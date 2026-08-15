@@ -1,0 +1,120 @@
+body { 
+    background-color: var(--bs-light); 
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
+}
+.header-title { 
+    font-weight: 700; 
+    font-size: 28px; 
+    color: var(--bs-dark);
+}
+.text-muted-custom { 
+    color: var(--bs-secondary); 
+    font-size: 14px; 
+}
+.date-picker-btn { 
+    border: 1px solid var(--bs-border-color); 
+    background: white; 
+    color: var(--bs-body-color); 
+    box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+}
+.date-picker-btn:hover {
+    background-color: var(--bs-light);
+}
+.avatar-circle { 
+    width: 40px; 
+    height: 40px; 
+    background-color: var(--bs-primary); 
+    color: white; 
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-weight: 600; 
+    font-size: 16px; 
+}
+.user-info { 
+    text-align: left; 
+    line-height: 1.2; 
+}
+.user-name { 
+    font-weight: 600; 
+    font-size: 15px; 
+    margin: 0; 
+    color: var(--bs-dark);
+}
+.user-role { 
+    font-size: 12px; 
+    color: var(--bs-secondary); 
+    margin: 0; 
+}
+.filter-card { 
+    background: white; 
+    border: 1px solid var(--bs-border-color); 
+    border-radius: 12px; 
+    padding: 16px; 
+    margin-top: 24px; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+.search-input { 
+    border-radius: 8px; 
+    border: 1px solid var(--bs-border-color); 
+    padding-left: 38px; 
+    font-size: 14px;
+}
+.search-icon { 
+    position: absolute; 
+    left: 14px; 
+    top: 50%; 
+    transform: translateY(-50%); 
+    color: var(--bs-secondary); 
+}
+.filter-select { 
+    border-radius: 8px; 
+    border: 1px solid var(--bs-border-color); 
+    color: var(--bs-body-color); 
+    font-size: 14px;
+    cursor: pointer;
+}
+.btn-filter { 
+    color: var(--bs-primary); 
+    background-color: rgba(var(--bs-primary-rgb), 0.1); 
+    border: none; 
+    font-weight: 500; 
+    border-radius: 8px; 
+    font-size: 14px;
+    transition: all 0.2s;
+}
+.btn-filter:hover {
+    background-color: rgba(var(--bs-primary-rgb), 0.2);
+}
+.btn-export { 
+    border: 1px solid var(--bs-border-color); 
+    background-color: white; 
+    color: var(--bs-body-color); 
+    font-weight: 500; 
+    border-radius: 8px; 
+    font-size: 14px;
+    transition: all 0.2s;
+}
+.btn-export:hover {
+    background-color: var(--bs-light);
+}
+.notification-bell { 
+    position: relative; 
+    font-size: 20px; 
+    color: var(--bs-body-color); 
+    margin-right: 20px; 
+    cursor: pointer; 
+}
+.notification-badge { 
+    position: absolute; 
+    top: -2px; 
+    right: -6px; 
+    background-color: var(--bs-danger); 
+    color: white; 
+    border-radius: 50%; 
+    font-size: 10px; 
+    font-weight: bold;
+    padding: 2px 5px; 
+    border: 2px solid var(--bs-light); 
+}

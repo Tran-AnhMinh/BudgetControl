@@ -1,4 +1,6 @@
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('Transaction Control scripts loaded');
-    // Initialize tooltips or other JS logic here if needed
+document.addEventListener('DOMContentLoaded', function() {
+    flatpickr(".date-picker-input", {
+        dateFormat: "d/m/Y",
+        allowInput: true
+    });
 });

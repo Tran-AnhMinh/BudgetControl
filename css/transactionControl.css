@@ -23,7 +23,7 @@ body {
 .avatar-circle { 
     width: 40px; 
     height: 40px; 
-    background-color: var(--bs-primary); 
+    background-color: var(--bs-info); 
     color: white; 
     border-radius: 50%; 
     display: flex; 

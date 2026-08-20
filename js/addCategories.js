@@ -59,6 +59,23 @@
                 });
             });
         }
+
+        const filterCatInput = document.getElementById('table-sort-category');
+        const filterBtnCat = document.getElementById('btn-table-sort-category');
+        if (filterCatInput && filterBtnCat) {
+            const filterCatMenu = filterBtnCat.nextElementSibling;
+            if (filterCatMenu && filterCatMenu.classList.contains('dropdown-menu')) {
+                filterCatMenu.innerHTML = `
+                    <li><a class="dropdown-item category-item text-secondary py-2" href="#" data-value="">Tất cả danh mục</a></li>
+                    ${categoryHtml}
+                `;
+            }
+        }
+
+        const editCatMenu = document.getElementById('edit-menu-trans-category');
+        if (editCatMenu) {
+            editCatMenu.innerHTML = categoryHtml;
+        }
     }
 
     const btnSaveCategory = document.getElementById('btn-save-category');

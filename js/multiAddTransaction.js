@@ -37,11 +37,6 @@ if (btnAddrowMultiAddTrans) {
         const multiaddtable = document.getElementById('multi-add-trans-tbody');
         const rowCount = multiaddtable.querySelectorAll('tr').length + 1;
         
-        // 1. TẠI SAO CẦN TÁCH RIÊNG GIAO DIỆN CATEGORY VÀ ACCOUNT?
-        // - Dữ liệu danh mục và tài khoản là các mảng (Array) có số lượng không cố định, cần dùng hàm .map() để duyệt qua từng phần tử và tạo mã HTML.
-        // - Đoạn mã HTML chính của dòng (newRowHTML) vốn đã rất dài và phức tạp (nhiều cột, nhiều cấu trúc lồng nhau).
-        // - Nếu nhét thẳng hàm .map().join('') vào giữa một chuỗi Template String khổng lồ như newRowHTML thì code sẽ cực kỳ rối mắt, khó đọc, dễ sai syntax và rất khó debug sau này.
-        // - Do đó, best practice là: Tính toán và render các đoạn HTML nhỏ (categoryHtml, accountHtml) thành chuỗi hoàn chỉnh trước, sau đó mới "đắp" (inject) chúng vào khung HTML lớn.
         
         const categories = JSON.parse(localStorage.getItem('categories')) || [];
         const categoryHtml = `
@@ -56,7 +51,6 @@ if (btnAddrowMultiAddTrans) {
 
         const accounts = JSON.parse(localStorage.getItem('accounts')) || [];
         const accountHtml = `
-            <li><a class="dropdown-item account-item text-secondary py-2" href="#" data-value="">Chọn tài khoản</a></li>
             ${accounts.map(a => `
                 <li>
                     <a class="dropdown-item account-item py-2" href="#" data-value="${a.name}">

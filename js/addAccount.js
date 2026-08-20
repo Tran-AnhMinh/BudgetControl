@@ -80,7 +80,22 @@ function updateAccountSelect() {
         });
     }
 
+    const filterAccInput = document.getElementById('table-sort-account');
+    const filterBtnAcc = document.getElementById('btn-table-sort-account');
+    if (filterAccInput && filterBtnAcc) {
+        const filterAccMenu = filterBtnAcc.nextElementSibling;
+        if (filterAccMenu && filterAccMenu.classList.contains('dropdown-menu')) {
+            filterAccMenu.innerHTML = `
+                <li><a class="dropdown-item account-item text-secondary py-2" href="#" data-value="">Chọn tài khoản</a></li>
+                ${accountHtml}
+            `;
+        }
+    }
 
+    const editAccMenu = document.getElementById('edit-menu-trans-account');
+    if (editAccMenu) {
+        editAccMenu.innerHTML = accountHtml;
+    }
 }
 const btnSaveAccount = document.getElementById('btn-save-account');
 if (btnSaveAccount) {

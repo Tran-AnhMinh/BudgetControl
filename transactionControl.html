@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <link rel="stylesheet" href="css/transactionControl.css">
+    <link rel="stylesheet" href="css/transactionControl.css?v=2">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <meta name="description" content="quản lý giao dịch">
@@ -15,6 +15,9 @@
 </head>
 
 <body>
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1055;"></div>
+
     <div class="container-fluid p-4" style="max-width: 1400px; margin: 0 auto;">
         <div class="d-flex justify-content-between align-items-center mb-2">
             <div>
@@ -55,7 +58,7 @@
             <div class="position-relative flex-grow-1" style="max-width: 380px;">
                 <i class="bi bi-search search-icon"></i>
                 <input type="text" class="form-control search-input py-2"
-                    placeholder="Tìm theo mô tả, danh mục, địa điểm...">
+                    placeholder="Tìm theo mô tả">
             </div>
 
             <div class="d-flex gap-2 flex-wrap flex-grow-1 justify-content-lg-end">
@@ -77,11 +80,11 @@
                         aria-controls="extraFilterCollapse">
                         <i class="bi bi-funnel me-2"></i> Bộ lọc
                     </button>
-                    <button class="btn btn-export px-3 py-2 d-flex align-items-center">
+                    <button type="button" class="btn btn-export px-3 py-2 d-flex align-items-center">   
                         <i class="bi bi-download me-2"></i> Xuất Excel
                     </button>
                     <button type="button" class="btn btn-add px-3 py-2 d-flex align-items-center" data-bs-toggle="modal"
-                        data-bs-target="#single-add-transaction">
+                        data-bs-target="#single-add-transaction" id="btn-single-add-trans-open">
                         <i class="bi bi-plus-lg me-2"></i> Thêm giao dịch
                     </button>
 
@@ -139,24 +142,24 @@
             <table class="table table-hover align-middle mb-0" style="font-size: 14px;">
                 <thead class="table-light text-secondary">
                     <tr>
-                        <th scope="col" class="fw-medium text-nowrap">Ngày <i class="bi bi-chevron-expand ms-1"
-                                style="font-size: 12px; cursor: pointer;"></i></th>
-                        <th scope="col" class="fw-medium text-nowrap">Loại <i class="bi bi-chevron-expand ms-1"
-                                style="font-size: 12px; cursor: pointer;"></i></th>
-                        <th scope="col" class="fw-medium text-nowrap">Danh mục <i class="bi bi-chevron-expand ms-1"
-                                style="font-size: 12px; cursor: pointer;"></i></th>
-                        <th scope="col" class="fw-medium">Mô tả <i class="bi bi-chevron-expand ms-1"
-                                style="font-size: 12px; cursor: pointer;"></i></th>
-                        <th scope="col" class="fw-medium text-nowrap">Tài khoản <i class="bi bi-chevron-expand ms-1"
-                                style="font-size: 12px; cursor: pointer;"></i></th>
-                        <th scope="col" class="fw-medium text-end text-nowrap">Số tiền <i
-                                class="bi bi-chevron-expand ms-1" style="font-size: 12px; cursor: pointer;"></i></th>
-                        <th scope="col" class="fw-medium text-nowrap">Tần suất <i class="bi bi-chevron-expand ms-1"
-                                style="font-size: 12px; cursor: pointer;"></i></th>
-                        <th scope="col" class="fw-medium text-end text-nowrap">Thao tác</th>
+                        <th scope="col" class="fw-medium text-nowrap text-center">Số</th>
+                        <th scope="col" class="fw-medium text-nowrap text-center">Ngày <button type="button" class="btn btn-link p-0" id="btn-sort-date"><i class="bi bi-chevron-expand ms-1"
+                                style="font-size: 12px; cursor: pointer;"></i></button></th>
+                        <th scope="col" class="fw-medium text-nowrap text-center">Loại <button type="button" class="btn btn-link p-0" id="btn-sort-type"><i class="bi bi-chevron-expand ms-1"
+                                style="font-size: 12px; cursor: pointer;"></i></button></th>
+                        <th scope="col" class="fw-medium text-nowrap">Danh mục <button type="button" class="btn btn-link p-0" id="btn-sort-category"><i class="bi bi-chevron-expand ms-1"
+                                style="font-size: 12px; cursor: pointer;"></i></button></th>
+                        <th scope="col" class="fw-medium">Mô tả</th>
+                        <th scope="col" class="fw-medium text-nowrap text-center">Tài khoản <button type="button" class="btn btn-link p-0" id="btn-sort-account"><i class="bi bi-chevron-expand ms-1"
+                                style="font-size: 12px; cursor: pointer;"></i></button></th>
+                        <th scope="col" class="fw-medium text-end text-nowrap text-center">Số tiền <button type="button" class="btn btn-link p-0" id="btn-sort-amount"><i class="bi bi-chevron-expand ms-1"
+                                style="font-size: 12px; cursor: pointer;"></i></button></th>
+                        <th scope="col" class="fw-medium text-nowrap text-center">Tần suất <button type="button" class="btn btn-link p-0" id="btn-sort-frequency"><i class="bi bi-chevron-expand ms-1"
+                                style="font-size: 12px; cursor: pointer;"></i></button></th>
+                        <th scope="col" class="fw-medium text-end text-nowrap text-center">Thao tác</th>
                     </tr>
                 </thead>
-                <tbody class="border-top-0">
+                <tbody class="border-top-0" id="transaction-table-body">
                     <tr>
                         <td class="text-nowrap">
                             <div class="text-dark fw-medium">17/08/2025</div>
@@ -172,8 +175,25 @@
                         <td class="text-danger fw-bold text-end text-nowrap">-25.000đ</td>
                         <td class="text-nowrap"><span class="badge badge-custom bg-primary-subtle text-primary">Hàng
                                 ngày</span></td>
-                        <td class="text-end"><button class="btn btn-sm text-secondary"><i
-                                    class="bi bi-three-dots-vertical"></i></button></td>
+                        <td class="text-end">
+                            <div class="dropdown">
+                                <button class="btn btn-sm text-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="bi bi-pencil me-2"></i> Chỉnh sửa
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item text-danger" href="#">
+                                            <i class="bi bi-trash me-2"></i> Xóa
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
                     </tr>
 
                     <tr>
@@ -181,18 +201,31 @@
                             <div class="text-dark fw-medium">17/08/2025</div>
                             <div class="text-secondary" style="font-size: 12px;">12:20</div>
                         </td>
-                        <td class="text-nowrap"><span class="text-warning fw-medium"><i class="bi bi-arrow-down"></i>
-                                Chi</span></td>
-                        <td class="text-nowrap"><span class="icon-circle bg-warning-subtle text-warning me-2"><i
-                                    class="bi bi-cup-hot-fill"></i></span> Ăn uống</td>
+                        <td class="text-nowrap"><span class="text-warning fw-medium"><i class="bi bi-arrow-down"></i>Chi</span></td>
+                        <td class="text-nowrap"><span class="icon-circle bg-warning-subtle text-warning me-2"><i class="bi bi-cup-hot-fill"></i></span> Ăn uống</td>
                         <td>Bún bò</td>
-                        <td class="text-nowrap"><span class="icon-circle bg-success-subtle text-success me-2"><i
-                                    class="bi bi-cash-stack"></i></span> Tiền mặt</td>
+                        <td class="text-nowrap"><span class="icon-circle bg-success-subtle text-success me-2"><i class="bi bi-cash-stack"></i></span> Tiền mặt</td>
                         <td class="text-danger fw-bold text-end text-nowrap">-35.000đ</td>
-                        <td class="text-nowrap"><span class="badge badge-custom bg-primary-subtle text-primary">Hàng
-                                ngày</span></td>
-                        <td class="text-end"><button class="btn btn-sm text-secondary"><i
-                                    class="bi bi-three-dots-vertical"></i></button></td>
+                        <td class="text-nowrap"><span class="badge badge-custom bg-primary-subtle text-primary">Hàng ngày</span></td>
+                        <td class="text-end">
+                            <div class="dropdown">
+                                <button class="btn btn-sm text-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="bi bi-pencil me-2"></i> Chỉnh sửa
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item text-danger" href="#">
+                                            <i class="bi bi-trash me-2"></i> Xóa
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
                     </tr>
 
                     <tr>
@@ -210,8 +243,25 @@
                         <td class="text-danger fw-bold text-end text-nowrap">-120.000đ</td>
                         <td class="text-nowrap"><span class="badge badge-custom bg-primary-subtle text-primary">Hàng
                                 ngày</span></td>
-                        <td class="text-end"><button class="btn btn-sm text-secondary"><i
-                                    class="bi bi-three-dots-vertical"></i></button></td>
+                        <td class="text-end">
+                            <div class="dropdown">
+                                <button class="btn btn-sm text-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="bi bi-pencil me-2"></i> Chỉnh sửa
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item text-danger" href="#">
+                                            <i class="bi bi-trash me-2"></i> Xóa
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
                     </tr>
 
                     <tr>
@@ -229,8 +279,25 @@
                         <td class="text-danger fw-bold text-end text-nowrap">-7.000đ</td>
                         <td class="text-nowrap"><span class="badge badge-custom bg-primary-subtle text-primary">Hàng
                                 ngày</span></td>
-                        <td class="text-end"><button class="btn btn-sm text-secondary"><i
-                                    class="bi bi-three-dots-vertical"></i></button></td>
+                        <td class="text-end">
+                            <div class="dropdown">
+                                <button class="btn btn-sm text-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="bi bi-pencil me-2"></i> Chỉnh sửa
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item text-danger" href="#">
+                                            <i class="bi bi-trash me-2"></i> Xóa
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
                     </tr>
 
                     <tr>
@@ -248,8 +315,25 @@
                         <td class="text-success fw-bold text-end text-nowrap">+500.000đ</td>
                         <td class="text-nowrap"><span class="badge badge-custom bg-success-subtle text-success">Hàng
                                 tháng</span></td>
-                        <td class="text-end"><button class="btn btn-sm text-secondary"><i
-                                    class="bi bi-three-dots-vertical"></i></button></td>
+                        <td class="text-end">
+                            <div class="dropdown">
+                                <button class="btn btn-sm text-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="bi bi-pencil me-2"></i> Chỉnh sửa
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item text-danger" href="#">
+                                            <i class="bi bi-trash me-2"></i> Xóa
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -285,9 +369,7 @@
 
     </div>
 
-    <script src="js/transactionControl.js"></script>
-
-    <div class="modal fade" id="single-add-transaction" tabindex="-1" role="dialog"
+    <div class="modal fade" id="single-add-transaction" role="dialog"
         aria-labelledby="singleAddTransactionLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content shadow border-0">
@@ -311,26 +393,30 @@
 
                         <p>Số tiền<span class="text-danger">*</span></p>
                         <div class="input-group mb-3 has-validation">
-                            <input type="number" class="form-control border-end-0" id="trans-amount" placeholder="Nhập số tiền"
-                                step="1000" min="0">
-                            <span class="input-group-text bg-white border-start-0 fw-bold">đ</span>
+                            <input type="text" class="form-control border-end-0" id="trans-amount" placeholder="Nhập số tiền">
+                            <span class="input-group-text bg-white border-start-0 fw-bold" id="vnd-icon">đ</span>
                             <div class="invalid-feedback">Vui lòng nhập số tiền hợp lệ.</div>
                         </div>
 
                         <div class="d-flex gap-2 mb-3">
-                            <button class="btn btn-quick-amount bg-white border w-100 px-1">+10k</button>
-                            <button class="btn btn-quick-amount bg-white border w-100 px-1">+20k</button>
-                            <button class="btn btn-quick-amount bg-white border w-100 px-1">+50k</button>
-                            <button class="btn btn-quick-amount bg-white border w-100 px-1">+100k</button>
+                            <button class="btn btn-quick-amount bg-white border w-100 px-1" id="btn-10k">+10k</button>
+                            <button class="btn btn-quick-amount bg-white border w-100 px-1" id="btn-20k">+20k</button>
+                            <button class="btn btn-quick-amount bg-white border w-100 px-1" id="btn-50k">+50k</button>
+                            <button class="btn btn-quick-amount bg-white border w-100 px-1" id="btn-100k">+100k</button>
                         </div>
 
                         <p class="mb-2">Danh mục <span class="text-danger">*</span></p>
                         <div class="d-flex gap-2 mb-3 has-validation">
                             <div class="w-100">
-                                <select class="form-select text-secondary" id="trans-category">
-                                    <option selected value="">Chọn danh mục</option>
-                                </select>
-                                <div class="invalid-feedback">Vui lòng chọn danh mục.</div>
+                                <div class="dropdown w-100">
+                                    <button class="form-select text-secondary text-start w-100 bg-white d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="btn-trans-category">
+                                        Chọn danh mục
+                                    </button>
+                                    <ul class="dropdown-menu w-100 shadow-sm border-0" id="menu-trans-category" style="max-height: 250px; overflow-y: auto;">
+                                    </ul>
+                                    <input type="hidden" id="trans-category" value="">
+                                </div>
+                                <div class="text-danger mt-1 d-none" style="font-size: 0.875em;" id="error-trans-category">Vui lòng chọn danh mục.</div>
                             </div>
                             <button
                                 class="btn btn-quick-amount bg-white border d-flex align-items-center justify-content-center px-3"
@@ -343,27 +429,41 @@
                             <div class="col">
                                 <p class="mb-2">Ngày giao dịch <span class="text-danger">*</span></p>
                                 <div class="input-group has-validation">
-                                    <span class="input-group-text bg-white border-end-0 text-secondary"><i class="bi bi-calendar3"></i></span>
+                                    <span class="input-group-text bg-white border-end-0 text-secondary"><i class="bi bi-calendar3" id="trans-date-calen-icon"></i></span>
                                     <input type="text" class="form-control date-picker-input bg-white border-start-0" id="trans-date" placeholder="dd/mm/yyyy HH:mm">
                                     <div class="invalid-feedback">Vui lòng chọn ngày giao dịch.</div>
                                 </div>
                             </div>
 
-                            <!-- <div class="col">
-                                <p class="mb-2">Phương thức</p>
-                                <select class="form-select text-secondary">
-                                    <option selected>Chọn phương thức</option>
+                            <div class="col">
+                                <p class="mb-2">Tần suất</p>
+                                <select class="form-select text-secondary" id="trans-frequency">
+                                    <option value="one-time" selected>Một lần</option>
+                                    <option value="monthly">Hàng tháng</option>
                                 </select>
-                            </div> -->
+                            </div>
                         </div>
 
                         <p class="mb-2">Tài Khoản</p>
-                        <select class="form-select text-secondary">
-                            <option selected>Chọn tài khoản</option>
-                        </select>
-
+                        <div class="d-flex gap-2 mb-3 has-validation">
+                            <div class="w-100">
+                                <div class="dropdown w-100">
+                                    <button class="form-select text-secondary text-start w-100 bg-white d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="btn-trans-account">
+                                        Chọn tài khoản
+                                    </button>
+                                    <ul class="dropdown-menu w-100 shadow-sm border-0" id="menu-trans-account" style="max-height: 250px; overflow-y: auto;">
+                                    </ul>
+                                    <input type="hidden" id="trans-account" value="">
+                                </div>
+                            </div>
+                            <button
+                                class="btn btn-quick-amount bg-white border d-flex align-items-center justify-content-center px-3"
+                                type="button" data-bs-toggle="modal" data-bs-target="#add-account">
+                                <i class="bi bi-plus-lg"></i>
+                            </button>
+                        </div>
                         <p class="mb-2">Mô tả</p>
-                        <textarea class="form-control mb-3" placeholder="Nhập mô tả" rows="3"></textarea>
+                        <textarea class="form-control mb-3" id="trans-detail" placeholder="Nhập mô tả" rows="3"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer border-0">
@@ -390,19 +490,9 @@
                             <div class="invalid-feedback" style="margin-top:-10px; margin-bottom: 10px;">Vui lòng nhập tên danh mục.</div>
                         </div>
 
-                        <p class="mb-2">Loại danh mục <span class="text-danger">*</span></p>
-                        <div>
-                            <select class="form-select mb-3 text-secondary" id="cat-type">
-                                <option selected value="">Chọn loại danh mục</option>
-                                <option value="expense">Chi tiêu</option>
-                                <option value="income">Thu nhập</option>
-                            </select>
-                            <div class="invalid-feedback" style="margin-top:-10px; margin-bottom: 10px;">Vui lòng chọn loại danh mục.</div>
-                        </div>
-
                         <p class="mb-2">Biểu tượng</p>
-                        <div class="d-flex flex-wrap gap-2 mb-3">
-                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-airplane" autocomplete="off" checked>
+                        <div class="d-flex flex-wrap gap-2 mb-3" id="cat-icon">
+                            <input type="radio" class="btn-check selected" name="categoryIcon" id="icon-airplane" autocomplete="off" checked>
                             <label class="btn btn-outline-secondary p-2" for="icon-airplane"><i class="bi bi-airplane fs-5"></i></label>
                             
                             <input type="radio" class="btn-check" name="categoryIcon" id="icon-bag" autocomplete="off">
@@ -493,8 +583,8 @@
                             <label class="btn btn-outline-secondary p-2" for="icon-piggy-bank"><i class="bi bi-piggy-bank fs-5"></i></label>
                         </div>
                         <p class="mb-2">Màu sắc</p>
-                        <div class="d-flex flex-wrap gap-2">
-                            <input type="radio" class="btn-check" name="categoryColor" id="color-primary" autocomplete="off" checked>
+                        <div class="d-flex flex-wrap gap-2" id="cat-color">
+                            <input type="radio" class="btn-check selected" name="categoryColor" id="color-primary" autocomplete="off" checked>
                             <label class="btn btn-outline-primary fw-bold" for="color-primary">Xanh biển</label>
 
                             <input type="radio" class="btn-check" name="categoryColor" id="color-secondary" autocomplete="off">
@@ -528,7 +618,7 @@
     
     </div>
 
-    <div class="modal fade" id="multi-add-transaction" tabindex="-1" role="dialog"
+    <div class="modal fade" id="multi-add-transaction" role="dialog"
         aria-labelledby="multiAddTransactionLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content shadow border-0 p-3">
@@ -541,39 +631,41 @@
                 </div>
                 
                 <div class="modal-body p-2 pt-0">
-                    <!-- Top Controls -->
                     <div class="row mb-4 align-items-end">
                         <div class="col-md-3">
                             <label class="form-label text-dark mb-1" style="font-size: 14px;">Ngày giao dịch <span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <input type="text" class="form-control bg-white border-end-0 text-dark" value="17/08/2025" style="font-size: 14px;">
+                                <input type="text" class="form-control bg-white border-end-0 text-dark date-picker-input-date-only" style="font-size: 14px;" placeholder="dd/mm/yyyy">
                                 <span class="input-group-text bg-white border-start-0 text-secondary"><i class="bi bi-calendar3"></i></span>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <label class="form-label text-dark mb-1" style="font-size: 14px;">Tài khoản mặc định</label>
-                            <select class="form-select text-dark" style="font-size: 14px;">
-                                <option>Ví MoMo</option>
-                            </select>
+                            <div class="dropdown w-100">
+                                <button class="form-select text-dark text-start w-100 bg-white d-flex align-items-center" style="font-size: 14px;" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="btn-multi-add-transac-select-account">
+                                    Chọn tài khoản
+                                </button>
+                                <ul class="dropdown-menu w-100 shadow-sm border-0" id="menu-multi-add-transac-select-account" style="max-height: 250px; overflow-y: auto;">
+                                </ul>
+                                <input type="hidden" id="multi-add-transac-select-account" value="">
+                            </div>
                         </div>
                         <div class="col-md-3">
                             <label class="form-label text-dark mb-1" style="font-size: 14px;">Tần suất mặc định</label>
-                            <select class="form-select text-dark" style="font-size: 14px;">
-                                <option>Không lặp lại</option>
-                                <option>Hàng ngày</option>
-                                <option>Hàng tuần</option>
-                                <option>Hàng tháng</option>
+                            <select class="form-select text-dark" style="font-size: 14px;" id="multi-add-default-frequency">
+                                <option value="" selected>chọn tần suất</option>
+                                <option value="one-time">Một lần</option>
+                                <option value="monthly">Hàng tháng</option>
                             </select>
                         </div>
                         <div class="col-md-3">
                             <div class="bg-light rounded p-2 px-3 d-flex flex-column justify-content-center h-100" style="font-size: 14px;">
-                                <div class="mb-1">Tổng chi: <span class="text-danger fw-bold" style="font-size: 15px;">220.000đ</span></div>
-                                <div>Tổng thu: <span class="text-success fw-bold" style="font-size: 15px;">0đ</span></div>
+                                <div class="mb-1">Tổng chi: <span class="text-danger fw-bold" style="font-size: 15px;" id="multi-add-total-expense">0đ</span></div>
+                                <div>Tổng thu: <span class="text-success fw-bold" style="font-size: 15px;" id="multi-add-total-income">0đ</span></div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Table -->
                     <div class="table-responsive bg-white rounded-3 border mb-3">
                         <table class="table align-middle mb-0" style="font-size: 14px;">
                             <thead class="table-light text-secondary">
@@ -581,176 +673,21 @@
                                     <th scope="col" class="fw-medium text-center" style="width: 40px; padding-left: 1rem;">#</th>
                                     <th scope="col" class="fw-medium" style="width: 80px;">Giờ</th>
                                     <th scope="col" class="fw-medium" style="width: 90px;">Loại</th>
-                                    <th scope="col" class="fw-medium" style="width: 150px;">Danh mục</th>
-                                    <th scope="col" class="fw-medium">Mô tả <span class="text-danger">*</span></th>
-                                    <th scope="col" class="fw-medium text-end" style="width: 110px;">Số tiền (đ)</th>
+                                    <th scope="col" class="fw-medium" style="width: 150px;">Danh mục <span class="text-danger">*</span></th>
+                                    <th scope="col" class="fw-medium">Mô tả</th>
+                                    <th scope="col" class="fw-medium text-end" style="width: 110px;">Số tiền<span class="text-danger">*</span> (đ)</th>
                                     <th scope="col" class="fw-medium" style="width: 150px;">Tần suất</th>
-                                    <th scope="col" class="fw-medium" style="width: 150px;">Tài khoản</th>
+                                    <th scope="col" class="fw-medium" style="width: 150px;">Tài khoản<span class="text-danger">*</span></th>
                                     <th scope="col" class="fw-medium text-center" style="width: 60px;">Thao tác</th>
                                 </tr>
                             </thead>
-                            <tbody class="border-top-0">
-                                <!-- Row 1 -->
-                                <tr>
-                                    <td class="text-center fw-medium" style="padding-left: 1rem;">1</td>
-                                    <td>
-                                        <input type="text" class="form-control form-control-sm text-center" value="15:30" style="font-size: 13px;" placeholder="HH:mm">
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-sm border bg-white text-danger d-flex justify-content-center align-items-center w-100" style="font-size: 13px;">
-                                            <i class="bi bi-arrow-down me-1"></i> Chi
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-sm border bg-white text-start d-flex justify-content-between align-items-center w-100" style="font-size: 13px;">
-                                            <span class="text-truncate"><i class="bi bi-cup-hot-fill text-warning me-2"></i> Ăn uống</span>
-                                            <i class="bi bi-chevron-down text-secondary" style="font-size: 10px;"></i>
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control form-control-sm" value="Bún bò" style="font-size: 13px;">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control form-control-sm text-end" value="35.000" style="font-size: 13px;">
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-sm border bg-white text-start d-flex justify-content-between align-items-center w-100" style="font-size: 13px;">
-                                            <span class="text-truncate">Hàng ngày</span>
-                                            <i class="bi bi-chevron-down text-secondary" style="font-size: 10px;"></i>
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-sm border bg-white text-start d-flex justify-content-between align-items-center w-100" style="font-size: 13px;">
-                                            <span class="text-truncate"><i class="bi bi-wallet2 text-success me-2"></i> Ví MoMo</span>
-                                            <i class="bi bi-chevron-down text-secondary" style="font-size: 10px;"></i>
-                                        </button>
-                                    </td>
-                                    <td class="text-center">
-                                        <button class="btn btn-sm text-secondary p-0"><i class="bi bi-trash"></i></button>
-                                    </td>
-                                </tr>
-                                <!-- Row 2 -->
-                                <tr>
-                                    <td class="text-center fw-medium" style="padding-left: 1rem;">2</td>
-                                    <td>
-                                        <input type="text" class="form-control form-control-sm text-center" value="12:20" style="font-size: 13px;" placeholder="HH:mm">
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-sm border bg-white text-danger d-flex justify-content-center align-items-center w-100" style="font-size: 13px;">
-                                            <i class="bi bi-arrow-down me-1"></i> Chi
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-sm border bg-white text-start d-flex justify-content-between align-items-center w-100" style="font-size: 13px;">
-                                            <span class="text-truncate"><i class="bi bi-cup-hot-fill text-warning me-2"></i> Ăn uống</span>
-                                            <i class="bi bi-chevron-down text-secondary" style="font-size: 10px;"></i>
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control form-control-sm" value="Trà sữa Tocotoco" style="font-size: 13px;">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control form-control-sm text-end" value="25.000" style="font-size: 13px;">
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-sm border bg-white text-start d-flex justify-content-between align-items-center w-100" style="font-size: 13px;">
-                                            <span class="text-truncate">Hàng ngày</span>
-                                            <i class="bi bi-chevron-down text-secondary" style="font-size: 10px;"></i>
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-sm border bg-white text-start d-flex justify-content-between align-items-center w-100" style="font-size: 13px;">
-                                            <span class="text-truncate"><i class="bi bi-wallet2 text-success me-2"></i> Ví MoMo</span>
-                                            <i class="bi bi-chevron-down text-secondary" style="font-size: 10px;"></i>
-                                        </button>
-                                    </td>
-                                    <td class="text-center">
-                                        <button class="btn btn-sm text-secondary p-0"><i class="bi bi-trash"></i></button>
-                                    </td>
-                                </tr>
-                                <!-- Row 3 -->
-                                <tr>
-                                    <td class="text-center fw-medium" style="padding-left: 1rem;">3</td>
-                                    <td>
-                                        <input type="text" class="form-control form-control-sm text-center" value="10:15" style="font-size: 13px;" placeholder="HH:mm">
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-sm border bg-white text-danger d-flex justify-content-center align-items-center w-100" style="font-size: 13px;">
-                                            <i class="bi bi-arrow-down me-1"></i> Chi
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-sm border bg-white text-start d-flex justify-content-between align-items-center w-100" style="font-size: 13px;">
-                                            <span class="text-truncate"><i class="bi bi-bus-front-fill me-2" style="color: #6f42c1;"></i>Di chuyển</span>
-                                            <i class="bi bi-chevron-down text-secondary" style="font-size: 10px;"></i>
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control form-control-sm" value="Xe buýt đi học" style="font-size: 13px;">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control form-control-sm text-end" value="7.000" style="font-size: 13px;">
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-sm border bg-white text-start d-flex justify-content-between align-items-center w-100" style="font-size: 13px;">
-                                            <span class="text-truncate">Hàng ngày</span>
-                                            <i class="bi bi-chevron-down text-secondary" style="font-size: 10px;"></i>
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-sm border bg-white text-start d-flex justify-content-between align-items-center w-100" style="font-size: 13px;">
-                                            <span class="text-truncate"><i class="bi bi-wallet2 text-success me-2"></i> Ví MoMo</span>
-                                            <i class="bi bi-chevron-down text-secondary" style="font-size: 10px;"></i>
-                                        </button>
-                                    </td>
-                                    <td class="text-center">
-                                        <button class="btn btn-sm text-secondary p-0"><i class="bi bi-trash"></i></button>
-                                    </td>
-                                </tr>
-                                <!-- Row 4 -->
-                                <tr>
-                                    <td class="text-center fw-medium" style="padding-left: 1rem;">4</td>
-                                    <td>
-                                        <input type="text" class="form-control form-control-sm text-center" value="07:45" style="font-size: 13px;" placeholder="HH:mm">
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-sm border bg-white text-danger d-flex justify-content-center align-items-center w-100" style="font-size: 13px;">
-                                            <i class="bi bi-arrow-down me-1"></i> Chi
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-sm border bg-white text-start d-flex justify-content-between align-items-center w-100" style="font-size: 13px;">
-                                            <span class="text-truncate"><i class="bi bi-book-fill text-primary me-2"></i> Học tập</span>
-                                            <i class="bi bi-chevron-down text-secondary" style="font-size: 10px;"></i>
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control form-control-sm" value="Mua sách Toán" style="font-size: 13px;">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control form-control-sm text-end" value="120.000" style="font-size: 13px;">
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-sm border bg-white text-start d-flex justify-content-between align-items-center w-100" style="font-size: 13px;">
-                                            <span class="text-truncate">Hàng ngày</span>
-                                            <i class="bi bi-chevron-down text-secondary" style="font-size: 10px;"></i>
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-sm border bg-white text-start d-flex justify-content-between align-items-center w-100" style="font-size: 13px;">
-                                            <span class="text-truncate"><i class="bi bi-bank2 text-primary me-2"></i> Vietcombank</span>
-                                            <i class="bi bi-chevron-down text-secondary" style="font-size: 10px;"></i>
-                                        </button>
-                                    </td>
-                                    <td class="text-center">
-                                        <button class="btn btn-sm text-secondary p-0"><i class="bi bi-trash"></i></button>
-                                    </td>
-                                </tr>
+                            <tbody class="border-top-0" id="multi-add-trans-tbody">
+                                
                             </tbody>
                         </table>
                     </div>
 
-                    <button class="btn btn-sm d-flex align-items-center bg-primary-subtle border-primary-subtle text-primary fw-medium px-3 py-2" style="font-size: 14px;">
+                    <button class="btn btn-sm d-flex align-items-center bg-primary-subtle border-primary-subtle text-primary fw-medium px-3 py-2" style="font-size: 14px;" id="btn-add-row-multi-add-trans">
                         <i class="bi bi-plus-lg me-2"></i> Thêm dòng
                     </button>
 
@@ -770,6 +707,158 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="add-account" tabindex="-1" role="dialog"
+        aria-labelledby="addAccountLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content shadow border-0">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="addAccountLabel">Thêm tài khoản</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form">
+                        <p class="mb-2">Tên tài khoản <span class="text-danger">*</span></p>
+                        <div>
+                            <input type="text" class="form-control mb-3" id="acc-name" placeholder="Nhập tên tài khoản">
+                            <div class="invalid-feedback" style="margin-top:-10px; margin-bottom: 10px;">Vui lòng nhập tên tài khoản.</div>
+                        </div>
+
+                        <p class="mb-2">Biểu tượng</p>
+                        <div class="d-flex flex-wrap gap-2 mb-3" id="cat-icon">
+                            <input type="radio" class="btn-check selected" name="accountIcon" id="acc-icon-airplane" autocomplete="off" checked>
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-airplane"><i class="bi bi-airplane fs-5"></i></label>
+                            
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-bag" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-bag"><i class="bi bi-bag fs-5"></i></label>
+                            
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-bandaid" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-bandaid"><i class="bi bi-bandaid fs-5"></i></label>
+                            
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-bank" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-bank"><i class="bi bi-bank fs-5"></i></label>
+                            
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-basket" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-basket"><i class="bi bi-basket fs-5"></i></label>
+                            
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-building" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-building"><i class="bi bi-building fs-5"></i></label>
+                            
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-bus-front" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-bus-front"><i class="bi bi-bus-front fs-5"></i></label>
+                            
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-cake" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-cake"><i class="bi bi-cake fs-5"></i></label>
+                            
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-calculator" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-calculator"><i class="bi bi-calculator fs-5"></i></label>
+                            
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-camera" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-camera"><i class="bi bi-camera fs-5"></i></label>
+                            
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-camera-reels" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-camera-reels"><i class="bi bi-camera-reels fs-5"></i></label>
+                            
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-capsule" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-capsule"><i class="bi bi-hospital fs-5"></i></label>
+                            
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-car-front" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-car-front"><i class="bi bi-car-front fs-5"></i></label>
+                            
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-cart" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-cart"><i class="bi bi-cart fs-5"></i></label>
+                            
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-cash" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-cash"><i class="bi bi-cash fs-5"></i></label>
+                            
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-controller" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-controller"><i class="bi bi-controller fs-5"></i></label>
+                            
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-fuel-pump" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-fuel-pump"><i class="bi bi-fuel-pump fs-5"></i></label>
+                            
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-gem" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-gem"><i class="bi bi-gem fs-5"></i></label>
+                            
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-heart-pulse" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-heart-pulse"><i class="bi bi-heart-pulse fs-5"></i></label>
+                            
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-house" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-house"><i class="bi bi-house fs-5"></i></label>
+                            
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-lightning-charge" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-lightning-charge"><i class="bi bi-lightning-charge fs-5"></i></label>
+                            
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-mortarboard" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-mortarboard"><i class="bi bi-mortarboard fs-5"></i></label>
+                            
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-people" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-people"><i class="bi bi-cup-hot fs-5"></i></label>
+                            
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-phone" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-phone"><i class="bi bi-phone fs-5"></i></label>
+                            
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-shop" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-shop"><i class="bi bi-shop fs-5"></i></label>
+                            
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-suitcase" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-suitcase"><i class="bi bi-suitcase fs-5"></i></label>
+                            
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-ticket-detailed" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-ticket-detailed"><i class="bi bi-ticket-detailed fs-5"></i></label>
+                            
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-wallet" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-wallet"><i class="bi bi-wallet fs-5"></i></label>
+                            
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-book" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-book"><i class="bi bi-book fs-5"></i></label>
+                            
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-piggy-bank" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-piggy-bank"><i class="bi bi-piggy-bank fs-5"></i></label>
+                        </div>
+                        <p class="mb-2">Màu sắc</p>
+                        <div class="d-flex flex-wrap gap-2" id="cat-color">
+                            <input type="radio" class="btn-check selected" name="accountColor" id="acc-color-primary" autocomplete="off" checked>
+                            <label class="btn btn-outline-primary fw-bold" for="acc-color-primary">Xanh biển</label>
+
+                            <input type="radio" class="btn-check" name="accountColor" id="acc-color-secondary" autocomplete="off">
+                            <label class="btn btn-outline-secondary fw-bold" for="acc-color-secondary">Xám</label>
+
+                            <input type="radio" class="btn-check" name="accountColor" id="acc-color-success" autocomplete="off">
+                            <label class="btn btn-outline-success fw-bold" for="acc-color-success">Xanh lá</label>
+
+                            <input type="radio" class="btn-check" name="accountColor" id="acc-color-danger" autocomplete="off">
+                            <label class="btn btn-outline-danger fw-bold" for="acc-color-danger">Đỏ</label>
+
+                            <input type="radio" class="btn-check" name="accountColor" id="acc-color-warning" autocomplete="off">
+                            <label class="btn btn-outline-warning fw-bold" for="acc-color-warning">Vàng</label>
+
+                            <input type="radio" class="btn-check" name="accountColor" id="acc-color-info" autocomplete="off">
+                            <label class="btn btn-outline-info fw-bold" for="acc-color-info">Xanh lơ</label>
+
+                            <input type="radio" class="btn-check" name="accountColor" id="acc-color-dark" autocomplete="off">
+                            <label class="btn btn-outline-dark fw-bold" for="acc-color-dark">Tối</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#single-add-transaction">Quay lại</button>
+                    <button type="button" class="btn btn-primary" id="btn-save-account">Lưu</button>
+                </div>
+            </div>
+
+        </div>
+    
+    </div>
+
+    <script src="js/general.js"></script>
+    <script src="js/transactionControl.js"></script>
+    <script src="js/transactionTable.js"></script>
+    <script src="js/addCategories.js"></script>
+    <script src="js/addAccount.js"></script>
+    <script src="js/singleAddTransaction.js"></script>
+    <script src="js/multiAddTransaction.js"></script>
 </body>
 
 

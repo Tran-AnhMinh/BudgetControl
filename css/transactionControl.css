@@ -237,3 +237,74 @@ body {
     color: var(--bs-primary) !important;
     border-color: var(--bs-primary) !important;
 }
+
+/* Action Icon Button Hover in Tables */
+.table .btn.text-secondary {
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    padding: 0 !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.table .btn.text-secondary:hover {
+    background-color: var(--bs-gray-200);
+    color: var(--bs-dark) !important;
+}
+
+/* Table Header Icon Hover */
+.table th i.bi-chevron-expand {
+    transition: color 0.2s ease;
+    padding: 4px;
+    border-radius: 4px;
+}
+
+.table th i.bi-chevron-expand:hover {
+    color: var(--bs-dark);
+    background-color: var(--bs-gray-200);
+}
+
+/* Category and Account Icon Selection Hover and Active State */
+input[name="categoryIcon"] + label.btn-outline-secondary,
+input[name="accountIcon"] + label.btn-outline-secondary {
+    border-color: var(--bs-border-color);
+    color: var(--bs-secondary);
+    transition: all 0.2s ease;
+}
+
+input[name="categoryIcon"] + label.btn-outline-secondary:hover,
+input[name="accountIcon"] + label.btn-outline-secondary:hover {
+    background-color: rgba(var(--bs-primary-rgb), 0.1);
+    color: var(--bs-primary);
+    border-color: var(--bs-primary);
+}
+
+input[name="categoryIcon"]:checked + label.btn-outline-secondary,
+input[name="accountIcon"]:checked + label.btn-outline-secondary {
+    background-color: var(--bs-primary);
+    color: white;
+    border-color: var(--bs-primary);
+}
+
+/* Fix flatpickr overlapping issue with bootstrap modals */
+.flatpickr-calendar {
+    z-index: 1060 !important;
+}
+
+#btn-add-row-multi-add-trans {
+    transition: all 0.2s ease-in-out;
+}
+
+#btn-add-row-multi-add-trans:hover {
+    background-color: var(--bs-primary) !important;
+    color: white !important;
+    border-color: var(--bs-primary) !important;
+}
+
+/* Allow dropdown menus to overflow table-responsive containers */
+.table-responsive {
+    overflow: visible !important;
+}

@@ -84,9 +84,6 @@ if (btnsortFrequency) {
 }
 
 function renderTable() {
-
-    
-
     const categories = JSON.parse(localStorage.getItem('categories')) || [];
     const accounts = JSON.parse(localStorage.getItem('accounts')) || [];
 

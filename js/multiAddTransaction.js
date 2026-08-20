@@ -60,11 +60,14 @@ if (btnAddrowMultiAddTrans) {
             `).join('')}
         `;
 
+        const now = new Date();
+        const currentTime = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+
         const newRowHTML = `
             <tr>
                 <td class="text-center fw-medium" style="padding-left: 1rem;" value="${rowCount}">${rowCount}</td>
                 <td>
-                    <input type="time" class="multi-add-trans-time form-control form-control-sm text-center" value="" style="font-size: 13px;" placeholder="HH:mm">
+                    <input type="time" class="multi-add-trans-time form-control form-control-sm text-center" value="${currentTime}" style="font-size: 13px;" placeholder="HH:mm">
                 </td>
                 <td>
                     <div class="dropdown w-100">

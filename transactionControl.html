@@ -15,10 +15,9 @@
 </head>
 
 <body>
-    <!-- Toast Container -->
-    <div id="toast-container" class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1055;"></div>
+    <div id="toast-container" class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 9999;"></div>
 
-    <div class="container-fluid p-4" style="max-width: 1400px; margin: 0 auto;">
+    <div class="container-fluid p-4 flex" style="max-width: 1400px; margin: 0 auto;">
         <div class="d-flex justify-content-between align-items-center mb-2">
             <div>
                 <h1 class="header-title mb-1">Giao dịch</h1>
@@ -26,11 +25,11 @@
             </div>
 
             <div class="d-flex align-items-center">
-                <button class="btn date-picker-btn me-4 d-flex align-items-center rounded-3 px-3 py-2">
+                <!-- <button class="btn date-picker-btn me-4 d-flex align-items-center rounded-3 px-3 py-2">
                     <i class="bi bi-calendar3 me-2 text-secondary"></i>
                     <span class="me-2" style="font-size: 14px;">01/08/2025 - 31/08/2025</span>
                     <i class="bi bi-chevron-down ms-1 text-secondary" style="font-size: 12px;"></i>
-                </button>
+                </button> -->
 
                 <!-- <div class="notification-bell d-flex align-items-center">
                     <i class="bi bi-bell"></i>
@@ -62,17 +61,51 @@
             </div>
 
             <div class="d-flex gap-2 flex-wrap flex-grow-1 justify-content-lg-end">
-                <select class="form-select filter-select py-2" style="width: auto; min-width: 150px;">
-                    <option selected>Tất cả danh mục</option>
-                </select>
+                <div class="dropdown">
+                    <button class="form-select text-secondary text-start w-100 bg-white d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="btn-table-sort-category">
+                        Tất cả danh mục
+                    </button>
+                    <ul class="dropdown-menu w-100 shadow-sm border-0" id="table-sort-select-category" style="max-height: 250px; overflow-y: auto;">
+                        
+                    </ul>
+                    <input type="hidden" id="table-sort-category" value="">
+                </div>
 
 
-                <select class="form-select filter-select py-2" style="width: auto; min-width: 130px;">
-                    <option selected>Tất cả loại</option>
-                </select>
-                <select class="form-select filter-select py-2" style="width: auto; min-width: 160px;">
-                    <option selected>Tất cả tài khoản</option>
-                </select>
+                <div class="dropdown h-100">
+                    <button class="btn border text-secondary bg-white d-flex justify-content-center align-items-center w-100 h-100"  data-bs-toggle="dropdown" aria-expanded="false">
+                        Tất cả loại<i class="bi bi-chevron-down ms-1"></i>
+                    </button>
+                    <ul class="dropdown-menu shadow-sm border-0">
+                        <li selected>
+                            <button class="dropdown-item d-flex align-items-center text-secondary" type="button" value="all-type">
+                                Tất cả
+                            </button>
+                        </li>
+                        <li>
+                            <button class="dropdown-item d-flex align-items-center" type="button" value="expense">
+                                <i class="bi bi-arrow-down me-2 text-danger"></i> Chi
+                            </button>
+                        </li>
+                        <li>
+                            <button class="dropdown-item d-flex align-items-center" type="button" value="income">
+                                <i class="bi bi-arrow-up me-2 text-success"></i> Thu
+                            </button>
+                        </li>
+                    </ul>
+                    <input type="hidden" value="all-type" class="table-sort-type">
+                </div>
+
+
+                <div class="dropdown">
+                    <button class="form-select text-secondary text-start w-100 bg-white d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="btn-table-sort-account">
+                        Tất cả tài khoản
+                    </button>
+                    <ul class="dropdown-menu w-100 shadow-sm border-0" id="table-sort-select-account" style="max-height: 250px; overflow-y: auto;">
+                        <li selected><a class="dropdown-item account-item text-secondary py-2" href="#" data-value="">Tất cả tài khoản</a></li>
+                    </ul>
+                    <input type="hidden" id="table-sort-account" value="">
+                </div>
 
                 <div class="d-flex gap-2 ms-lg-2">
                     <button class="btn btn-filter px-3 py-2 d-flex align-items-center" type="button"
@@ -92,34 +125,51 @@
                         data-bs-target="#multi-add-transaction">
                         <i class="bi bi-plus-lg me-2"></i> Thêm nhiều giao dịch
                     </button>
+
+
                 </div>
             </div>
         </div>
 
         <div class="collapse" id="extraFilterCollapse">
             <div class="extra-filter-card d-flex flex-wrap align-items-center gap-3 mt-3">
-                <button class="btn date-picker-btn d-flex align-items-center rounded-3 px-3 py-2">
+                <!-- <button class="btn date-picker-btn d-flex align-items-center rounded-3 px-3 py-2">
                     <i class="bi bi-calendar3 me-2 text-secondary"></i>
                     <span class="me-2" style="font-size: 14px;">01/08/2025 - 31/08/2025</span>
                     <i class="bi bi-chevron-down ms-1 text-secondary" style="font-size: 12px;"></i>
-                </button>
+                </button> -->
 
-                <button class="btn date-picker-btn d-flex align-items-center rounded-3 px-3 py-2">
-                    <span class="me-2" style="font-size: 14px;">Tần suất</span>
-                    <i class="bi bi-chevron-down ms-1 text-secondary" style="font-size: 12px;"></i>
-                </button>
+                <div class="input-group" style="max-width: 250px;">
+                    <span class="input-group-text bg-white text-secondary pe-2 border-end-0" style="border-top-left-radius: 0.5rem; border-bottom-left-radius: 0.5rem;">
+                        <i class="bi bi-calendar3"></i>
+                    </span>
+                    <input type="text" class="form-control flatpickr-input active bg-white border-start-0 px-1 py-2" id="table-sort-date" placeholder="Chọn ngày" style="font-size: 14px; border-top-right-radius: 0.5rem; border-bottom-right-radius: 0.5rem; cursor: pointer;">
+                </div>
+
+                <div class="dropdown">
+                    <button class="btn date-picker-btn d-flex align-items-center rounded-3 px-3 py-2" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="me-2 text-truncate dropdown-text" style="font-size: 14px;">Tần suất</span>
+                        <i class="bi bi-chevron-down ms-1 text-secondary" style="font-size: 12px;"></i>
+                    </button>
+                    <ul class="dropdown-menu shadow-sm border-0">
+                        <li><button class="dropdown-item" type="button" value="">Tần suất</button></li>
+                        <li><button class="dropdown-item" type="button" value="one-time">Một lần</button></li>
+                        <li><button class="dropdown-item" type="button" value="monthly">Hàng tháng</button></li>
+                    </ul>
+                    <input type="hidden" id="table-sort-frequency" value="">
+                </div>
 
                 <div class="d-flex align-items-center gap-2">
                     <input type="number" class="form-control py-2" placeholder="Số tiền từ"
-                        style="width: 130px; font-size: 14px;">
+                        style="width: 130px; font-size: 14px;" id="table-sort-amount-min">
                     <span class="text-secondary">-</span>
                     <input type="number" class="form-control py-2" placeholder="Số tiền đến"
-                        style="width: 130px; font-size: 14px;">
+                        style="width: 130px; font-size: 14px;" id="table-sort-amount-max">
                 </div>
 
                 <button class="btn btn-primary d-flex align-items-center px-4 py-2 ms-lg-auto rounded-3"
-                    style="font-size: 14px;">
-                    Áp dụng
+                    style="font-size: 14px;" id="btn-reset-filters">
+                    Đặt lại tất cả
                 </button>
             </div>
         </div>
@@ -160,181 +210,6 @@
                     </tr>
                 </thead>
                 <tbody class="border-top-0" id="transaction-table-body">
-                    <tr>
-                        <td class="text-nowrap">
-                            <div class="text-dark fw-medium">17/08/2025</div>
-                            <div class="text-secondary" style="font-size: 12px;">15:30</div>
-                        </td>
-                        <td class="text-nowrap"><span class="text-warning fw-medium"><i class="bi bi-arrow-down"></i>
-                                Chi</span></td>
-                        <td class="text-nowrap"><span class="icon-circle bg-warning-subtle text-warning me-2"><i
-                                    class="bi bi-cup-hot-fill"></i></span> Ăn uống</td>
-                        <td>Trà sữa Tocotoco</td>
-                        <td class="text-nowrap"><span class="icon-circle bg-success-subtle text-success me-2"><i
-                                    class="bi bi-wallet2"></i></span> Ví Momo</td>
-                        <td class="text-danger fw-bold text-end text-nowrap">-25.000đ</td>
-                        <td class="text-nowrap"><span class="badge badge-custom bg-primary-subtle text-primary">Hàng
-                                ngày</span></td>
-                        <td class="text-end">
-                            <div class="dropdown">
-                                <button class="btn btn-sm text-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi bi-three-dots-vertical"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="bi bi-pencil me-2"></i> Chỉnh sửa
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item text-danger" href="#">
-                                            <i class="bi bi-trash me-2"></i> Xóa
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="text-nowrap">
-                            <div class="text-dark fw-medium">17/08/2025</div>
-                            <div class="text-secondary" style="font-size: 12px;">12:20</div>
-                        </td>
-                        <td class="text-nowrap"><span class="text-warning fw-medium"><i class="bi bi-arrow-down"></i>Chi</span></td>
-                        <td class="text-nowrap"><span class="icon-circle bg-warning-subtle text-warning me-2"><i class="bi bi-cup-hot-fill"></i></span> Ăn uống</td>
-                        <td>Bún bò</td>
-                        <td class="text-nowrap"><span class="icon-circle bg-success-subtle text-success me-2"><i class="bi bi-cash-stack"></i></span> Tiền mặt</td>
-                        <td class="text-danger fw-bold text-end text-nowrap">-35.000đ</td>
-                        <td class="text-nowrap"><span class="badge badge-custom bg-primary-subtle text-primary">Hàng ngày</span></td>
-                        <td class="text-end">
-                            <div class="dropdown">
-                                <button class="btn btn-sm text-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi bi-three-dots-vertical"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="bi bi-pencil me-2"></i> Chỉnh sửa
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item text-danger" href="#">
-                                            <i class="bi bi-trash me-2"></i> Xóa
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="text-nowrap">
-                            <div class="text-dark fw-medium">16/08/2025</div>
-                            <div class="text-secondary" style="font-size: 12px;">10:15</div>
-                        </td>
-                        <td class="text-nowrap"><span class="text-warning fw-medium"><i class="bi bi-arrow-down"></i>
-                                Chi</span></td>
-                        <td class="text-nowrap"><span class="icon-circle bg-primary-subtle text-primary me-2"><i
-                                    class="bi bi-book-fill"></i></span> Học tập</td>
-                        <td>Mua sách Toán cao cấp</td>
-                        <td class="text-nowrap"><span class="icon-circle bg-primary-subtle text-primary me-2"><i
-                                    class="bi bi-bank2"></i></span> Vietcombank</td>
-                        <td class="text-danger fw-bold text-end text-nowrap">-120.000đ</td>
-                        <td class="text-nowrap"><span class="badge badge-custom bg-primary-subtle text-primary">Hàng
-                                ngày</span></td>
-                        <td class="text-end">
-                            <div class="dropdown">
-                                <button class="btn btn-sm text-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi bi-three-dots-vertical"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="bi bi-pencil me-2"></i> Chỉnh sửa
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item text-danger" href="#">
-                                            <i class="bi bi-trash me-2"></i> Xóa
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="text-nowrap">
-                            <div class="text-dark fw-medium">16/08/2025</div>
-                            <div class="text-secondary" style="font-size: 12px;">07:45</div>
-                        </td>
-                        <td class="text-nowrap"><span class="text-warning fw-medium"><i class="bi bi-arrow-down"></i>
-                                Chi</span></td>
-                        <td class="text-nowrap"><span class="icon-circle bg-success-subtle text-success me-2"><i
-                                    class="bi bi-bus-front-fill"></i></span> Di chuyển</td>
-                        <td>Vé xe buýt</td>
-                        <td class="text-nowrap"><span class="icon-circle bg-success-subtle text-success me-2"><i
-                                    class="bi bi-wallet2"></i></span> Ví Momo</td>
-                        <td class="text-danger fw-bold text-end text-nowrap">-7.000đ</td>
-                        <td class="text-nowrap"><span class="badge badge-custom bg-primary-subtle text-primary">Hàng
-                                ngày</span></td>
-                        <td class="text-end">
-                            <div class="dropdown">
-                                <button class="btn btn-sm text-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi bi-three-dots-vertical"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="bi bi-pencil me-2"></i> Chỉnh sửa
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item text-danger" href="#">
-                                            <i class="bi bi-trash me-2"></i> Xóa
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="text-nowrap">
-                            <div class="text-dark fw-medium">15/08/2025</div>
-                            <div class="text-secondary" style="font-size: 12px;">19:45</div>
-                        </td>
-                        <td class="text-nowrap"><span class="text-info fw-medium"><i class="bi bi-arrow-up"></i>
-                                Thu</span></td>
-                        <td class="text-nowrap"><span class="icon-circle bg-success-subtle text-success me-2"><i
-                                    class="bi bi-piggy-bank-fill"></i></span> Thu nhập</td>
-                        <td>Tiền từ bố</td>
-                        <td class="text-nowrap"><span class="icon-circle bg-primary-subtle text-primary me-2"><i
-                                    class="bi bi-bank2"></i></span> Vietcombank</td>
-                        <td class="text-success fw-bold text-end text-nowrap">+500.000đ</td>
-                        <td class="text-nowrap"><span class="badge badge-custom bg-success-subtle text-success">Hàng
-                                tháng</span></td>
-                        <td class="text-end">
-                            <div class="dropdown">
-                                <button class="btn btn-sm text-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi bi-three-dots-vertical"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="bi bi-pencil me-2"></i> Chỉnh sửa
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item text-danger" href="#">
-                                            <i class="bi bi-trash me-2"></i> Xóa
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
         </div>
@@ -343,26 +218,15 @@
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-3 mb-4">
             <div class="mb-3 mb-md-0 d-none d-md-block" style="width: 120px;"></div>
             <nav>
-                <ul class="pagination pagination-sm mb-0">
-                    <li class="page-item"><a class="page-link text-secondary" href="#"><i
-                                class="bi bi-chevron-left"></i></a></li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link text-secondary" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link text-secondary" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link text-secondary" href="#">4</a></li>
-                    <li class="page-item"><a class="page-link text-secondary" href="#">5</a></li>
-                    <li class="page-item"><span class="page-link text-secondary border-0 bg-transparent">...</span></li>
-                    <li class="page-item"><a class="page-link text-secondary" href="#">9</a></li>
-                    <li class="page-item"><a class="page-link text-secondary" href="#"><i
-                                class="bi bi-chevron-right"></i></a></li>
+                <ul class="pagination pagination-sm mb-0" id="pagination-container">
                 </ul>
             </nav>
             <div class="d-flex align-items-center text-secondary mt-3 mt-md-0" style="font-size: 13px;">
                 <span class="me-2">Hiển thị</span>
-                <select class="form-select form-select-sm" style="width: auto; font-size: 13px;">
-                    <option selected>10 / trang</option>
-                    <option>20 / trang</option>
-                    <option>50 / trang</option>
+                <select class="form-select form-select-sm" style="width: auto; font-size: 13px;" id="items-per-page-select">
+                    <option value="10" selected>10 / trang</option>
+                    <option value="20">20 / trang</option>
+                    <option value="50">50 / trang</option>
                 </select>
             </div>
         </div>
@@ -408,14 +272,14 @@
                         <p class="mb-2">Danh mục <span class="text-danger">*</span></p>
                         <div class="d-flex gap-2 mb-3 has-validation">
                             <div class="w-100">
-                                <div class="dropdown w-100">
-                                    <button class="form-select text-secondary text-start w-100 bg-white d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="btn-trans-category">
-                                        Chọn danh mục
-                                    </button>
-                                    <ul class="dropdown-menu w-100 shadow-sm border-0" id="menu-trans-category" style="max-height: 250px; overflow-y: auto;">
-                                    </ul>
-                                    <input type="hidden" id="trans-category" value="">
-                                </div>
+                                    <div class="dropdown w-100">
+                                        <button class="form-select text-secondary text-start w-100 bg-white d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="btn-trans-category">
+                                            Chọn danh mục
+                                        </button>
+                                        <ul class="dropdown-menu w-100 shadow-sm border-0" id="menu-trans-category" style="max-height: 250px; overflow-y: auto;">
+                                        </ul>
+                                        <input type="hidden" id="trans-category" value="">
+                                    </div>
                                 <div class="text-danger mt-1 d-none" style="font-size: 0.875em;" id="error-trans-category">Vui lòng chọn danh mục.</div>
                             </div>
                             <button
@@ -449,7 +313,7 @@
                             <div class="w-100">
                                 <div class="dropdown w-100">
                                     <button class="form-select text-secondary text-start w-100 bg-white d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="btn-trans-account">
-                                        Chọn tài khoản
+                                       Chọn tài  khoản
                                     </button>
                                     <ul class="dropdown-menu w-100 shadow-sm border-0" id="menu-trans-account" style="max-height: 250px; overflow-y: auto;">
                                     </ul>
@@ -692,12 +556,12 @@
                     </button>
 
 
-                    <div id="drop-zone" class="mt-4 p-4 text-center border border-2 rounded-3 bg-light" style="border-style: dashed !important; border-color: #dee2e6 !important; cursor: pointer;" onclick="document.getElementById('file-upload').click()">
+                    <!-- <div id="drop-zone" class="mt-4 p-4 text-center border border-2 rounded-3 bg-light" style="border-style: dashed !important; border-color: #dee2e6 !important; cursor: pointer;" onclick="document.getElementById('file-upload').click()">
                         <i class="bi bi-cloud-arrow-up text-primary mb-2 d-inline-block" style="font-size: 2.5rem;"></i>
                         <p class="mb-1 fw-medium text-dark">Kéo thả file vào đây hoặc <span class="text-primary">chọn file</span> trong máy</p>
                         <p class="text-secondary mb-0" style="font-size: 13px;">Hỗ trợ định dạng .jpg, .png, .pdf (Tối đa 5MB/1 file)</p>
                         <input type="file" id="file-upload" class="d-none" accept=".jpg, .jpeg, .png, .pdf">
-                    </div>
+                    </div> -->
                 </div>
                 
                 <div class="modal-footer border-0 pt-0">
@@ -850,6 +714,111 @@
 
         </div>
     
+    </div>
+
+    <div class="modal fade" id="edit-single-add-transaction" role="dialog"
+        aria-labelledby="editSingleAddTransactionLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content shadow border-0">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="editSingleAddTransactionLabel">Thêm giao dịch</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form">
+                        <div class="btn-group w-100 bg-light rounded p-1" role="group">
+                            <input type="radio" class="btn-check" name="transactionType" id="edit-expense" autocomplete="off"
+                                checked>
+                            <label class="btn btn-type-toggle" for="edit-expense"><i class="bi bi-arrow-down-short"></i>Chi
+                                tiêu</label>
+
+                            <input type="radio" class="btn-check" name="transactionType" id="edit-income" autocomplete="off">
+                            <label class="btn btn-type-toggle" for="edit-income">
+                                <i class="bi bi-arrow-up-short text-success"></i>Thu nhập
+                            </label>
+                        </div>
+
+                        <p>Số tiền<span class="text-danger">*</span></p>
+                        <div class="input-group mb-3 has-validation">
+                            <input type="text" class="form-control border-end-0" id="edit-trans-amount" placeholder="Nhập số tiền">
+                            <span class="input-group-text bg-white border-start-0 fw-bold" id="edit-vnd-icon">đ</span>
+                            <div class="invalid-feedback">Vui lòng nhập số tiền hợp lệ.</div>
+                        </div>
+
+                        <div class="d-flex gap-2 mb-3">
+                            <button class="btn btn-quick-amount bg-white border w-100 px-1" id="edit-btn-10k">+10k</button>
+                            <button class="btn btn-quick-amount bg-white border w-100 px-1" id="edit-btn-20k">+20k</button>
+                            <button class="btn btn-quick-amount bg-white border w-100 px-1" id="edit-btn-50k">+50k</button>
+                            <button class="btn btn-quick-amount bg-white border w-100 px-1" id="edit-btn-100k">+100k</button>
+                        </div>
+
+                        <p class="mb-2">Danh mục <span class="text-danger">*</span></p>
+                        <div class="d-flex gap-2 mb-3 has-validation">
+                            <div class="w-100">
+                                    <div class="dropdown w-100">
+                                        <button class="form-select text-secondary text-start w-100 bg-white d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="edit-btn-trans-category">
+                                            Chọn danh mục
+                                        </button>
+                                        <ul class="dropdown-menu w-100 shadow-sm border-0" id="edit-menu-trans-category" style="max-height: 250px; overflow-y: auto;">
+                                        </ul>
+                                        <input type="hidden" id="edit-trans-category" value="">
+                                    </div>
+                                <div class="text-danger mt-1 d-none" style="font-size: 0.875em;" id="edit-error-trans-category">Vui lòng chọn danh mục.</div>
+                            </div>
+                            <button
+                                class="btn btn-quick-amount bg-white border d-flex align-items-center justify-content-center px-3"
+                                type="button" data-bs-toggle="modal" data-bs-target="#add-category">
+                                <i class="bi bi-plus-lg"></i>
+                            </button>
+                        </div>
+
+                        <div class="row d-flex gap-2 mb-3">
+                            <div class="col">
+                                <p class="mb-2">Ngày giao dịch <span class="text-danger">*</span></p>
+                                <div class="input-group has-validation">
+                                    <span class="input-group-text bg-white border-end-0 text-secondary"><i class="bi bi-calendar3" id="edit-trans-date-calen-icon"></i></span>
+                                    <input type="text" class="form-control date-picker-input bg-white border-start-0" id="edit-trans-date" placeholder="dd/mm/yyyy HH:mm">
+                                    <div class="invalid-feedback">Vui lòng chọn ngày giao dịch.</div>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <p class="mb-2">Tần suất</p>
+                                <select class="form-select text-secondary" id="edit-trans-frequency">
+                                    <option value="one-time" selected>Một lần</option>
+                                    <option value="monthly">Hàng tháng</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <p class="mb-2">Tài Khoản</p>
+                        <div class="d-flex gap-2 mb-3 has-validation">
+                            <div class="w-100">
+                                <div class="dropdown w-100">
+                                    <button class="form-select text-secondary text-start w-100 bg-white d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="edit-btn-trans-account">
+                                       Chọn tài  khoản
+                                    </button>
+                                    <ul class="dropdown-menu w-100 shadow-sm border-0" id="edit-menu-trans-account" style="max-height: 250px; overflow-y: auto;">
+                                    </ul>
+                                    <input type="hidden" id="edit-trans-account" value="">
+                                </div>
+                            </div>
+                            <button
+                                class="btn btn-quick-amount bg-white border d-flex align-items-center justify-content-center px-3"
+                                type="button" data-bs-toggle="modal" data-bs-target="#add-account">
+                                <i class="bi bi-plus-lg"></i>
+                            </button>
+                        </div>
+                        <p class="mb-2">Mô tả</p>
+                        <textarea class="form-control mb-3" id="edit-trans-detail" placeholder="Nhập mô tả" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-primary" id="edit-btn-save-transaction">Lưu</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="js/general.js"></script>

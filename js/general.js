@@ -59,39 +59,47 @@ document.addEventListener('input', function(e) {
 document.addEventListener('click', function(e) {
     const dropdownItem = e.target.closest('.dropdown-item');
     if (dropdownItem) {
+        if (dropdownItem.classList.contains('edit-transaction-btn') || dropdownItem.classList.contains('delete-transaction-btn')) {
+            return;
+        }
         const dropdownMenu = dropdownItem.closest('.dropdown-menu');
         if (dropdownMenu) {
             const dropdown = dropdownMenu.closest('.dropdown');
             if (dropdown) {
                 const button = dropdown.querySelector('[data-bs-toggle="dropdown"]');
                 if (button) {
-                    if (dropdownItem.value === 'expense' || dropdownItem.value === 'income') {
+                    if (dropdownItem.value === 'expense' || dropdownItem.value === 'income' || dropdownItem.value === 'all-type') {
                         e.preventDefault();
-                        const isIncome = dropdownItem.value === 'income';
-                        if (isIncome) {
+                        const isIncome = dropdownItem.value;
+                        if (isIncome === 'income') {
                             button.classList.remove('text-danger');
                             button.classList.add('text-success');
                             button.innerHTML = `<i class="bi bi-arrow-up me-1"></i> Thu`;
-                        } else {
+                        } else if (isIncome === 'expense') {
                             button.classList.remove('text-success');
                             button.classList.add('text-danger');
                             button.innerHTML = `<i class="bi bi-arrow-down me-1"></i> Chi`;
+                        } else{
+                            button.classList.remove('text-success', 'text-danger');
+                            button.innerHTML = `Tất cả <i class="bi bi-chevron-down ms-1"></i>`;
                         }
                         const hiddenInput = dropdown.querySelector('input[type="hidden"]');
                         if (hiddenInput) {
                             hiddenInput.value = dropdownItem.value;
-                            if (hiddenInput.classList.contains('multi-add-trans-type') && typeof updateMultiAddTotals === 'function') {
+                            if (hiddenInput.classList.contains('-type') && typeof updateMultiAddTotals === 'function') {
                                 updateMultiAddTotals();
                             }
                         }
 
-                    } else if (dropdownItem.value === 'one-time' || dropdownItem.value === 'monthly') {
+                    } else if (dropdownItem.value === 'one-time' || dropdownItem.value === 'monthly' || (dropdownItem.value === '' && !dropdownItem.classList.contains('category-item') && !dropdownItem.classList.contains('account-item'))) {
                         e.preventDefault();
                         const textSpan = button.querySelector('.dropdown-text');
+                        const textToSet = dropdownItem.value === '' ? 'Chọn tần suất' : dropdownItem.textContent.trim();
+                        
                         if (textSpan) {
-                            textSpan.textContent = dropdownItem.textContent.trim();
+                            textSpan.textContent = textToSet;
                         } else {
-                            button.innerHTML = `<span class="text-truncate dropdown-text">${dropdownItem.textContent.trim()}</span><i class="bi bi-chevron-down text-secondary" style="font-size: 10px;"></i>`;
+                            button.innerHTML = `<span class="text-truncate dropdown-text">${textToSet}</span><i class="bi bi-chevron-down text-secondary" style="font-size: 10px;"></i>`;
                         }
 
                         const hiddenInput = dropdown.querySelector('input[type="hidden"]');
@@ -104,7 +112,7 @@ document.addEventListener('click', function(e) {
                         const val = dropdownItem.getAttribute('data-value');
                         
                         if (val === '') {
-                            button.innerHTML = dropdownItem.classList.contains('category-item') ? 'Danh mục' : 'Chọn tài khoản';
+                            button.innerHTML = dropdownItem.classList.contains('category-item') ? 'Chọn danh mục' : 'Chọn tài khoản';
                             button.classList.add('text-secondary');
                         } else {
                             button.innerHTML = dropdownItem.innerHTML;
@@ -116,8 +124,16 @@ document.addEventListener('click', function(e) {
                             hiddenInput.value = val;
                         }
                     }
+                    
+                    const updatedHiddenInput = dropdown.querySelector('input[type="hidden"]');
+                    if (updatedHiddenInput && (updatedHiddenInput.id.startsWith('table-sort') || updatedHiddenInput.classList.contains('table-sort-type'))) {
+                        if (typeof renderTable === 'function') {
+                            renderTable();
+                        }
+                    }
                 }
             }
         }
     }
 });
+

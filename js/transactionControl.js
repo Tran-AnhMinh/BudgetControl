@@ -18,4 +18,21 @@ document.addEventListener('DOMContentLoaded', function () {
     updateCategorySelect();
     updateAccountSelect();
     renderTable();
+
+    const dateFilter = document.getElementById('table-sort-date');
+    if (dateFilter) {
+        flatpickr(dateFilter, {
+            mode: "range",
+            dateFormat: "d/m/Y",
+            placeholder: "Chọn ngày",
+            locale: {
+                rangeSeparator: " - "
+            },
+            onChange: function(selectedDates, dateStr, instance) {
+                if (typeof renderTable === 'function') {
+                    renderTable();
+                }
+            }
+        });
+    }
 });

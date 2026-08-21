@@ -78,6 +78,7 @@
         }
     }
 
+function initAddCategories() {
     const btnSaveCategory = document.getElementById('btn-save-category');
     if (btnSaveCategory) {
         btnSaveCategory.addEventListener('click', function () {
@@ -159,3 +160,5 @@
             }
         });
     });
+
+}

@@ -299,96 +299,97 @@ transactionTableBody.addEventListener('click', function(e) {
     }
 });
 
-const saveEditBtn = document.getElementById('edit-btn-save-transaction');
-if (saveEditBtn) {
-    saveEditBtn.addEventListener('click', function() {
-        const index = parseInt(this.getAttribute('data-index'), 10);
-        
-        const type = document.getElementById('edit-expense').checked ? 'expense' : 'income';
-        const amountStr = document.getElementById('edit-trans-amount').value.replace(/\D/g, '');
-        const amount = parseInt(amountStr, 10) || 0;
-        const category = document.getElementById('edit-trans-category').value;
-        const dateInput = document.getElementById('edit-trans-date');
-        const time = dateInput._flatpickr && dateInput._flatpickr.selectedDates[0] ? dateInput._flatpickr.selectedDates[0] : new Date();
-        const frequency = document.getElementById('edit-trans-frequency').value === 'monthly';
-        const account = document.getElementById('edit-trans-account').value;
-        const detail = document.getElementById('edit-trans-detail').value;
+function initTransactionTableModals() {
+    const saveEditBtn = document.getElementById('edit-btn-save-transaction');
+    if (saveEditBtn) {
+        saveEditBtn.addEventListener('click', function() {
+            const index = parseInt(this.getAttribute('data-index'), 10);
+            
+            const type = document.getElementById('edit-expense').checked ? 'expense' : 'income';
+            const amountStr = document.getElementById('edit-trans-amount').value.replace(/\D/g, '');
+            const amount = parseInt(amountStr, 10) || 0;
+            const category = document.getElementById('edit-trans-category').value;
+            const dateInput = document.getElementById('edit-trans-date');
+            const time = dateInput._flatpickr && dateInput._flatpickr.selectedDates[0] ? dateInput._flatpickr.selectedDates[0] : new Date();
+            const frequency = document.getElementById('edit-trans-frequency').value === 'monthly';
+            const account = document.getElementById('edit-trans-account').value;
+            const detail = document.getElementById('edit-trans-detail').value;
 
-        let isValid = true;
-        if (!amount || amount <= 0) {
-            document.getElementById('edit-trans-amount').classList.add('is-invalid');
-            isValid = false;
-        } else {
-            document.getElementById('edit-trans-amount').classList.remove('is-invalid');
-        }
+            let isValid = true;
+            if (!amount || amount <= 0) {
+                document.getElementById('edit-trans-amount').classList.add('is-invalid');
+                isValid = false;
+            } else {
+                document.getElementById('edit-trans-amount').classList.remove('is-invalid');
+            }
 
-        if (!category) {
-            document.getElementById('edit-error-trans-category').classList.remove('d-none');
-            isValid = false;
-        } else {
-            document.getElementById('edit-error-trans-category').classList.add('d-none');
-        }
+            if (!category) {
+                document.getElementById('edit-error-trans-category').classList.remove('d-none');
+                isValid = false;
+            } else {
+                document.getElementById('edit-error-trans-category').classList.add('d-none');
+            }
 
-        if (!dateInput.value) {
-            dateInput.classList.add('is-invalid');
-            isValid = false;
-        } else {
-            dateInput.classList.remove('is-invalid');
-        }
+            if (!dateInput.value) {
+                dateInput.classList.add('is-invalid');
+                isValid = false;
+            } else {
+                dateInput.classList.remove('is-invalid');
+            }
 
-        if (!isValid) return;
+            if (!isValid) return;
 
-        transactions[index] = {
-            type,
-            amount,
-            category,
-            time: time.toISOString(),
-            monthly: frequency,
-            account,
-            detail
-        };
+            transactions[index] = {
+                type,
+                amount,
+                category,
+                time: time.toISOString(),
+                monthly: frequency,
+                account,
+                detail
+            };
 
-        localStorage.setItem('transactions', JSON.stringify(transactions));
-        
-        const modalEl = document.getElementById('edit-single-add-transaction');
-        const modal = bootstrap.Modal.getInstance(modalEl);
-        if (modal) modal.hide();
+            localStorage.setItem('transactions', JSON.stringify(transactions));
+            
+            const modalEl = document.getElementById('edit-single-add-transaction');
+            const modal = bootstrap.Modal.getInstance(modalEl);
+            if (modal) modal.hide();
 
-        renderTable();
-        
-        if (typeof showToast === 'function') {
-            showToast('Cập nhật giao dịch thành công!');
-        }
-    });
-}
-
-const editAmountInput = document.getElementById('edit-trans-amount');
-if (editAmountInput) {
-    editAmountInput.addEventListener('input', function () {
-        let value = this.value.replace(/\D/g, '');
-        if (value !== '') {
-            value = parseInt(value, 10).toLocaleString('vi-VN');
-            this.value = value;
-        } else {
-            this.value = '';
-        }
-    });
-}
-
-['10k', '20k', '50k', '100k'].forEach(val => {
-    const btn = document.getElementById(`edit-btn-${val}`);
-    if (btn) {
-        btn.addEventListener('click', () => {
-            const amountInput = document.getElementById('edit-trans-amount');
-            if(amountInput) {
-                let currentAmount = parseFloat(amountInput.value.replace(/\D/g, '')) || 0;
-                currentAmount += parseInt(val) * 1000;
-                amountInput.value = currentAmount.toLocaleString('vi-VN');
+            renderTable();
+            
+            if (typeof showToast === 'function') {
+                showToast('Cập nhật giao dịch thành công!');
             }
         });
     }
-});
 
+    const editAmountInput = document.getElementById('edit-trans-amount');
+    if (editAmountInput) {
+        editAmountInput.addEventListener('input', function () {
+            let value = this.value.replace(/\D/g, '');
+            if (value !== '') {
+                value = parseInt(value, 10).toLocaleString('vi-VN');
+                this.value = value;
+            } else {
+                this.value = '';
+            }
+        });
+    }
+
+    ['10k', '20k', '50k', '100k'].forEach(val => {
+        const btn = document.getElementById(`edit-btn-${val}`);
+        if (btn) {
+            btn.addEventListener('click', () => {
+                const amountInput = document.getElementById('edit-trans-amount');
+                if(amountInput) {
+                    let currentAmount = parseFloat(amountInput.value.replace(/\D/g, '')) || 0;
+                    currentAmount += parseInt(val) * 1000;
+                    amountInput.value = currentAmount.toLocaleString('vi-VN');
+                }
+            });
+        }
+    });
+}
 const filterAmountMin = document.getElementById('table-sort-amount-min');
 if (filterAmountMin) {
     filterAmountMin.addEventListener('input', renderTable);

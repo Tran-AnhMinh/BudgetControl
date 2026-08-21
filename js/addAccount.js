@@ -97,52 +97,55 @@ function updateAccountSelect() {
         editAccMenu.innerHTML = accountHtml;
     }
 }
-const btnSaveAccount = document.getElementById('btn-save-account');
-if (btnSaveAccount) {
-    btnSaveAccount.addEventListener('click', function () {
-        let isValid = true;
+function initAddAccount() {
+    const btnSaveAccount = document.getElementById('btn-save-account');
+    if (btnSaveAccount) {
+        btnSaveAccount.addEventListener('click', function () {
+            let isValid = true;
 
-        const name = document.getElementById('acc-name');
-        if (!name.value.trim()) {
-            name.classList.add('is-invalid');
-            isValid = false;
-        } else {
-            name.classList.remove('is-invalid');
-        }
-
-        if (isValid) {
-            const accName = document.getElementById('acc-name').value;
-            const iconRadio = document.querySelector('input[name="accountIcon"]:checked');
-            const accIcon = iconRadio ? iconRadio.id.replace('acc-icon-', '') : 'wallet2';
-            const colorRadio = document.querySelector('input[name="accountColor"]:checked');
-            const accColor = colorRadio ? colorRadio.id.replace('acc-color-', '') : 'secondary';
-
-            const newCategory = {
-                name: accName,
-                icon: accIcon,
-                color: accColor
-            };
-            let cagetories = JSON.parse(localStorage.getItem('accounts')) || [];
-            cagetories.push(newCategory);
-            localStorage.setItem('accounts', JSON.stringify(cagetories));
-            updateAccountSelect();
-
-            showToast('Thêm tài khoản thành công!');
-
-            const addAccountModal = bootstrap.Modal.getInstance(document.getElementById('add-account'));
-            if (addAccountModal) {
-                addAccountModal.hide();
+            const name = document.getElementById('acc-name');
+            if (!name.value.trim()) {
+                name.classList.add('is-invalid');
+                isValid = false;
+            } else {
+                name.classList.remove('is-invalid');
             }
 
-            const singleAddModal = new bootstrap.Modal(document.getElementById('single-add-transaction'));
-            singleAddModal.show();
+            if (isValid) {
+                const accName = document.getElementById('acc-name').value;
+                const iconRadio = document.querySelector('input[name="accountIcon"]:checked');
+                const accIcon = iconRadio ? iconRadio.id.replace('acc-icon-', '') : 'wallet2';
+                const colorRadio = document.querySelector('input[name="accountColor"]:checked');
+                const accColor = colorRadio ? colorRadio.id.replace('acc-color-', '') : 'secondary';
 
-            name.value = '';
-            const accIconElem = document.getElementById('acc-icon');
-            if (accIconElem) accIconElem.value = '';
-            const accColorElem = document.getElementById('acc-color');
-            if (accColorElem) accColorElem.value = '';
-        }
-    });
+                const newCategory = {
+                    name: accName,
+                    icon: accIcon,
+                    color: accColor
+                };
+                let cagetories = JSON.parse(localStorage.getItem('accounts')) || [];
+                cagetories.push(newCategory);
+                localStorage.setItem('accounts', JSON.stringify(cagetories));
+                updateAccountSelect();
+
+                showToast('Thêm tài khoản thành công!');
+
+                const addAccountModal = bootstrap.Modal.getInstance(document.getElementById('add-account'));
+                if (addAccountModal) {
+                    addAccountModal.hide();
+                }
+
+                const singleAddModal = new bootstrap.Modal(document.getElementById('single-add-transaction'));
+                singleAddModal.show();
+
+                name.value = '';
+                const accIconElem = document.getElementById('acc-icon');
+                if (accIconElem) accIconElem.value = '';
+                const accColorElem = document.getElementById('acc-color');
+                if (accColorElem) accColorElem.value = '';
+            }
+        });
+    }
+
+
 }
-

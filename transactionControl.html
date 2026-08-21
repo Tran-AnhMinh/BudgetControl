@@ -35,11 +35,11 @@
                     <i class="bi bi-house me-3"></i>
                     <span class="hide-on-collapse">Dashboard</span>
                 </a>
-                <a href="#" class="sidebar-link active text-decoration-none p-3">
+                <a href="transactionControl.html" class="sidebar-link active text-decoration-none p-3">
                     <i class="bi bi-wallet me-3"></i>
                     <span class="hide-on-collapse">Chi tiêu</span>
                 </a>
-                <a href="#" class="sidebar-link text-decoration-none p-3">
+                <a href="cagetoriesControl.html" class="sidebar-link text-decoration-none p-3">
                     <i class="bi bi-tags me-3"></i>
                     <span class="hide-on-collapse">Danh mục</span>
                 </a>
@@ -50,228 +50,263 @@
                 </a>
             </div>
         </nav>
-        
+
         <div class="main-content flex-grow-1">
             <div class="container-fluid p-4 flex" style="max-width: 1400px; margin: 0 auto;">
                 <div class="d-flex justify-content-between align-items-center mb-2">
-            <div>
-                <h1 class="header-title mb-1">Giao dịch</h1>
-                <p class="text-muted-custom mb-0">Quản lý tất cả thu chi của bạn</p>
-            </div>
+                    <div>
+                        <h1 class="header-title mb-1">Giao dịch</h1>
+                        <p class="text-muted-custom mb-0">Quản lý tất cả thu chi của bạn</p>
+                    </div>
 
-            <div class="d-flex align-items-center">
-                <!-- <button class="btn date-picker-btn me-4 d-flex align-items-center rounded-3 px-3 py-2">
+                    <div class="d-flex align-items-center">
+                        <!-- <button class="btn date-picker-btn me-4 d-flex align-items-center rounded-3 px-3 py-2">
                     <i class="bi bi-calendar3 me-2 text-secondary"></i>
                     <span class="me-2" style="font-size: 14px;">01/08/2025 - 31/08/2025</span>
                     <i class="bi bi-chevron-down ms-1 text-secondary" style="font-size: 12px;"></i>
                 </button> -->
 
-                <!-- <div class="notification-bell d-flex align-items-center">
+                        <!-- <div class="notification-bell d-flex align-items-center">
                     <i class="bi bi-bell"></i>
                     <span class="notification-badge">3</span>
                 </div> -->
 
-                <div class="dropdown d-flex align-items-center ms-2" style="cursor: pointer;" data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                    <div class="avatar-circle me-2">M</div>
-                    <div class="user-info d-none d-md-block pe-1">
-                        <p class="user-name">Minh</p>
-                        <p class="user-role">Sinh viên năm 2</p>
+                        <div class="dropdown d-flex align-items-center ms-2" style="cursor: pointer;"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <div class="avatar-circle me-2">M</div>
+                            <div class="user-info d-none d-md-block pe-1">
+                                <p class="user-name">Minh</p>
+                                <p class="user-role">Sinh viên năm 2</p>
+                            </div>
+                            <i class="bi bi-chevron-down text-secondary ms-1 d-none d-md-block"
+                                style="font-size: 12px;"></i>
+                        </div>
+                        <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+                            <li><a class="dropdown-item" href="#">Thông tin cá nhân</a></li>
+                            <li><a class="dropdown-item text-danger" href="#">Đăng xuất</a></li>
+                        </ul>
                     </div>
-                    <i class="bi bi-chevron-down text-secondary ms-1 d-none d-md-block" style="font-size: 12px;"></i>
-                </div>
-                <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
-                    <li><a class="dropdown-item" href="#">Thông tin cá nhân</a></li>
-                    <li><a class="dropdown-item text-danger" href="#">Đăng xuất</a></li>
-                </ul>
-            </div>
-        </div>
-
-
-        <div class="filter-card d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3">
-            <div class="position-relative flex-grow-1" style="max-width: 380px;">
-                <i class="bi bi-search search-icon"></i>
-                <input type="text" class="form-control search-input py-2"
-                    placeholder="Tìm theo mô tả">
-            </div>
-
-            <div class="d-flex gap-2 flex-wrap flex-grow-1 justify-content-lg-end">
-                <div class="dropdown">
-                    <button class="form-select text-secondary text-start w-100 bg-white d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="btn-table-sort-category">
-                        Tất cả danh mục
-                    </button>
-                    <ul class="dropdown-menu w-100 shadow-sm border-0" id="table-sort-select-category" style="max-height: 250px; overflow-y: auto;">
-                        
-                    </ul>
-                    <input type="hidden" id="table-sort-category" value="">
                 </div>
 
 
-                <div class="dropdown h-100">
-                    <button class="btn border text-secondary bg-white d-flex justify-content-center align-items-center w-100 h-100"  data-bs-toggle="dropdown" aria-expanded="false">
-                        Tất cả loại<i class="bi bi-chevron-down ms-1"></i>
-                    </button>
-                    <ul class="dropdown-menu shadow-sm border-0">
-                        <li selected>
-                            <button class="dropdown-item d-flex align-items-center text-secondary" type="button" value="all-type">
-                                Tất cả
+                <div
+                    class="filter-card d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3">
+                        <div class="position-relative flex-grow-1" style="max-width: 380px;">
+                            <i class="bi bi-search search-icon"></i>
+                            <input type="text" class="form-control search-input py-2" placeholder="Tìm theo mô tả">
+                        </div>
+
+                    <div class="d-flex gap-2 flex-wrap flex-grow-1 justify-content-lg-end">
+                        <div class="dropdown">
+                            <button
+                                class="form-select text-secondary text-start w-100 bg-white d-flex align-items-center"
+                                type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                id="btn-table-sort-category">
+                                Tất cả danh mục
                             </button>
-                        </li>
-                        <li>
-                            <button class="dropdown-item d-flex align-items-center" type="button" value="expense">
-                                <i class="bi bi-arrow-down me-2 text-danger"></i> Chi
+                            <ul class="dropdown-menu w-100 shadow-sm border-0" id="table-sort-select-category"
+                                style="max-height: 250px; overflow-y: auto;">
+
+                            </ul>
+                            <input type="hidden" id="table-sort-category" value="">
+                        </div>
+
+
+                        <div class="dropdown h-100">
+                            <button
+                                class="btn border text-secondary bg-white d-flex justify-content-center align-items-center w-100 h-100"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Tất cả loại<i class="bi bi-chevron-down ms-1"></i>
                             </button>
-                        </li>
-                        <li>
-                            <button class="dropdown-item d-flex align-items-center" type="button" value="income">
-                                <i class="bi bi-arrow-up me-2 text-success"></i> Thu
+                            <ul class="dropdown-menu shadow-sm border-0">
+                                <li selected>
+                                    <button class="dropdown-item d-flex align-items-center text-secondary" type="button"
+                                        value="all-type">
+                                        Tất cả
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item d-flex align-items-center" type="button"
+                                        value="expense">
+                                        <i class="bi bi-arrow-down me-2 text-danger"></i> Chi
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item d-flex align-items-center" type="button"
+                                        value="income">
+                                        <i class="bi bi-arrow-up me-2 text-success"></i> Thu
+                                    </button>
+                                </li>
+                            </ul>
+                            <input type="hidden" value="all-type" class="table-sort-type">
+                        </div>
+
+
+                        <div class="dropdown">
+                            <button
+                                class="form-select text-secondary text-start w-100 bg-white d-flex align-items-center"
+                                type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                id="btn-table-sort-account">
+                                Tất cả tài khoản
                             </button>
-                        </li>
-                    </ul>
-                    <input type="hidden" value="all-type" class="table-sort-type">
+                            <ul class="dropdown-menu w-100 shadow-sm border-0" id="table-sort-select-account"
+                                style="max-height: 250px; overflow-y: auto;">
+                                <li selected><a class="dropdown-item account-item text-secondary py-2" href="#"
+                                        data-value="">Tất cả tài khoản</a></li>
+                            </ul>
+                            <input type="hidden" id="table-sort-account" value="">
+                        </div>
+
+                        <div class="d-flex gap-2 ms-lg-2">
+                            <button class="btn btn-filter px-3 py-2 d-flex align-items-center" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#extraFilterCollapse" aria-expanded="false"
+                                aria-controls="extraFilterCollapse">
+                                <i class="bi bi-funnel me-2"></i> Bộ lọc
+                            </button>
+                            <button type="button" class="btn btn-export px-3 py-2 d-flex align-items-center"
+                                id="btn-export-excel">
+                                <i class="bi bi-download me-2"></i> Xuất Excel
+                            </button>
+                            <button type="button" class="btn btn-add px-3 py-2 d-flex align-items-center"
+                                data-bs-toggle="modal" data-bs-target="#single-add-transaction"
+                                id="btn-single-add-trans-open">
+                                <i class="bi bi-plus-lg me-2"></i> Thêm giao dịch
+                            </button>
+
+                            <button class="btn btn-add px-3 py-2 d-flex align-items-center" data-bs-toggle="modal"
+                                data-bs-target="#multi-add-transaction">
+                                <i class="bi bi-plus-lg me-2"></i> Thêm nhiều giao dịch
+                            </button>
+
+
+                        </div>
+                    </div>
                 </div>
 
-
-                <div class="dropdown">
-                    <button class="form-select text-secondary text-start w-100 bg-white d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="btn-table-sort-account">
-                        Tất cả tài khoản
-                    </button>
-                    <ul class="dropdown-menu w-100 shadow-sm border-0" id="table-sort-select-account" style="max-height: 250px; overflow-y: auto;">
-                        <li selected><a class="dropdown-item account-item text-secondary py-2" href="#" data-value="">Tất cả tài khoản</a></li>
-                    </ul>
-                    <input type="hidden" id="table-sort-account" value="">
-                </div>
-
-                <div class="d-flex gap-2 ms-lg-2">
-                    <button class="btn btn-filter px-3 py-2 d-flex align-items-center" type="button"
-                        data-bs-toggle="collapse" data-bs-target="#extraFilterCollapse" aria-expanded="false"
-                        aria-controls="extraFilterCollapse">
-                        <i class="bi bi-funnel me-2"></i> Bộ lọc
-                    </button>
-                    <button type="button" class="btn btn-export px-3 py-2 d-flex align-items-center" id="btn-export-excel">   
-                        <i class="bi bi-download me-2"></i> Xuất Excel
-                    </button>
-                    <button type="button" class="btn btn-add px-3 py-2 d-flex align-items-center" data-bs-toggle="modal"
-                        data-bs-target="#single-add-transaction" id="btn-single-add-trans-open">
-                        <i class="bi bi-plus-lg me-2"></i> Thêm giao dịch
-                    </button>
-
-                    <button class="btn btn-add px-3 py-2 d-flex align-items-center" data-bs-toggle="modal"
-                        data-bs-target="#multi-add-transaction">
-                        <i class="bi bi-plus-lg me-2"></i> Thêm nhiều giao dịch
-                    </button>
-
-
-                </div>
-            </div>
-        </div>
-
-        <div class="collapse" id="extraFilterCollapse">
-            <div class="extra-filter-card d-flex flex-wrap align-items-center gap-3 mt-3">
-                <!-- <button class="btn date-picker-btn d-flex align-items-center rounded-3 px-3 py-2">
+                <div class="collapse" id="extraFilterCollapse">
+                    <div class="extra-filter-card d-flex flex-wrap align-items-center gap-3 mt-3">
+                        <!-- <button class="btn date-picker-btn d-flex align-items-center rounded-3 px-3 py-2">
                     <i class="bi bi-calendar3 me-2 text-secondary"></i>
                     <span class="me-2" style="font-size: 14px;">01/08/2025 - 31/08/2025</span>
                     <i class="bi bi-chevron-down ms-1 text-secondary" style="font-size: 12px;"></i>
                 </button> -->
 
-                <div class="input-group" style="max-width: 250px;">
-                    <span class="input-group-text bg-white text-secondary pe-2 border-end-0" style="border-top-left-radius: 0.5rem; border-bottom-left-radius: 0.5rem;">
-                        <i class="bi bi-calendar3"></i>
-                    </span>
-                    <input type="text" class="form-control flatpickr-input active bg-white border-start-0 px-1 py-2" id="table-sort-date" placeholder="Chọn ngày" style="font-size: 14px; border-top-right-radius: 0.5rem; border-bottom-right-radius: 0.5rem; cursor: pointer;">
+                        <div class="input-group" style="max-width: 250px;">
+                            <span class="input-group-text bg-white text-secondary pe-2 border-end-0"
+                                style="border-top-left-radius: 0.5rem; border-bottom-left-radius: 0.5rem;">
+                                <i class="bi bi-calendar3"></i>
+                            </span>
+                            <input type="text"
+                                class="form-control flatpickr-input active bg-white border-start-0 px-1 py-2"
+                                id="table-sort-date" placeholder="Chọn ngày"
+                                style="font-size: 14px; border-top-right-radius: 0.5rem; border-bottom-right-radius: 0.5rem; cursor: pointer;">
+                        </div>
+
+                        <div class="dropdown">
+                            <button class="btn date-picker-btn d-flex align-items-center rounded-3 px-3 py-2"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="me-2 text-truncate dropdown-text" style="font-size: 14px;">Tần suất</span>
+                                <i class="bi bi-chevron-down ms-1 text-secondary" style="font-size: 12px;"></i>
+                            </button>
+                            <ul class="dropdown-menu shadow-sm border-0">
+                                <li><button class="dropdown-item" type="button" value="">Tần suất</button></li>
+                                <li><button class="dropdown-item" type="button" value="one-time">Một lần</button></li>
+                                <li><button class="dropdown-item" type="button" value="monthly">Hàng tháng</button></li>
+                            </ul>
+                            <input type="hidden" id="table-sort-frequency" value="">
+                        </div>
+
+                        <div class="d-flex align-items-center gap-2">
+                            <input type="number" class="form-control py-2" placeholder="Số tiền từ"
+                                style="width: 130px; font-size: 14px;" id="table-sort-amount-min">
+                            <span class="text-secondary">-</span>
+                            <input type="number" class="form-control py-2" placeholder="Số tiền đến"
+                                style="width: 130px; font-size: 14px;" id="table-sort-amount-max">
+                        </div>
+
+                        <button class="btn btn-primary d-flex align-items-center px-4 py-2 ms-lg-auto rounded-3"
+                            style="font-size: 14px;" id="btn-reset-filters">
+                            Đặt lại tất cả
+                        </button>
+                    </div>
                 </div>
 
-                <div class="dropdown">
-                    <button class="btn date-picker-btn d-flex align-items-center rounded-3 px-3 py-2" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="me-2 text-truncate dropdown-text" style="font-size: 14px;">Tần suất</span>
-                        <i class="bi bi-chevron-down ms-1 text-secondary" style="font-size: 12px;"></i>
-                    </button>
-                    <ul class="dropdown-menu shadow-sm border-0">
-                        <li><button class="dropdown-item" type="button" value="">Tần suất</button></li>
-                        <li><button class="dropdown-item" type="button" value="one-time">Một lần</button></li>
-                        <li><button class="dropdown-item" type="button" value="monthly">Hàng tháng</button></li>
-                    </ul>
-                    <input type="hidden" id="table-sort-frequency" value="">
+                <div
+                    class="summary-card d-flex flex-column flex-md-row justify-content-between align-items-md-center mt-4 mb-3 px-2">
+                    <div class="fw-bold mb-2 mb-md-0" style="font-size: 15px;" id="total-transaction">Tổng <span
+                            id="transaction-count">42</span> giao dịch</div>
+                    <div class="d-flex flex-wrap gap-3 gap-md-4" style="font-size: 15px;">
+                        <div id="total-income">Tổng thu: <span id="income-amount"
+                                class="text-success fw-bold">1.250.000đ</span>
+                        </div>
+                        <div id="total-expense">Tổng chi: <span id="expense-amount"
+                                class="text-danger fw-bold">870.000đ</span>
+                        </div>
+                        <div id="remaining-balance" class="ps-5 ms-5">Số dư: <span id="balance-amount"
+                                class="text-primary fw-bold">380.000đ</span></div>
+                    </div>
                 </div>
 
-                <div class="d-flex align-items-center gap-2">
-                    <input type="number" class="form-control py-2" placeholder="Số tiền từ"
-                        style="width: 130px; font-size: 14px;" id="table-sort-amount-min">
-                    <span class="text-secondary">-</span>
-                    <input type="number" class="form-control py-2" placeholder="Số tiền đến"
-                        style="width: 130px; font-size: 14px;" id="table-sort-amount-max">
+                <div class="table-responsive bg-white rounded-3 border mb-3">
+                    <table class="table table-hover align-middle mb-0" style="font-size: 14px;">
+                        <thead class="table-light text-secondary">
+                            <tr>
+                                <th scope="col" class="fw-medium text-nowrap text-center">Số</th>
+                                <th scope="col" class="fw-medium text-nowrap text-center">Ngày <button type="button"
+                                        class="btn btn-link p-0 ms-1 align-baseline" id="btn-sort-date" style="line-height: 1;"><i class="bi bi-chevron-expand"
+                                            style="font-size: 12px; cursor: pointer;"></i></button></th>
+                                <th scope="col" class="fw-medium text-nowrap text-center">Loại <button type="button"
+                                        class="btn btn-link p-0 ms-1 align-baseline" id="btn-sort-type" style="line-height: 1;"><i class="bi bi-chevron-expand"
+                                            style="font-size: 12px; cursor: pointer;"></i></button></th>
+                                <th scope="col" class="fw-medium text-nowrap">Danh mục <button type="button"
+                                        class="btn btn-link p-0 ms-1 align-baseline" id="btn-sort-category" style="line-height: 1;"><i
+                                            class="bi bi-chevron-expand"
+                                            style="font-size: 12px; cursor: pointer;"></i></button></th>
+                                <th scope="col" class="fw-medium">Mô tả</th>
+                                <th scope="col" class="fw-medium text-nowrap text-center">Tài khoản <button
+                                        type="button" class="btn btn-link p-0 ms-1 align-baseline" id="btn-sort-account" style="line-height: 1;"><i
+                                            class="bi bi-chevron-expand"
+                                            style="font-size: 12px; cursor: pointer;"></i></button></th>
+                                <th scope="col" class="fw-medium text-end text-nowrap text-center">Số tiền <button
+                                        type="button" class="btn btn-link p-0 ms-1 align-baseline" id="btn-sort-amount" style="line-height: 1;"><i
+                                            class="bi bi-chevron-expand"
+                                            style="font-size: 12px; cursor: pointer;"></i></button></th>
+                                <th scope="col" class="fw-medium text-nowrap text-center">Tần suất <button type="button"
+                                        class="btn btn-link p-0 ms-1 align-baseline" id="btn-sort-frequency" style="line-height: 1;"><i
+                                            class="bi bi-chevron-expand"
+                                            style="font-size: 12px; cursor: pointer;"></i></button></th>
+                                <th scope="col" class="fw-medium text-end text-nowrap text-center">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody class="border-top-0" id="transaction-table-body">
+                        </tbody>
+                    </table>
                 </div>
 
-                <button class="btn btn-primary d-flex align-items-center px-4 py-2 ms-lg-auto rounded-3"
-                    style="font-size: 14px;" id="btn-reset-filters">
-                    Đặt lại tất cả
-                </button>
-            </div>
-        </div>
 
-        <div
-            class="summary-card d-flex flex-column flex-md-row justify-content-between align-items-md-center mt-4 mb-3 px-2">
-            <div class="fw-bold mb-2 mb-md-0" style="font-size: 15px;" id="total-transaction">Tổng <span
-                    id="transaction-count">42</span> giao dịch</div>
-            <div class="d-flex flex-wrap gap-3 gap-md-4" style="font-size: 15px;">
-                <div id="total-income">Tổng thu: <span id="income-amount" class="text-success fw-bold">1.250.000đ</span>
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-3 mb-4">
+                    <div class="mb-3 mb-md-0 d-none d-md-block" style="width: 120px;"></div>
+                    <nav>
+                        <ul class="pagination pagination-sm mb-0" id="pagination-container">
+                        </ul>
+                    </nav>
+                    <div class="d-flex align-items-center text-secondary mt-3 mt-md-0" style="font-size: 13px;">
+                        <span class="me-2">Hiển thị</span>
+                        <select class="form-select form-select-sm" style="width: auto; font-size: 13px;"
+                            id="items-per-page-select">
+                            <option value="10" selected>10 / trang</option>
+                            <option value="20">20 / trang</option>
+                            <option value="50">50 / trang</option>
+                        </select>
+                    </div>
                 </div>
-                <div id="total-expense">Tổng chi: <span id="expense-amount" class="text-danger fw-bold">870.000đ</span>
-                </div>
-                <div id="remaining-balance" class="ps-5 ms-5">Số dư: <span id="balance-amount"
-                        class="text-primary fw-bold">380.000đ</span></div>
-            </div>
-        </div>
-
-        <div class="table-responsive bg-white rounded-3 border mb-3">
-            <table class="table table-hover align-middle mb-0" style="font-size: 14px;">
-                <thead class="table-light text-secondary">
-                    <tr>
-                        <th scope="col" class="fw-medium text-nowrap text-center">Số</th>
-                        <th scope="col" class="fw-medium text-nowrap text-center">Ngày <button type="button" class="btn btn-link p-0" id="btn-sort-date"><i class="bi bi-chevron-expand ms-1"
-                                style="font-size: 12px; cursor: pointer;"></i></button></th>
-                        <th scope="col" class="fw-medium text-nowrap text-center">Loại <button type="button" class="btn btn-link p-0" id="btn-sort-type"><i class="bi bi-chevron-expand ms-1"
-                                style="font-size: 12px; cursor: pointer;"></i></button></th>
-                        <th scope="col" class="fw-medium text-nowrap">Danh mục <button type="button" class="btn btn-link p-0" id="btn-sort-category"><i class="bi bi-chevron-expand ms-1"
-                                style="font-size: 12px; cursor: pointer;"></i></button></th>
-                        <th scope="col" class="fw-medium">Mô tả</th>
-                        <th scope="col" class="fw-medium text-nowrap text-center">Tài khoản <button type="button" class="btn btn-link p-0" id="btn-sort-account"><i class="bi bi-chevron-expand ms-1"
-                                style="font-size: 12px; cursor: pointer;"></i></button></th>
-                        <th scope="col" class="fw-medium text-end text-nowrap text-center">Số tiền <button type="button" class="btn btn-link p-0" id="btn-sort-amount"><i class="bi bi-chevron-expand ms-1"
-                                style="font-size: 12px; cursor: pointer;"></i></button></th>
-                        <th scope="col" class="fw-medium text-nowrap text-center">Tần suất <button type="button" class="btn btn-link p-0" id="btn-sort-frequency"><i class="bi bi-chevron-expand ms-1"
-                                style="font-size: 12px; cursor: pointer;"></i></button></th>
-                        <th scope="col" class="fw-medium text-end text-nowrap text-center">Thao tác</th>
-                    </tr>
-                </thead>
-                <tbody class="border-top-0" id="transaction-table-body">
-                </tbody>
-            </table>
-        </div>
-
-
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-3 mb-4">
-            <div class="mb-3 mb-md-0 d-none d-md-block" style="width: 120px;"></div>
-            <nav>
-                <ul class="pagination pagination-sm mb-0" id="pagination-container">
-                </ul>
-            </nav>
-            <div class="d-flex align-items-center text-secondary mt-3 mt-md-0" style="font-size: 13px;">
-                <span class="me-2">Hiển thị</span>
-                <select class="form-select form-select-sm" style="width: auto; font-size: 13px;" id="items-per-page-select">
-                    <option value="10" selected>10 / trang</option>
-                    <option value="20">20 / trang</option>
-                    <option value="50">50 / trang</option>
-                </select>
-            </div>
-        </div>
             </div>
         </div>
 
     </div>
 
-    <div class="modal fade" id="single-add-transaction" role="dialog"
-        aria-labelledby="singleAddTransactionLabel" aria-hidden="true">
+    <div class="modal fade" id="single-add-transaction" role="dialog" aria-labelledby="singleAddTransactionLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content shadow border-0">
                 <div class="modal-header">
@@ -294,7 +329,8 @@
 
                         <p>Số tiền<span class="text-danger">*</span></p>
                         <div class="input-group mb-3 has-validation">
-                            <input type="text" class="form-control border-end-0" id="trans-amount" placeholder="Nhập số tiền">
+                            <input type="text" class="form-control border-end-0" id="trans-amount"
+                                placeholder="Nhập số tiền">
                             <span class="input-group-text bg-white border-start-0 fw-bold" id="vnd-icon">đ</span>
                             <div class="invalid-feedback">Vui lòng nhập số tiền hợp lệ.</div>
                         </div>
@@ -309,15 +345,20 @@
                         <p class="mb-2">Danh mục <span class="text-danger">*</span></p>
                         <div class="d-flex gap-2 mb-3 has-validation">
                             <div class="w-100">
-                                    <div class="dropdown w-100">
-                                        <button class="form-select text-secondary text-start w-100 bg-white d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="btn-trans-category">
-                                            Chọn danh mục
-                                        </button>
-                                        <ul class="dropdown-menu w-100 shadow-sm border-0" id="menu-trans-category" style="max-height: 250px; overflow-y: auto;">
-                                        </ul>
-                                        <input type="hidden" id="trans-category" value="">
-                                    </div>
-                                <div class="text-danger mt-1 d-none" style="font-size: 0.875em;" id="error-trans-category">Vui lòng chọn danh mục.</div>
+                                <div class="dropdown w-100">
+                                    <button
+                                        class="form-select text-secondary text-start w-100 bg-white d-flex align-items-center"
+                                        type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                        id="btn-trans-category">
+                                        Chọn danh mục
+                                    </button>
+                                    <ul class="dropdown-menu w-100 shadow-sm border-0" id="menu-trans-category"
+                                        style="max-height: 250px; overflow-y: auto;">
+                                    </ul>
+                                    <input type="hidden" id="trans-category" value="">
+                                </div>
+                                <div class="text-danger mt-1 d-none" style="font-size: 0.875em;"
+                                    id="error-trans-category">Vui lòng chọn danh mục.</div>
                             </div>
                             <button
                                 class="btn btn-quick-amount bg-white border d-flex align-items-center justify-content-center px-3"
@@ -330,8 +371,10 @@
                             <div class="col">
                                 <p class="mb-2">Ngày giao dịch <span class="text-danger">*</span></p>
                                 <div class="input-group has-validation">
-                                    <span class="input-group-text bg-white border-end-0 text-secondary"><i class="bi bi-calendar3" id="trans-date-calen-icon"></i></span>
-                                    <input type="text" class="form-control date-picker-input bg-white border-start-0" id="trans-date" placeholder="dd/mm/yyyy HH:mm">
+                                    <span class="input-group-text bg-white border-end-0 text-secondary"><i
+                                            class="bi bi-calendar3" id="trans-date-calen-icon"></i></span>
+                                    <input type="text" class="form-control date-picker-input bg-white border-start-0"
+                                        id="trans-date" placeholder="dd/mm/yyyy HH:mm">
                                     <div class="invalid-feedback">Vui lòng chọn ngày giao dịch.</div>
                                 </div>
                             </div>
@@ -349,10 +392,14 @@
                         <div class="d-flex gap-2 mb-3 has-validation">
                             <div class="w-100">
                                 <div class="dropdown w-100">
-                                    <button class="form-select text-secondary text-start w-100 bg-white d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="btn-trans-account">
-                                       Chọn tài  khoản
+                                    <button
+                                        class="form-select text-secondary text-start w-100 bg-white d-flex align-items-center"
+                                        type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                        id="btn-trans-account">
+                                        Chọn tài khoản
                                     </button>
-                                    <ul class="dropdown-menu w-100 shadow-sm border-0" id="menu-trans-account" style="max-height: 250px; overflow-y: auto;">
+                                    <ul class="dropdown-menu w-100 shadow-sm border-0" id="menu-trans-account"
+                                        style="max-height: 250px; overflow-y: auto;">
                                     </ul>
                                     <input type="hidden" id="trans-account" value="">
                                 </div>
@@ -364,7 +411,8 @@
                             </button>
                         </div>
                         <p class="mb-2">Mô tả</p>
-                        <textarea class="form-control mb-3" id="trans-detail" placeholder="Nhập mô tả" rows="3"></textarea>
+                        <textarea class="form-control mb-3" id="trans-detail" placeholder="Nhập mô tả"
+                            rows="3"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer border-0">
@@ -375,8 +423,8 @@
         </div>
     </div>
 
-    <div class="modal fade" id="add-category" tabindex="-1" role="dialog"
-        aria-labelledby="addCategoryLabel" aria-hidden="true">
+    <div class="modal fade" id="add-category" tabindex="-1" role="dialog" aria-labelledby="addCategoryLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content shadow border-0">
                 <div class="modal-header">
@@ -388,181 +436,257 @@
                         <p class="mb-2">Tên danh mục <span class="text-danger">*</span></p>
                         <div>
                             <input type="text" class="form-control mb-3" id="cat-name" placeholder="Nhập tên danh mục">
-                            <div class="invalid-feedback" style="margin-top:-10px; margin-bottom: 10px;">Vui lòng nhập tên danh mục.</div>
+                            <div class="invalid-feedback" style="margin-top:-10px; margin-bottom: 10px;">Vui lòng nhập
+                                tên danh mục.</div>
                         </div>
 
                         <p class="mb-2">Biểu tượng</p>
                         <div class="d-flex flex-wrap gap-2 mb-3" id="cat-icon">
-                            <input type="radio" class="btn-check selected" name="categoryIcon" id="icon-airplane" autocomplete="off" checked>
-                            <label class="btn btn-outline-secondary p-2" for="icon-airplane"><i class="bi bi-airplane fs-5"></i></label>
-                            
+                            <input type="radio" class="btn-check selected" name="categoryIcon" id="icon-airplane"
+                                autocomplete="off" checked>
+                            <label class="btn btn-outline-secondary p-2" for="icon-airplane"><i
+                                    class="bi bi-airplane fs-5"></i></label>
+
                             <input type="radio" class="btn-check" name="categoryIcon" id="icon-bag" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="icon-bag"><i class="bi bi-bag fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-bandaid" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="icon-bandaid"><i class="bi bi-bandaid fs-5"></i></label>
-                            
+                            <label class="btn btn-outline-secondary p-2" for="icon-bag"><i
+                                    class="bi bi-bag fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-bandaid"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="icon-bandaid"><i
+                                    class="bi bi-bandaid fs-5"></i></label>
+
                             <input type="radio" class="btn-check" name="categoryIcon" id="icon-bank" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="icon-bank"><i class="bi bi-bank fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-basket" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="icon-basket"><i class="bi bi-basket fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-building" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="icon-building"><i class="bi bi-building fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-bus-front" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="icon-bus-front"><i class="bi bi-bus-front fs-5"></i></label>
-                            
+                            <label class="btn btn-outline-secondary p-2" for="icon-bank"><i
+                                    class="bi bi-bank fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-basket"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="icon-basket"><i
+                                    class="bi bi-basket fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-building"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="icon-building"><i
+                                    class="bi bi-building fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-bus-front"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="icon-bus-front"><i
+                                    class="bi bi-bus-front fs-5"></i></label>
+
                             <input type="radio" class="btn-check" name="categoryIcon" id="icon-cake" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="icon-cake"><i class="bi bi-cake fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-calculator" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="icon-calculator"><i class="bi bi-calculator fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-camera" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="icon-camera"><i class="bi bi-camera fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-camera-reels" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="icon-camera-reels"><i class="bi bi-camera-reels fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-capsule" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="icon-capsule"><i class="bi bi-hospital fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-car-front" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="icon-car-front"><i class="bi bi-car-front fs-5"></i></label>
-                            
+                            <label class="btn btn-outline-secondary p-2" for="icon-cake"><i
+                                    class="bi bi-cake fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-calculator"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="icon-calculator"><i
+                                    class="bi bi-calculator fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-camera"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="icon-camera"><i
+                                    class="bi bi-camera fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-camera-reels"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="icon-camera-reels"><i
+                                    class="bi bi-camera-reels fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-capsule"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="icon-capsule"><i
+                                    class="bi bi-hospital fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-car-front"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="icon-car-front"><i
+                                    class="bi bi-car-front fs-5"></i></label>
+
                             <input type="radio" class="btn-check" name="categoryIcon" id="icon-cart" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="icon-cart"><i class="bi bi-cart fs-5"></i></label>
-                            
+                            <label class="btn btn-outline-secondary p-2" for="icon-cart"><i
+                                    class="bi bi-cart fs-5"></i></label>
+
                             <input type="radio" class="btn-check" name="categoryIcon" id="icon-cash" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="icon-cash"><i class="bi bi-cash fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-controller" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="icon-controller"><i class="bi bi-controller fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-fuel-pump" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="icon-fuel-pump"><i class="bi bi-fuel-pump fs-5"></i></label>
-                            
+                            <label class="btn btn-outline-secondary p-2" for="icon-cash"><i
+                                    class="bi bi-cash fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-controller"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="icon-controller"><i
+                                    class="bi bi-controller fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-fuel-pump"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="icon-fuel-pump"><i
+                                    class="bi bi-fuel-pump fs-5"></i></label>
+
                             <input type="radio" class="btn-check" name="categoryIcon" id="icon-gem" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="icon-gem"><i class="bi bi-gem fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-heart-pulse" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="icon-heart-pulse"><i class="bi bi-heart-pulse fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-house" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="icon-house"><i class="bi bi-house fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-lightning-charge" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="icon-lightning-charge"><i class="bi bi-lightning-charge fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-mortarboard" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="icon-mortarboard"><i class="bi bi-mortarboard fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-people" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="icon-people"><i class="bi bi-cup-hot fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-phone" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="icon-phone"><i class="bi bi-phone fs-5"></i></label>
-                            
+                            <label class="btn btn-outline-secondary p-2" for="icon-gem"><i
+                                    class="bi bi-gem fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-heart-pulse"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="icon-heart-pulse"><i
+                                    class="bi bi-heart-pulse fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-house"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="icon-house"><i
+                                    class="bi bi-house fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-lightning-charge"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="icon-lightning-charge"><i
+                                    class="bi bi-lightning-charge fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-mortarboard"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="icon-mortarboard"><i
+                                    class="bi bi-mortarboard fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-people"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="icon-people"><i
+                                    class="bi bi-cup-hot fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-phone"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="icon-phone"><i
+                                    class="bi bi-phone fs-5"></i></label>
+
                             <input type="radio" class="btn-check" name="categoryIcon" id="icon-shop" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="icon-shop"><i class="bi bi-shop fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-suitcase" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="icon-suitcase"><i class="bi bi-suitcase fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-ticket-detailed" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="icon-ticket-detailed"><i class="bi bi-ticket-detailed fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-wallet" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="icon-wallet"><i class="bi bi-wallet fs-5"></i></label>
-                            
+                            <label class="btn btn-outline-secondary p-2" for="icon-shop"><i
+                                    class="bi bi-shop fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-suitcase"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="icon-suitcase"><i
+                                    class="bi bi-suitcase fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-ticket-detailed"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="icon-ticket-detailed"><i
+                                    class="bi bi-ticket-detailed fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-wallet"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="icon-wallet"><i
+                                    class="bi bi-wallet fs-5"></i></label>
+
                             <input type="radio" class="btn-check" name="categoryIcon" id="icon-book" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="icon-book"><i class="bi bi-book fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-piggy-bank" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="icon-piggy-bank"><i class="bi bi-piggy-bank fs-5"></i></label>
+                            <label class="btn btn-outline-secondary p-2" for="icon-book"><i
+                                    class="bi bi-book fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="categoryIcon" id="icon-piggy-bank"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="icon-piggy-bank"><i
+                                    class="bi bi-piggy-bank fs-5"></i></label>
                         </div>
                         <p class="mb-2">Màu sắc</p>
                         <div class="d-flex flex-wrap gap-2" id="cat-color">
-                            <input type="radio" class="btn-check selected" name="categoryColor" id="color-primary" autocomplete="off" checked>
+                            <input type="radio" class="btn-check selected" name="categoryColor" id="color-primary"
+                                autocomplete="off" checked>
                             <label class="btn btn-outline-primary fw-bold" for="color-primary">Xanh biển</label>
 
-                            <input type="radio" class="btn-check" name="categoryColor" id="color-secondary" autocomplete="off">
+                            <input type="radio" class="btn-check" name="categoryColor" id="color-secondary"
+                                autocomplete="off">
                             <label class="btn btn-outline-secondary fw-bold" for="color-secondary">Xám</label>
 
-                            <input type="radio" class="btn-check" name="categoryColor" id="color-success" autocomplete="off">
+                            <input type="radio" class="btn-check" name="categoryColor" id="color-success"
+                                autocomplete="off">
                             <label class="btn btn-outline-success fw-bold" for="color-success">Xanh lá</label>
 
-                            <input type="radio" class="btn-check" name="categoryColor" id="color-danger" autocomplete="off">
+                            <input type="radio" class="btn-check" name="categoryColor" id="color-danger"
+                                autocomplete="off">
                             <label class="btn btn-outline-danger fw-bold" for="color-danger">Đỏ</label>
 
-                            <input type="radio" class="btn-check" name="categoryColor" id="color-warning" autocomplete="off">
+                            <input type="radio" class="btn-check" name="categoryColor" id="color-warning"
+                                autocomplete="off">
                             <label class="btn btn-outline-warning fw-bold" for="color-warning">Vàng</label>
 
-                            <input type="radio" class="btn-check" name="categoryColor" id="color-info" autocomplete="off">
+                            <input type="radio" class="btn-check" name="categoryColor" id="color-info"
+                                autocomplete="off">
                             <label class="btn btn-outline-info fw-bold" for="color-info">Xanh lơ</label>
 
-                            <input type="radio" class="btn-check" name="categoryColor" id="color-dark" autocomplete="off">
+                            <input type="radio" class="btn-check" name="categoryColor" id="color-dark"
+                                autocomplete="off">
                             <label class="btn btn-outline-dark fw-bold" for="color-dark">Tối</label>
                         </div>
                     </div>
                 </div>
 
                 <div class="modal-footer border-0">
-                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#single-add-transaction">Quay lại</button>
+                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                        data-bs-target="#single-add-transaction">Quay lại</button>
                     <button type="button" class="btn btn-primary" id="btn-save-category">Lưu</button>
                 </div>
             </div>
 
         </div>
-    
+
     </div>
 
-    <div class="modal fade" id="multi-add-transaction" role="dialog"
-        aria-labelledby="multiAddTransactionLabel" aria-hidden="true">
+    <div class="modal fade" id="multi-add-transaction" role="dialog" aria-labelledby="multiAddTransactionLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content shadow border-0 p-3">
                 <div class="modal-header border-0 pb-3 align-items-start">
                     <div>
                         <h4 class="modal-title fw-bold mb-2" id="multiAddTransactionLabel">Thêm nhiều giao dịch</h4>
-                        <p class="text-secondary mb-0" style="font-size: 14px;"><i class="bi bi-info-circle text-primary me-1"></i>Thêm nhanh các giao dịch phát sinh trong ngày</p>
+                        <p class="text-secondary mb-0" style="font-size: 14px;"><i
+                                class="bi bi-info-circle text-primary me-1"></i>Thêm nhanh các giao dịch phát sinh trong
+                            ngày</p>
                     </div>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                
+
                 <div class="modal-body p-2 pt-0">
                     <div class="row mb-4 align-items-end">
                         <div class="col-md-3">
-                            <label class="form-label text-dark mb-1" style="font-size: 14px;">Ngày giao dịch <span class="text-danger">*</span></label>
+                            <label class="form-label text-dark mb-1" style="font-size: 14px;">Ngày giao dịch <span
+                                    class="text-danger">*</span></label>
                             <div class="input-group">
-                                <input type="text" class="form-control bg-white border-end-0 text-dark date-picker-input-date-only" style="font-size: 14px;" placeholder="dd/mm/yyyy">
-                                <span class="input-group-text bg-white border-start-0 text-secondary"><i class="bi bi-calendar3"></i></span>
+                                <input type="text"
+                                    class="form-control bg-white border-end-0 text-dark date-picker-input-date-only"
+                                    style="font-size: 14px;" placeholder="dd/mm/yyyy">
+                                <span class="input-group-text bg-white border-start-0 text-secondary"><i
+                                        class="bi bi-calendar3"></i></span>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <label class="form-label text-dark mb-1" style="font-size: 14px;">Tài khoản mặc định</label>
                             <div class="dropdown w-100">
-                                <button class="form-select text-dark text-start w-100 bg-white d-flex align-items-center" style="font-size: 14px;" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="btn-multi-add-transac-select-account">
+                                <button
+                                    class="form-select text-dark text-start w-100 bg-white d-flex align-items-center"
+                                    style="font-size: 14px;" type="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false" id="btn-multi-add-transac-select-account">
                                     Chọn tài khoản
                                 </button>
-                                <ul class="dropdown-menu w-100 shadow-sm border-0" id="menu-multi-add-transac-select-account" style="max-height: 250px; overflow-y: auto;">
+                                <ul class="dropdown-menu w-100 shadow-sm border-0"
+                                    id="menu-multi-add-transac-select-account"
+                                    style="max-height: 250px; overflow-y: auto;">
                                 </ul>
                                 <input type="hidden" id="multi-add-transac-select-account" value="">
                             </div>
                         </div>
                         <div class="col-md-3">
                             <label class="form-label text-dark mb-1" style="font-size: 14px;">Tần suất mặc định</label>
-                            <select class="form-select text-dark" style="font-size: 14px;" id="multi-add-default-frequency">
+                            <select class="form-select text-dark" style="font-size: 14px;"
+                                id="multi-add-default-frequency">
                                 <option value="" selected>chọn tần suất</option>
                                 <option value="one-time">Một lần</option>
                                 <option value="monthly">Hàng tháng</option>
                             </select>
                         </div>
                         <div class="col-md-3">
-                            <div class="bg-light rounded p-2 px-3 d-flex flex-column justify-content-center h-100" style="font-size: 14px;">
-                                <div class="mb-1">Tổng chi: <span class="text-danger fw-bold" style="font-size: 15px;" id="multi-add-total-expense">0đ</span></div>
-                                <div>Tổng thu: <span class="text-success fw-bold" style="font-size: 15px;" id="multi-add-total-income">0đ</span></div>
+                            <div class="bg-light rounded p-2 px-3 d-flex flex-column justify-content-center h-100"
+                                style="font-size: 14px;">
+                                <div class="mb-1">Tổng chi: <span class="text-danger fw-bold" style="font-size: 15px;"
+                                        id="multi-add-total-expense">0đ</span></div>
+                                <div>Tổng thu: <span class="text-success fw-bold" style="font-size: 15px;"
+                                        id="multi-add-total-income">0đ</span></div>
                             </div>
                         </div>
                     </div>
@@ -571,24 +695,30 @@
                         <table class="table align-middle mb-0" style="font-size: 14px;">
                             <thead class="table-light text-secondary">
                                 <tr>
-                                    <th scope="col" class="fw-medium text-center" style="width: 40px; padding-left: 1rem;">#</th>
+                                    <th scope="col" class="fw-medium text-center"
+                                        style="width: 40px; padding-left: 1rem;">#</th>
                                     <th scope="col" class="fw-medium" style="width: 80px;">Giờ</th>
                                     <th scope="col" class="fw-medium" style="width: 90px;">Loại</th>
-                                    <th scope="col" class="fw-medium" style="width: 150px;">Danh mục <span class="text-danger">*</span></th>
+                                    <th scope="col" class="fw-medium" style="width: 150px;">Danh mục <span
+                                            class="text-danger">*</span></th>
                                     <th scope="col" class="fw-medium">Mô tả</th>
-                                    <th scope="col" class="fw-medium text-end" style="width: 110px;">Số tiền<span class="text-danger">*</span> (đ)</th>
+                                    <th scope="col" class="fw-medium text-end" style="width: 110px;">Số tiền<span
+                                            class="text-danger">*</span> (đ)</th>
                                     <th scope="col" class="fw-medium" style="width: 150px;">Tần suất</th>
-                                    <th scope="col" class="fw-medium" style="width: 150px;">Tài khoản<span class="text-danger">*</span></th>
+                                    <th scope="col" class="fw-medium" style="width: 150px;">Tài khoản<span
+                                            class="text-danger">*</span></th>
                                     <th scope="col" class="fw-medium text-center" style="width: 60px;">Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody class="border-top-0" id="multi-add-trans-tbody">
-                                
+
                             </tbody>
                         </table>
                     </div>
 
-                    <button class="btn btn-sm d-flex align-items-center bg-primary-subtle border-primary-subtle text-primary fw-medium px-3 py-2" style="font-size: 14px;" id="btn-add-row-multi-add-trans">
+                    <button
+                        class="btn btn-sm d-flex align-items-center bg-primary-subtle border-primary-subtle text-primary fw-medium px-3 py-2"
+                        style="font-size: 14px;" id="btn-add-row-multi-add-trans">
                         <i class="bi bi-plus-lg me-2"></i> Thêm dòng
                     </button>
 
@@ -600,7 +730,7 @@
                         <input type="file" id="file-upload" class="d-none" accept=".jpg, .jpeg, .png, .pdf">
                     </div> -->
                 </div>
-                
+
                 <div class="modal-footer border-0 pt-0">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
                     <button type="button" class="btn btn-primary" id="btn-save-multi-transaction">Lưu</button>
@@ -609,8 +739,8 @@
         </div>
     </div>
 
-    <div class="modal fade" id="add-account" tabindex="-1" role="dialog"
-        aria-labelledby="addAccountLabel" aria-hidden="true">
+    <div class="modal fade" id="add-account" tabindex="-1" role="dialog" aria-labelledby="addAccountLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content shadow border-0">
                 <div class="modal-header">
@@ -622,135 +752,204 @@
                         <p class="mb-2">Tên tài khoản <span class="text-danger">*</span></p>
                         <div>
                             <input type="text" class="form-control mb-3" id="acc-name" placeholder="Nhập tên tài khoản">
-                            <div class="invalid-feedback" style="margin-top:-10px; margin-bottom: 10px;">Vui lòng nhập tên tài khoản.</div>
+                            <div class="invalid-feedback" style="margin-top:-10px; margin-bottom: 10px;">Vui lòng nhập
+                                tên tài khoản.</div>
                         </div>
 
                         <p class="mb-2">Biểu tượng</p>
                         <div class="d-flex flex-wrap gap-2 mb-3" id="cat-icon">
-                            <input type="radio" class="btn-check selected" name="accountIcon" id="acc-icon-airplane" autocomplete="off" checked>
-                            <label class="btn btn-outline-secondary p-2" for="acc-icon-airplane"><i class="bi bi-airplane fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-bag" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="acc-icon-bag"><i class="bi bi-bag fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-bandaid" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="acc-icon-bandaid"><i class="bi bi-bandaid fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-bank" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="acc-icon-bank"><i class="bi bi-bank fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-basket" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="acc-icon-basket"><i class="bi bi-basket fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-building" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="acc-icon-building"><i class="bi bi-building fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-bus-front" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="acc-icon-bus-front"><i class="bi bi-bus-front fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-cake" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="acc-icon-cake"><i class="bi bi-cake fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-calculator" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="acc-icon-calculator"><i class="bi bi-calculator fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-camera" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="acc-icon-camera"><i class="bi bi-camera fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-camera-reels" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="acc-icon-camera-reels"><i class="bi bi-camera-reels fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-capsule" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="acc-icon-capsule"><i class="bi bi-hospital fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-car-front" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="acc-icon-car-front"><i class="bi bi-car-front fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-cart" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="acc-icon-cart"><i class="bi bi-cart fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-cash" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="acc-icon-cash"><i class="bi bi-cash fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-controller" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="acc-icon-controller"><i class="bi bi-controller fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-fuel-pump" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="acc-icon-fuel-pump"><i class="bi bi-fuel-pump fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-gem" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="acc-icon-gem"><i class="bi bi-gem fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-heart-pulse" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="acc-icon-heart-pulse"><i class="bi bi-heart-pulse fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-house" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="acc-icon-house"><i class="bi bi-house fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-lightning-charge" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="acc-icon-lightning-charge"><i class="bi bi-lightning-charge fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-mortarboard" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="acc-icon-mortarboard"><i class="bi bi-mortarboard fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-people" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="acc-icon-people"><i class="bi bi-cup-hot fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-phone" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="acc-icon-phone"><i class="bi bi-phone fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-shop" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="acc-icon-shop"><i class="bi bi-shop fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-suitcase" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="acc-icon-suitcase"><i class="bi bi-suitcase fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-ticket-detailed" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="acc-icon-ticket-detailed"><i class="bi bi-ticket-detailed fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-wallet" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="acc-icon-wallet"><i class="bi bi-wallet fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-book" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="acc-icon-book"><i class="bi bi-book fs-5"></i></label>
-                            
-                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-piggy-bank" autocomplete="off">
-                            <label class="btn btn-outline-secondary p-2" for="acc-icon-piggy-bank"><i class="bi bi-piggy-bank fs-5"></i></label>
+                            <input type="radio" class="btn-check selected" name="accountIcon" id="acc-icon-airplane"
+                                autocomplete="off" checked>
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-airplane"><i
+                                    class="bi bi-airplane fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-bag"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-bag"><i
+                                    class="bi bi-bag fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-bandaid"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-bandaid"><i
+                                    class="bi bi-bandaid fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-bank"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-bank"><i
+                                    class="bi bi-bank fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-basket"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-basket"><i
+                                    class="bi bi-basket fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-building"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-building"><i
+                                    class="bi bi-building fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-bus-front"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-bus-front"><i
+                                    class="bi bi-bus-front fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-cake"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-cake"><i
+                                    class="bi bi-cake fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-calculator"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-calculator"><i
+                                    class="bi bi-calculator fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-camera"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-camera"><i
+                                    class="bi bi-camera fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-camera-reels"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-camera-reels"><i
+                                    class="bi bi-camera-reels fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-capsule"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-capsule"><i
+                                    class="bi bi-hospital fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-car-front"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-car-front"><i
+                                    class="bi bi-car-front fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-cart"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-cart"><i
+                                    class="bi bi-cart fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-cash"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-cash"><i
+                                    class="bi bi-cash fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-controller"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-controller"><i
+                                    class="bi bi-controller fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-fuel-pump"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-fuel-pump"><i
+                                    class="bi bi-fuel-pump fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-gem"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-gem"><i
+                                    class="bi bi-gem fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-heart-pulse"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-heart-pulse"><i
+                                    class="bi bi-heart-pulse fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-house"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-house"><i
+                                    class="bi bi-house fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-lightning-charge"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-lightning-charge"><i
+                                    class="bi bi-lightning-charge fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-mortarboard"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-mortarboard"><i
+                                    class="bi bi-mortarboard fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-people"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-people"><i
+                                    class="bi bi-cup-hot fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-phone"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-phone"><i
+                                    class="bi bi-phone fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-shop"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-shop"><i
+                                    class="bi bi-shop fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-suitcase"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-suitcase"><i
+                                    class="bi bi-suitcase fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-ticket-detailed"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-ticket-detailed"><i
+                                    class="bi bi-ticket-detailed fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-wallet"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-wallet"><i
+                                    class="bi bi-wallet fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-book"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-book"><i
+                                    class="bi bi-book fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="accountIcon" id="acc-icon-piggy-bank"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="acc-icon-piggy-bank"><i
+                                    class="bi bi-piggy-bank fs-5"></i></label>
                         </div>
                         <p class="mb-2">Màu sắc</p>
                         <div class="d-flex flex-wrap gap-2" id="cat-color">
-                            <input type="radio" class="btn-check selected" name="accountColor" id="acc-color-primary" autocomplete="off" checked>
+                            <input type="radio" class="btn-check selected" name="accountColor" id="acc-color-primary"
+                                autocomplete="off" checked>
                             <label class="btn btn-outline-primary fw-bold" for="acc-color-primary">Xanh biển</label>
 
-                            <input type="radio" class="btn-check" name="accountColor" id="acc-color-secondary" autocomplete="off">
+                            <input type="radio" class="btn-check" name="accountColor" id="acc-color-secondary"
+                                autocomplete="off">
                             <label class="btn btn-outline-secondary fw-bold" for="acc-color-secondary">Xám</label>
 
-                            <input type="radio" class="btn-check" name="accountColor" id="acc-color-success" autocomplete="off">
+                            <input type="radio" class="btn-check" name="accountColor" id="acc-color-success"
+                                autocomplete="off">
                             <label class="btn btn-outline-success fw-bold" for="acc-color-success">Xanh lá</label>
 
-                            <input type="radio" class="btn-check" name="accountColor" id="acc-color-danger" autocomplete="off">
+                            <input type="radio" class="btn-check" name="accountColor" id="acc-color-danger"
+                                autocomplete="off">
                             <label class="btn btn-outline-danger fw-bold" for="acc-color-danger">Đỏ</label>
 
-                            <input type="radio" class="btn-check" name="accountColor" id="acc-color-warning" autocomplete="off">
+                            <input type="radio" class="btn-check" name="accountColor" id="acc-color-warning"
+                                autocomplete="off">
                             <label class="btn btn-outline-warning fw-bold" for="acc-color-warning">Vàng</label>
 
-                            <input type="radio" class="btn-check" name="accountColor" id="acc-color-info" autocomplete="off">
+                            <input type="radio" class="btn-check" name="accountColor" id="acc-color-info"
+                                autocomplete="off">
                             <label class="btn btn-outline-info fw-bold" for="acc-color-info">Xanh lơ</label>
 
-                            <input type="radio" class="btn-check" name="accountColor" id="acc-color-dark" autocomplete="off">
+                            <input type="radio" class="btn-check" name="accountColor" id="acc-color-dark"
+                                autocomplete="off">
                             <label class="btn btn-outline-dark fw-bold" for="acc-color-dark">Tối</label>
                         </div>
                     </div>
                 </div>
 
                 <div class="modal-footer border-0">
-                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#single-add-transaction">Quay lại</button>
+                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                        data-bs-target="#single-add-transaction">Quay lại</button>
                     <button type="button" class="btn btn-primary" id="btn-save-account">Lưu</button>
                 </div>
             </div>
 
         </div>
-    
+
     </div>
 
     <div class="modal fade" id="edit-single-add-transaction" role="dialog"
@@ -764,12 +963,14 @@
                 <div class="modal-body">
                     <div class="form">
                         <div class="btn-group w-100 bg-light rounded p-1" role="group">
-                            <input type="radio" class="btn-check" name="transactionType" id="edit-expense" autocomplete="off"
-                                checked>
-                            <label class="btn btn-type-toggle" for="edit-expense"><i class="bi bi-arrow-down-short"></i>Chi
+                            <input type="radio" class="btn-check" name="transactionType" id="edit-expense"
+                                autocomplete="off" checked>
+                            <label class="btn btn-type-toggle" for="edit-expense"><i
+                                    class="bi bi-arrow-down-short"></i>Chi
                                 tiêu</label>
 
-                            <input type="radio" class="btn-check" name="transactionType" id="edit-income" autocomplete="off">
+                            <input type="radio" class="btn-check" name="transactionType" id="edit-income"
+                                autocomplete="off">
                             <label class="btn btn-type-toggle" for="edit-income">
                                 <i class="bi bi-arrow-up-short text-success"></i>Thu nhập
                             </label>
@@ -777,30 +978,40 @@
 
                         <p>Số tiền<span class="text-danger">*</span></p>
                         <div class="input-group mb-3 has-validation">
-                            <input type="text" class="form-control border-end-0" id="edit-trans-amount" placeholder="Nhập số tiền">
+                            <input type="text" class="form-control border-end-0" id="edit-trans-amount"
+                                placeholder="Nhập số tiền">
                             <span class="input-group-text bg-white border-start-0 fw-bold" id="edit-vnd-icon">đ</span>
                             <div class="invalid-feedback">Vui lòng nhập số tiền hợp lệ.</div>
                         </div>
 
                         <div class="d-flex gap-2 mb-3">
-                            <button class="btn btn-quick-amount bg-white border w-100 px-1" id="edit-btn-10k">+10k</button>
-                            <button class="btn btn-quick-amount bg-white border w-100 px-1" id="edit-btn-20k">+20k</button>
-                            <button class="btn btn-quick-amount bg-white border w-100 px-1" id="edit-btn-50k">+50k</button>
-                            <button class="btn btn-quick-amount bg-white border w-100 px-1" id="edit-btn-100k">+100k</button>
+                            <button class="btn btn-quick-amount bg-white border w-100 px-1"
+                                id="edit-btn-10k">+10k</button>
+                            <button class="btn btn-quick-amount bg-white border w-100 px-1"
+                                id="edit-btn-20k">+20k</button>
+                            <button class="btn btn-quick-amount bg-white border w-100 px-1"
+                                id="edit-btn-50k">+50k</button>
+                            <button class="btn btn-quick-amount bg-white border w-100 px-1"
+                                id="edit-btn-100k">+100k</button>
                         </div>
 
                         <p class="mb-2">Danh mục <span class="text-danger">*</span></p>
                         <div class="d-flex gap-2 mb-3 has-validation">
                             <div class="w-100">
-                                    <div class="dropdown w-100">
-                                        <button class="form-select text-secondary text-start w-100 bg-white d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="edit-btn-trans-category">
-                                            Chọn danh mục
-                                        </button>
-                                        <ul class="dropdown-menu w-100 shadow-sm border-0" id="edit-menu-trans-category" style="max-height: 250px; overflow-y: auto;">
-                                        </ul>
-                                        <input type="hidden" id="edit-trans-category" value="">
-                                    </div>
-                                <div class="text-danger mt-1 d-none" style="font-size: 0.875em;" id="edit-error-trans-category">Vui lòng chọn danh mục.</div>
+                                <div class="dropdown w-100">
+                                    <button
+                                        class="form-select text-secondary text-start w-100 bg-white d-flex align-items-center"
+                                        type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                        id="edit-btn-trans-category">
+                                        Chọn danh mục
+                                    </button>
+                                    <ul class="dropdown-menu w-100 shadow-sm border-0" id="edit-menu-trans-category"
+                                        style="max-height: 250px; overflow-y: auto;">
+                                    </ul>
+                                    <input type="hidden" id="edit-trans-category" value="">
+                                </div>
+                                <div class="text-danger mt-1 d-none" style="font-size: 0.875em;"
+                                    id="edit-error-trans-category">Vui lòng chọn danh mục.</div>
                             </div>
                             <button
                                 class="btn btn-quick-amount bg-white border d-flex align-items-center justify-content-center px-3"
@@ -813,8 +1024,10 @@
                             <div class="col">
                                 <p class="mb-2">Ngày giao dịch <span class="text-danger">*</span></p>
                                 <div class="input-group has-validation">
-                                    <span class="input-group-text bg-white border-end-0 text-secondary"><i class="bi bi-calendar3" id="edit-trans-date-calen-icon"></i></span>
-                                    <input type="text" class="form-control date-picker-input bg-white border-start-0" id="edit-trans-date" placeholder="dd/mm/yyyy HH:mm">
+                                    <span class="input-group-text bg-white border-end-0 text-secondary"><i
+                                            class="bi bi-calendar3" id="edit-trans-date-calen-icon"></i></span>
+                                    <input type="text" class="form-control date-picker-input bg-white border-start-0"
+                                        id="edit-trans-date" placeholder="dd/mm/yyyy HH:mm">
                                     <div class="invalid-feedback">Vui lòng chọn ngày giao dịch.</div>
                                 </div>
                             </div>
@@ -832,10 +1045,14 @@
                         <div class="d-flex gap-2 mb-3 has-validation">
                             <div class="w-100">
                                 <div class="dropdown w-100">
-                                    <button class="form-select text-secondary text-start w-100 bg-white d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="edit-btn-trans-account">
-                                       Chọn tài  khoản
+                                    <button
+                                        class="form-select text-secondary text-start w-100 bg-white d-flex align-items-center"
+                                        type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                        id="edit-btn-trans-account">
+                                        Chọn tài khoản
                                     </button>
-                                    <ul class="dropdown-menu w-100 shadow-sm border-0" id="edit-menu-trans-account" style="max-height: 250px; overflow-y: auto;">
+                                    <ul class="dropdown-menu w-100 shadow-sm border-0" id="edit-menu-trans-account"
+                                        style="max-height: 250px; overflow-y: auto;">
                                     </ul>
                                     <input type="hidden" id="edit-trans-account" value="">
                                 </div>
@@ -847,7 +1064,8 @@
                             </button>
                         </div>
                         <p class="mb-2">Mô tả</p>
-                        <textarea class="form-control mb-3" id="edit-trans-detail" placeholder="Nhập mô tả" rows="3"></textarea>
+                        <textarea class="form-control mb-3" id="edit-trans-detail" placeholder="Nhập mô tả"
+                            rows="3"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer border-0">

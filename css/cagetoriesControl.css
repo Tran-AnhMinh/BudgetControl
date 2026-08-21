@@ -1,0 +1,57 @@
+body { 
+    background-color: var(--bs-light); 
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
+}
+.header-title { 
+    font-weight: 700; 
+    font-size: 28px; 
+    color: var(--bs-dark);
+}
+.text-muted-custom { 
+    color: var(--bs-secondary); 
+    font-size: 14px; 
+}
+.date-picker-btn { 
+    border: 1px solid var(--bs-border-color); 
+    background: white; 
+    color: var(--bs-body-color); 
+    box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+}
+.date-picker-btn:hover {
+    background-color: var(--bs-light);
+}
+.avatar-circle { 
+    width: 40px; 
+    height: 40px; 
+    background-color: var(--bs-info); 
+    color: white; 
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-weight: 600; 
+    font-size: 16px; 
+}
+.user-info { 
+    text-align: left; 
+    line-height: 1.2; 
+}
+.user-name { 
+    font-weight: 600; 
+    font-size: 15px; 
+    margin: 0; 
+    color: var(--bs-dark);
+}
+.user-role { 
+    font-size: 12px; 
+    color: var(--bs-secondary); 
+    margin: 0; 
+}
+.filter-card { 
+    background: white; 
+    border: 1px solid var(--bs-border-color); 
+    border-radius: 12px; 
+    padding: 16px; 
+    margin-top: 24px; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}

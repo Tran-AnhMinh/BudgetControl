@@ -98,7 +98,14 @@ function renderTable() {
     const dateInput = document.getElementById('table-sort-date');
     const selectedDates = dateInput && dateInput._flatpickr ? dateInput._flatpickr.selectedDates : [];
 
+    const searchInput = document.querySelector('.search-input');
+    const searchQuery = searchInput ? searchInput.value.toLowerCase().trim() : '';
+
     let filteredTransactions = transactions;
+
+    if (searchQuery) {
+        filteredTransactions = filteredTransactions.filter(t => (t.detail || '').toLowerCase().includes(searchQuery));
+    }
 
     if (selectedDates && selectedDates.length > 0) {
         let startDate = new Date(selectedDates[0]);
@@ -392,6 +399,14 @@ if (filterAmountMax) {
     filterAmountMax.addEventListener('input', renderTable);
 }
 
+const searchInputField = document.querySelector('.search-input');
+if (searchInputField) {
+    searchInputField.addEventListener('input', function() {
+        currentPage = 1;
+        renderTable();
+    });
+}
+
 const btnResetFilters = document.getElementById('btn-reset-filters');
 if (btnResetFilters) {
     btnResetFilters.addEventListener('click', function() {
@@ -543,7 +558,6 @@ async function saveExcel(){
             ]
         });
 
-        // Chuẩn bị dữ liệu cho file Excel
         const data = [];
         data.push(['Ngày giờ', 'Loại', 'Danh mục', 'Chi tiết', 'Tài khoản', 'Số tiền', 'Tần suất']);
         
@@ -564,13 +578,10 @@ async function saveExcel(){
                 frequencyText
             ]);
         }
-
-        // Tạo workbook và worksheet
         const wb = XLSX.utils.book_new();
         const ws = XLSX.utils.aoa_to_sheet(data);
         XLSX.utils.book_append_sheet(wb, ws, "Giao dịch");
 
-        // Tạo mảng byte của file xlsx
         const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
 
         const writableStream = await fileDes.createWritable();

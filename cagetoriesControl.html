@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="css/cagetoriesControl.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <meta name="description" content="quản lý danh mục">
+    <title>Danh sách danh mục</title>
+</head>
+<body>
+    <div id="toast-container" class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 9999;"></div>
+
+    <div class="d-flex">
+
+        <nav class="sidebar collapsed d-flex flex-column flex-shrink-0 position-fixed">
+            <button class="toggle-btn" onclick="toggleSidebar()">
+                <i class="bi bi-caret-left-fill"></i>
+            </button>
+
+            <div class="p-4">
+                <h4 class="logo-text fw-bold mb-0">Finora</h4>
+            </div>
+
+            <div class="nav flex-column">
+                <a href="mainPage.html" class="sidebar-link text-decoration-none p-3">
+                    <i class="bi bi-house me-3"></i>
+                    <span class="hide-on-collapse">Dashboard</span>
+                </a>
+                <a href="transactionControl.html" class="sidebar-link text-decoration-none p-3">
+                    <i class="bi bi-wallet me-3"></i>
+                    <span class="hide-on-collapse">Chi tiêu</span>
+                </a>
+                <a href="cagetoriesControl.html" class="sidebar-link active text-decoration-none p-3">
+                    <i class="bi bi-tags me-3"></i>
+                    <span class="hide-on-collapse">Danh mục</span>
+                </a>
+
+                <a href="#" class="sidebar-link text-decoration-none p-3">
+                    <i class="bi-qr-code me-3"></i>
+                    <span class="hide-on-collapse">QR</span>
+                </a>
+            </div>
+        </nav>
+        <div class="main-content flex-grow-1">
+        <div class="container-fluid p-4 flex" style="margin: 0 auto;">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <div>
+                    <h1 class="header-title mb-1">Giao dịch</h1>
+                    <p class="text-muted-custom mb-0">Quản lý tất cả thu chi của bạn</p>
+                </div>
+
+                <div class="d-flex align-items-center">
+                    <!-- <button class="btn date-picker-btn me-4 d-flex align-items-center rounded-3 px-3 py-2">
+                <i class="bi bi-calendar3 me-2 text-secondary"></i>
+                <span class="me-2" style="font-size: 14px;">01/08/2025 - 31/08/2025</span>
+                <i class="bi bi-chevron-down ms-1 text-secondary" style="font-size: 12px;"></i>
+            </button> -->
+
+                    <!-- <div class="notification-bell d-flex align-items-center">
+                <i class="bi bi-bell"></i>
+                <span class="notification-badge">3</span>
+            </div> -->
+
+                    <div class="dropdown d-flex align-items-center ms-2" style="cursor: pointer;"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="avatar-circle me-2">M</div>
+                        <div class="user-info d-none d-md-block pe-1">
+                            <p class="user-name">Minh</p>
+                            <p class="user-role">Sinh viên năm 2</p>
+                        </div>
+                        <i class="bi bi-chevron-down text-secondary ms-1 d-none d-md-block"
+                            style="font-size: 12px;"></i>
+                    </div>
+                    <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+                        <li><a class="dropdown-item" href="#">Thông tin cá nhân</a></li>
+                        <li><a class="dropdown-item text-danger" href="#">Đăng xuất</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script src="js/sidebar.js"></script>
+</body>
+
+</html>

@@ -524,4 +524,65 @@ if (itemsPerPageSelect) {
     });
 }
 
+async function saveExcel(){
+    if (typeof XLSX === 'undefined') {
+        alert('Thư viện xuất Excel chưa được tải. Vui lòng thử lại sau.');
+        return;
+    }
 
+    try {
+        const fileDes = await window.showSaveFilePicker({
+            suggestedName: 'transactions.xlsx',
+            types: [
+                {
+                    description: 'Excel Files',
+                    accept: {
+                        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx']
+                    }
+                }
+            ]
+        });
+
+        // Chuẩn bị dữ liệu cho file Excel
+        const data = [];
+        data.push(['Ngày giờ', 'Loại', 'Danh mục', 'Chi tiết', 'Tài khoản', 'Số tiền', 'Tần suất']);
+        
+        for (const t of transactions) {
+            const dateObj = new Date(t.time);
+            const dateStr = dateObj.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            const timeStr = dateObj.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+            const typeText = t.type === 'expense' ? 'Chi' : 'Thu';
+            const frequencyText = t.monthly ? 'Hàng tháng' : 'Một lần';
+            
+            data.push([
+                `${dateStr} ${timeStr}`,
+                typeText,
+                t.category || '',
+                t.detail || '',
+                t.account || '',
+                t.amount || 0,
+                frequencyText
+            ]);
+        }
+
+        // Tạo workbook và worksheet
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.aoa_to_sheet(data);
+        XLSX.utils.book_append_sheet(wb, ws, "Giao dịch");
+
+        // Tạo mảng byte của file xlsx
+        const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+
+        const writableStream = await fileDes.createWritable();
+        await writableStream.write(excelBuffer);
+        await writableStream.close();
+
+        if (typeof showToast === 'function') {
+            showToast('Xuất dữ liệu Excel thành công!');
+        }
+    } catch (error) {
+        console.error('Lỗi khi lưu file:', error);
+    }
+}
+
+document.getElementById('btn-export-excel').addEventListener('click', saveExcel);

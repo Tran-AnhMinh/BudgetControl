@@ -1,0 +1,138 @@
+:root {
+    --sidebar-width: 280px;
+    --sidebar-width-collapsed: 60px;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+
+/*sidebar css*/
+.sidebar {
+    width: var(--sidebar-width);
+    height: 100vh;
+    background: #E5EEFF;
+    transition: all 0.3s ease;
+}
+
+.sidebar.collapsed {
+    width: var(--sidebar-width-collapsed);
+}
+
+.sidebar-link {
+    color: #2563EB;
+    transition: all 0.2s ease;
+    border-radius: 8px;
+    margin: 4px 16px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.sidebar-link:hover {
+    color: black;
+}
+
+.sidebar-link.active {
+    color: #1E40AF;
+    background: white;
+}
+
+.logo-text {
+    background: linear-gradient(45deg, #6b8cff, #8b9fff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: opacity 0.3s ease;
+}
+
+
+.main-content {
+    margin-left: var(--sidebar-width);
+    min-height: 100vh;
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.collapsed~.main-content {
+    margin-left: var(--sidebar-width-collapsed);
+}
+
+.toggle-btn {
+    position: absolute;
+    right: -15px;
+    top: 20px;
+    background: white;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    border: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    z-index: 100;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.collapsed .toggle-btn {
+    transform: rotate(180deg);
+}
+
+.collapsed .hide-on-collapse {
+    opacity: 0;
+    display:none;
+}
+
+.collapsed .logo-text {
+    opacity: 0;
+}
+
+.collapsed .sidebar-link {
+    padding: 1rem !important;
+    margin:  0 4px 8px;
+}
+
+.collapsed .sidebar-link i {
+    margin: 0 !important;
+}
+
+/*Header css*/
+.header{
+    margin-bottom:20px;
+}
+.avatar-circle { 
+    width: 40px; 
+    height: 40px; 
+    background-color: var(--bs-info); 
+    color: white; 
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-weight: 600; 
+    font-size: 16px; 
+}
+
+.user-info { 
+    text-align: left; 
+    line-height: 1.5; 
+}
+.user-name { 
+    font-weight: 600; 
+    font-size: 15px; 
+    margin: 0; 
+    color: var(--bs-dark);
+}
+.user-role { 
+    font-size: 12px; 
+    color: var(--bs-secondary); 
+    margin: 0; 
+}
+
+.dropdown-toggle::after{
+    display:none !important;
+}

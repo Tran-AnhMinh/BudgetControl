@@ -71,13 +71,12 @@
     display: flex;
     align-items: center;
     gap: 10px;
-
     margin-top: 20px;
 }
 
 .budget-icon {
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
 
     flex-shrink: 0;
 
@@ -118,7 +117,7 @@
 
 .budget-progress {
     flex: 1;
-    height: 8px;
+    height: 12px;
 
     background: #E5E7EB;
     border-radius: 10px;
@@ -152,10 +151,10 @@
 ========================= */
 
 .today-card .card-title {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 
-    font-size: 15px;
-    font-weight: 600;
+    font-size: 20px;
+    font-weight: 700;
     color: #111827;
 }
 
@@ -168,7 +167,7 @@
     align-items: center;
     gap: 8px;
 
-    font-size: 13px;
+    font-size: 16px;
     color: #374151;
 }
 
@@ -216,7 +215,7 @@
 
 .today-progress {
     flex: 1;
-    height: 10px;
+    height: 20px;
 
     background: #E5E7EB;
 }

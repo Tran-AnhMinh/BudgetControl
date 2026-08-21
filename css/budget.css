@@ -1,0 +1,471 @@
+/* ================================
+   BUDGET
+================================ */
+
+.budget-content {
+  width: 100%;
+}
+
+.budget-card {
+  height: 100%;
+  background: #fff;
+  border: 2px solid #eef0f5;
+  border-radius: 15px;
+  padding: 16px;
+}
+
+/* ================================
+   COMMON
+================================ */
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: black;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.section-title i {
+  color: #3448c5;
+  font-size: 13px;
+}
+
+.section-description {
+  margin-top: 10px;
+  color: #687083;
+  font-size: 11px;
+}
+
+/* ================================
+   DAILY BUDGET
+================================ */
+
+.daily-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.daily-budget-input {
+  position: relative;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.daily-budget-input .form-control {
+  height: 38px;
+  padding: 8px 32px 8px 10px;
+  border: 1px solid #dce1ec;
+  border-radius: 6px;
+  background: #fff;
+  color: #273044;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: none;
+}
+
+.daily-budget-input .form-control:focus {
+  border-color: #3155d9;
+  box-shadow: 0 0 0 2px rgba(49, 85, 217, 0.08);
+}
+
+.daily-budget-input .currency {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%); 
+  color: #687083;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.daily-help {
+  margin-top: 6px;
+  color: #8a91a1;
+  font-size: 9px;
+  line-height: 1.4;
+}
+
+.save-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: 0;
+  border-radius: 10px;
+  background: #0757d9;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.save-btn:hover {
+  background: #064bc0;
+  color: #fff;
+}
+
+/* ================================
+   CATEGORY BUDGET
+================================ */
+
+.category-card {
+  min-height: 100%;
+}
+
+.category-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.month-picker {
+  min-width: 83px;
+  height: 36px;
+  padding: 3px 24px 3px 9px;
+  border: 1px solid #dce1ec;
+  border-radius: 5px;
+  outline: none;
+  background-color: #fff;
+  color: #596174;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.month-picker:focus {
+  border-color: #3155d9;
+  box-shadow: none;
+}
+
+/* ================================
+   CATEGORY LIST
+================================ */
+
+.category-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.category-item {
+  min-height: 45px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 5px 8px;
+  border-radius: 6px;
+  background: #f7f8fc;
+  transition: background-color 0.15s ease;
+}
+
+.category-item:hover {
+  background: #f2f4fa;
+}
+
+.category-info {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.category-icon {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  color: #fff;
+  font-size: 15px;
+}
+
+.category-icon.bg-success {
+  background-color: #48dfb1 !important;
+}
+
+.category-icon.bg-primary {
+  background-color: #3867e8 !important;
+}
+
+.category-icon.bg-danger {
+  background-color: #ef4961 !important;
+}
+
+.category-icon.bg-secondary {
+  background-color: #dbe4f3 !important;
+  color: #53627a;
+}
+
+.category-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  color: #303747;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.category-amount {
+  white-space: nowrap;
+  color: #252b3a;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.category-amount small {
+  margin-left: 2px;
+  color: #71798a;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.category-action {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #7b8497;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.category-action:hover {
+  background: #e9edf5;
+  color: #354052;
+}
+
+/* ================================
+   ADD BUDGET
+================================ */
+
+.add-budget-btn {
+  width: 100%;
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 10px;
+  padding: 0;
+
+  border: 1px dashed #d5ddec;
+  border-radius: 5px;
+  background: #fafbfe;
+
+  color: #1764d9;
+  font-size: 14px;
+  font-weight: 500;
+
+  transition: all 0.15s ease;
+}
+
+.add-budget-btn i {
+  font-size: 14px;
+}
+
+.add-budget-btn:hover {
+  border-color: #9db5ed;
+  background: #f4f7ff;
+  color: #0757d9;
+}
+
+.budget-modal-dialog {
+    max-width: 450px;
+    margin: 1rem auto;
+}
+
+.budget-modal {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.budget-modal-header {
+    padding: 16px 16px 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.budget-modal-title {
+    margin: 0;
+
+    font-size: 20px;
+    font-weight: 500;
+    color: #111827;
+}
+
+.budget-modal-close {
+    width: 24px;
+    height: 24px;
+
+    padding: 0;
+    border: none;
+    background: transparent;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #1f2937;
+    font-size: 20px;
+
+    cursor: pointer;
+}
+
+.budget-modal-close:hover {
+    color: #000;
+}
+
+/* =========================
+   BODY
+========================= */
+
+.budget-modal-body {
+    padding: 0 16px 10px;
+}
+
+.budget-form-group {
+    margin-bottom: 14px;
+}
+
+.budget-form-group label {
+    display: block;
+
+    margin-bottom: 5px;
+
+    font-size: 14px;
+    font-weight: 500;
+    color: #4b5563;
+    text-transform: uppercase;
+}
+
+/* =========================
+   INPUT
+========================= */
+
+.budget-input {
+    height: 40px;
+
+    padding: 5px 10px;
+
+    border: 1px solid #d5d9e2;
+    border-radius: 5px;
+
+    background-color: #f9faff;
+
+    color: #243b64;
+    font-size: 14px;
+
+    box-shadow: none;
+}
+
+.budget-input:focus {
+    border-color: #8aa8e8;
+    background-color: #fff;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.08);
+}
+
+/* =========================
+   SELECT
+========================= */
+
+.budget-select-wrapper {
+    position: relative;
+}
+
+.budget-select-wrapper .budget-input {
+    cursor: pointer;
+}
+
+/* =========================
+   AMOUNT
+========================= */
+
+.budget-amount-wrapper {
+    position: relative;
+}
+
+.budget-amount-wrapper .budget-input {
+    padding-right: 28px;
+}
+
+.budget-currency {
+    position: absolute;
+
+    top: 50%;
+    right: 10px;
+
+    transform: translateY(-50%);
+
+    color: #4b5563;
+    font-size: 14px;
+
+    pointer-events: none;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.budget-modal-footer {
+    padding: 8px 16px 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.budget-cancel-btn {
+    padding: 6px 4px;
+
+    border: none;
+    background: transparent;
+
+    color: #374151;
+    font-size: 12px;
+
+    cursor: pointer;
+}
+
+.budget-cancel-btn:hover {
+    color: #111827;
+}
+
+.budget-save-btn {
+    min-width: 92px;
+
+    padding: 7px 11px;
+
+    border: none;
+    border-radius: 5px;
+
+    background: #0759d9;
+    color: #fff;
+
+    font-size: 12px;
+    font-weight: 500;
+}

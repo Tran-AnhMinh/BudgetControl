@@ -64,12 +64,17 @@ if (btnSaveTransaction) {
                 }
             }
 
+            const categoryStr = category.value;
+            const categoryId = categoryStr ? parseInt(categoryStr, 10) : '';
+            const accountStr = document.getElementById('trans-account').value;
+            const accountId = accountStr ? parseInt(accountStr, 10) : '';
+
             const newTransaction = {
                 time: isoTime,
                 type: typeStr,
-                category: category.value,
+                category: categoryId,
                 detail: document.getElementById('trans-detail').value,
-                account: document.getElementById('trans-account').value,
+                account: accountId,
                 amount: amountVal,
                 monthly: document.getElementById('trans-frequency')?.value === 'monthly'
             };

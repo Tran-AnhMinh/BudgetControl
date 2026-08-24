@@ -3,7 +3,7 @@
         const categoryHtml = `
             ${categories.map(c => `
                 <li>
-                    <a class="dropdown-item category-item py-2" href="#" data-value="${c.name}">
+                    <a class="dropdown-item category-item py-2" href="#" data-value="${c.id}">
                         <span class="icon-circle bg-${c.color}-subtle text-${c.color} me-2"><i class="bi bi-${c.icon}"></i></span>${c.name}
                     </a>
                 </li>
@@ -98,26 +98,40 @@
                 const colorRadio = document.querySelector('input[name="categoryColor"]:checked');
                 const cageColor = colorRadio ? colorRadio.id.replace('color-', '') : 'secondary';
 
+                let cagetories = JSON.parse(localStorage.getItem('categories')) || [];
+                const newId = cagetories.length > 0 ? Math.max(...cagetories.map(c => c.id || 0)) + 1 : 1;
                 const newCategory = {
+                    id: newId,
                     name: cageName,
                     icon: cageIcon,
                     color: cageColor
                 };
-                let cagetories = JSON.parse(localStorage.getItem('categories')) || [];
                 cagetories.push(newCategory);
                 localStorage.setItem('categories', JSON.stringify(cagetories));
-                updateCategorySelect();
-                updateCategorySelect();
-
-                showToast('Thêm danh mục thành công!');
-
-                const addCategoryModal = bootstrap.Modal.getInstance(document.getElementById('add-category'));
-                if (addCategoryModal) {
-                    addCategoryModal.hide();
+                if (typeof updateCategorySelect === 'function') {
+                    updateCategorySelect();
+                }
+                if (typeof renderCagetoriesTable === 'function') {
+                    renderCagetoriesTable();
                 }
 
-                const singleAddModal = new bootstrap.Modal(document.getElementById('single-add-transaction'));
-                singleAddModal.show();
+                if (typeof showToast === 'function') {
+                    showToast('Thêm danh mục thành công!');
+                } else {
+                    alert('Thêm danh mục thành công!');
+                }
+
+                const addCategoryModalElem = document.getElementById('add-category');
+                if (addCategoryModalElem) {
+                    const addCategoryModal = bootstrap.Modal.getInstance(addCategoryModalElem);
+                    if (addCategoryModal) addCategoryModal.hide();
+                }
+
+                const singleAddModalElem = document.getElementById('single-add-transaction');
+                if (singleAddModalElem) {
+                    const singleAddModal = bootstrap.Modal.getOrCreateInstance(singleAddModalElem);
+                    if (singleAddModal) singleAddModal.show();
+                }
 
                 name.value = '';
                 const catIcon = document.getElementById('cat-icon');

@@ -3,7 +3,7 @@ function updateAccountSelect() {
     const accountHtml = `
         ${accounts.map(a => `
             <li>
-                <a class="dropdown-item account-item py-2" href="#" data-value="${a.name}">
+                <a class="dropdown-item account-item py-2" href="#" data-value="${a.id}">
                     <span class="icon-circle bg-${a.color}-subtle text-${a.color} me-2"><i class="bi bi-${a.icon}"></i></span>${a.name}
                 </a>
             </li>
@@ -117,25 +117,41 @@ if (btnSaveAccount) {
             const colorRadio = document.querySelector('input[name="accountColor"]:checked');
             const accColor = colorRadio ? colorRadio.id.replace('acc-color-', '') : 'secondary';
 
-            const newCategory = {
+            let accounts = JSON.parse(localStorage.getItem('accounts')) || [];
+            const newId = accounts.length > 0 ? Math.max(...accounts.map(a => a.id || 0)) + 1 : 1;
+            const newAccount = {
+                id: newId,
                 name: accName,
                 icon: accIcon,
                 color: accColor
             };
-            let cagetories = JSON.parse(localStorage.getItem('accounts')) || [];
-            cagetories.push(newCategory);
-            localStorage.setItem('accounts', JSON.stringify(cagetories));
-            updateAccountSelect();
-
-            showToast('Thêm tài khoản thành công!');
-
-            const addAccountModal = bootstrap.Modal.getInstance(document.getElementById('add-account'));
-            if (addAccountModal) {
-                addAccountModal.hide();
+            accounts.push(newAccount);
+            localStorage.setItem('accounts', JSON.stringify(accounts));
+            
+            if (typeof updateAccountSelect === 'function') {
+                updateAccountSelect();
+            }
+            if (typeof renderAccountsTable === 'function') {
+                renderAccountsTable();
             }
 
-            const singleAddModal = new bootstrap.Modal(document.getElementById('single-add-transaction'));
-            singleAddModal.show();
+            if (typeof showToast === 'function') {
+                showToast('Thêm tài khoản thành công!');
+            } else {
+                alert('Thêm tài khoản thành công!');
+            }
+
+            const addAccountModalElem = document.getElementById('add-account');
+            if (addAccountModalElem) {
+                const addAccountModal = bootstrap.Modal.getInstance(addAccountModalElem);
+                if (addAccountModal) addAccountModal.hide();
+            }
+
+            const singleAddModalElem = document.getElementById('single-add-transaction');
+            if (singleAddModalElem) {
+                const singleAddModal = bootstrap.Modal.getOrCreateInstance(singleAddModalElem);
+                if (singleAddModal) singleAddModal.show();
+            }
 
             name.value = '';
             const accIconElem = document.getElementById('acc-icon');

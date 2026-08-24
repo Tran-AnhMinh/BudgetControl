@@ -121,13 +121,13 @@ function renderTable() {
     }
 
     if (filterCategory) {
-        filteredTransactions = filteredTransactions.filter(t => t.category === filterCategory);
+        filteredTransactions = filteredTransactions.filter(t => String(t.category) === String(filterCategory));
     }
     if (filterType !== 'all-type' && filterType !== '') {
         filteredTransactions = filteredTransactions.filter(t => t.type === filterType);
     }
     if (filterAccount) {
-        filteredTransactions = filteredTransactions.filter(t => t.account === filterAccount);
+        filteredTransactions = filteredTransactions.filter(t => String(t.account) === String(filterAccount));
     }
     if (filterFrequency === 'monthly') {
         filteredTransactions = filteredTransactions.filter(t => t.monthly);
@@ -167,8 +167,8 @@ function renderTable() {
         const typeIcon = isExpense ? 'bi-arrow-down' : 'bi-arrow-up';
         const typeText = isExpense ? 'Chi' : 'Thu';
 
-        const cat = categories.find(c => c.name === t.category) || { icon: 'tag', color: 'secondary' };
-        const acc = accounts.find(a => a.name === t.account) || { icon: 'wallet2', color: 'secondary' };
+        const cat = categories.find(c => String(c.id) === String(t.category)) || { name: t.category, icon: 'tag', color: 'secondary' };
+        const acc = accounts.find(a => String(a.id) === String(t.account)) || { name: t.account, icon: 'wallet2', color: 'secondary' };
 
         const amountSign = isExpense ? '-' : '+';
         const amountClass = isExpense ? 'text-danger' : 'text-success';
@@ -184,11 +184,11 @@ function renderTable() {
                     <div class="text-dark fw-medium">${dateStr}</div>
                     <div class="text-secondary" style="font-size: 12px;">${timeStr}</div>
                 </td>
-                <td class="text-nowrap text-center"><span class="${typeClass} fw-medium"><i class="bi ${typeIcon}"></i> ${typeText}</span></td>
-                <td class="text-nowrap "><span class="icon-circle bg-${cat.color}-subtle text-${cat.color} me-2"><i class="bi bi-${cat.icon}"></i></span> ${t.category}</td>
+                <td class="text-nowrap text-right"><span class="${typeClass} fw-medium"><i class="bi ${typeIcon}"></i> ${typeText}</span></td>
+                <td class="text-nowrap "><span class="icon-circle bg-${cat.color}-subtle text-${cat.color} me-2"><i class="bi bi-${cat.icon}"></i></span> ${cat.name || ''}</td>
                 <td>${t.detail || ''}</td>
-                <td class="text-nowrap"><span class="icon-circle bg-${acc.color}-subtle text-${acc.color} me-2"><i class="bi bi-${acc.icon}"></i></span> ${t.account}</td>
-                <td class="${amountClass} fw-bold text-end text-nowrap text-center">${amountSign}${formattedAmount}</td>
+                <td class="text-nowrap"><span class="icon-circle bg-${acc.color}-subtle text-${acc.color} me-2"><i class="bi bi-${acc.icon}"></i></span> ${acc.name || ''}</td>
+                <td class="${amountClass} fw-bold text-end text-nowrap text-left">${amountSign}${formattedAmount}</td>
                 <td class="text-nowrap text-center"><span class="badge badge-custom bg-${frequencyColor}-subtle text-${frequencyColor}">${frequencyText}</span></td>
                 <td class="text-end">
                     <div class="dropdown">
@@ -247,7 +247,8 @@ transactionTableBody.addEventListener('click', function(e) {
             if (catInput) catInput.value = transaction.category || '';
             const catBtn = document.getElementById('edit-btn-trans-category');
             if (catBtn) {
-                catBtn.innerHTML = transaction.category || 'Chọn danh mục';
+                const editCat = categories.find(c => String(c.id) === String(transaction.category));
+                catBtn.innerHTML = editCat ? `<span class="icon-circle bg-${editCat.color}-subtle text-${editCat.color} me-2"><i class="bi bi-${editCat.icon}"></i></span>${editCat.name}` : 'Chọn danh mục';
                 if (transaction.category) {
                     catBtn.classList.remove('text-secondary');
                 } else {
@@ -259,7 +260,8 @@ transactionTableBody.addEventListener('click', function(e) {
             if (accInput) accInput.value = transaction.account || '';
             const accBtn = document.getElementById('edit-btn-trans-account');
             if (accBtn) {
-                accBtn.innerHTML = transaction.account || 'Chọn tài khoản';
+                const editAcc = accounts.find(a => String(a.id) === String(transaction.account));
+                accBtn.innerHTML = editAcc ? `<span class="icon-circle bg-${editAcc.color}-subtle text-${editAcc.color} me-2"><i class="bi bi-${editAcc.icon}"></i></span>${editAcc.name}` : 'Chọn tài khoản';
                 if (transaction.account) {
                     accBtn.classList.remove('text-secondary');
                 } else {
@@ -307,11 +309,13 @@ if (saveEditBtn) {
         const type = document.getElementById('edit-expense').checked ? 'expense' : 'income';
         const amountStr = document.getElementById('edit-trans-amount').value.replace(/\D/g, '');
         const amount = parseInt(amountStr, 10) || 0;
-        const category = document.getElementById('edit-trans-category').value;
+        const categoryStr = document.getElementById('edit-trans-category').value;
+        const category = categoryStr ? parseInt(categoryStr, 10) : '';
         const dateInput = document.getElementById('edit-trans-date');
         const time = dateInput._flatpickr && dateInput._flatpickr.selectedDates[0] ? dateInput._flatpickr.selectedDates[0] : new Date();
         const frequency = document.getElementById('edit-trans-frequency').value === 'monthly';
-        const account = document.getElementById('edit-trans-account').value;
+        const accountStr = document.getElementById('edit-trans-account').value;
+        const account = accountStr ? parseInt(accountStr, 10) : '';
         const detail = document.getElementById('edit-trans-detail').value;
 
         let isValid = true;
@@ -475,8 +479,8 @@ function renderPagination(totalPages) {
     
     let html = '';
     
-    html += `<li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
-                <a class="page-link text-secondary pagination-btn" href="#" data-page="${currentPage - 1}">
+    html += `<li class="page-item mx-1 ${currentPage === 1 ? 'disabled' : ''}">
+                <a class="page-link text-secondary pagination-btn rounded-2" href="#" data-page="${currentPage - 1}">
                     <i class="bi bi-chevron-left"></i>
                 </a>
              </li>`;
@@ -485,29 +489,29 @@ function renderPagination(totalPages) {
     let endPage = Math.min(totalPages, currentPage + 2);
     
     if (startPage > 1) {
-        html += `<li class="page-item"><a class="page-link text-secondary pagination-btn" href="#" data-page="1">1</a></li>`;
+        html += `<li class="page-item mx-1"><a class="page-link text-secondary pagination-btn rounded-2" href="#" data-page="1">1</a></li>`;
         if (startPage > 2) {
-            html += `<li class="page-item"><span class="page-link text-secondary border-0 bg-transparent">...</span></li>`;
+            html += `<li class="page-item mx-1"><span class="page-link text-secondary border-0 bg-transparent rounded-2">...</span></li>`;
         }
     }
     
     for (let p = startPage; p <= endPage; p++) {
         if (p === currentPage) {
-            html += `<li class="page-item active"><a class="page-link pagination-btn" href="#" data-page="${p}">${p}</a></li>`;
+            html += `<li class="page-item mx-1 active"><a class="page-link pagination-btn rounded-2" href="#" data-page="${p}">${p}</a></li>`;
         } else {
-            html += `<li class="page-item"><a class="page-link text-secondary pagination-btn" href="#" data-page="${p}">${p}</a></li>`;
+            html += `<li class="page-item mx-1"><a class="page-link text-secondary pagination-btn rounded-2" href="#" data-page="${p}">${p}</a></li>`;
         }
     }
     
     if (endPage < totalPages) {
         if (endPage < totalPages - 1) {
-            html += `<li class="page-item m-1"><span class="page-link text-secondary border-0 bg-transparent">...</span></li>`;
+            html += `<li class="page-item mx-1"><span class="page-link text-secondary border-0 bg-transparent rounded-2">...</span></li>`;
         }
-        html += `<li class="page-item m-1"><a class="page-link text-secondary pagination-btn" href="#" data-page="${totalPages}">${totalPages}</a></li>`;
+        html += `<li class="page-item mx-1"><a class="page-link text-secondary pagination-btn rounded-2" href="#" data-page="${totalPages}">${totalPages}</a></li>`;
     }
     
-    html += `<li class="page-item m-1 ${currentPage === totalPages ? 'disabled' : ''}">
-                <a class="page-link text-secondary pagination-btn" href="#" data-page="${currentPage + 1}">
+    html += `<li class="page-item mx-1 ${currentPage === totalPages ? 'disabled' : ''}">
+                <a class="page-link text-secondary pagination-btn rounded-2" href="#" data-page="${currentPage + 1}">
                     <i class="bi bi-chevron-right"></i>
                 </a>
              </li>`;
@@ -539,60 +543,35 @@ if (itemsPerPageSelect) {
     });
 }
 
-async function saveExcel(){
-    if (typeof XLSX === 'undefined') {
-        alert('Thư viện xuất Excel chưa được tải. Vui lòng thử lại sau.');
-        return;
-    }
-
-    try {
-        const fileDes = await window.showSaveFilePicker({
-            suggestedName: 'transactions.xlsx',
-            types: [
-                {
-                    description: 'Excel Files',
-                    accept: {
-                        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx']
-                    }
-                }
-            ]
-        });
-
-        const data = [];
-        data.push(['Ngày giờ', 'Loại', 'Danh mục', 'Chi tiết', 'Tài khoản', 'Số tiền', 'Tần suất']);
+function saveExcel() {
+    let data = [];
+    data.push(['Ngày giờ', 'Loại', 'Danh mục', 'Chi tiết', 'Tài khoản', 'Số tiền', 'Tần suất']);
+    
+    for (const t of transactions) {
+        const dateObj = new Date(t.time);
+        const dateStr = dateObj.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        const timeStr = dateObj.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+        const typeText = t.type === 'expense' ? 'Chi' : 'Thu';
+        const frequencyText = t.monthly ? 'Hàng tháng' : 'Một lần';
         
-        for (const t of transactions) {
-            const dateObj = new Date(t.time);
-            const dateStr = dateObj.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' });
-            const timeStr = dateObj.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
-            const typeText = t.type === 'expense' ? 'Chi' : 'Thu';
-            const frequencyText = t.monthly ? 'Hàng tháng' : 'Một lần';
-            
-            data.push([
-                `${dateStr} ${timeStr}`,
-                typeText,
-                t.category || '',
-                t.detail || '',
-                t.account || '',
-                t.amount || 0,
-                frequencyText
-            ]);
-        }
-        const wb = XLSX.utils.book_new();
-        const ws = XLSX.utils.aoa_to_sheet(data);
-        XLSX.utils.book_append_sheet(wb, ws, "Giao dịch");
+        data.push([
+            `${dateStr} ${timeStr}`,
+            typeText,
+            t.category || '',
+            t.detail || '',
+            t.account || '',
+            t.amount || 0,
+            frequencyText
+        ]);
+    }
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.aoa_to_sheet(data);
+    XLSX.utils.book_append_sheet(wb, ws, "Giao dịch");
 
-        const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+    XLSX.writeFile(wb, "transactions.xlsx");
 
-        const writableStream = await fileDes.createWritable();
-        await writableStream.write(excelBuffer);
-        await writableStream.close();
-
-        if (typeof showToast === 'function') {
-            showToast('Xuất dữ liệu Excel thành công!');
-        }
-    } catch (error) {
-        console.error('Lỗi khi lưu file:', error);
+    if (typeof showToast === 'function') {
+        showToast('Xuất dữ liệu Excel thành công!');
     }
 }
 

@@ -249,9 +249,9 @@ if (btnSaveMultiTransaction) {
                 newTransactions.push({
                     time: combinedDateTime,
                     type: typeVal,
-                    category: catVal,
+                    category: parseInt(catVal, 10),
                     detail: detailVal,
-                    account: accVal,
+                    account: parseInt(accVal, 10),
                     amount: amountVal,
                     monthly: freqVal === 'monthly'
                 });

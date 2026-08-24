@@ -79,6 +79,7 @@ function renderCagetoriesTable() {
         const cageName = cage.name || '';
         const cageIcon = cage.icon || '';
         const cageColor = cage.color || 'secondary';
+        const cageColorTranslated = translateColor(cageColor);
 
         return `
             <tr class="align-middle">
@@ -87,22 +88,22 @@ function renderCagetoriesTable() {
                 <td class="text-nowrap text-center"><i class="text-${cageColor} bi bi-${cageIcon} fs-5"></i></td>
                 <td class="text-nowrap text-center">
                     <span class="badge bg-${cageColor}-subtle text-${cageColor} px-3 py-2 rounded-pill">
-                        ${cageColor}
+                        ${cageColorTranslated}
                     </span>
                 </td>
                 <td class="text-center text-nowrap">
                     <div class="dropdown">
-                        <button class="btn btn-sm text-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="dropdownMenuButtonCage${index}">
+                        <button class="btn btn-sm text-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="dropdownMenuButtonCage${cage.id}">
                             <i class="bi bi-three-dots-vertical"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li>
-                                <button class="dropdown-item edit-category-btn" data-index="${index}">
+                                <button class="dropdown-item edit-category-btn" data-id="${cage.id}">
                                     <i class="bi bi-pencil me-2"></i> Chỉnh sửa
                                 </button>
                             </li>
                             <li>
-                                <button class="dropdown-item text-danger delete-category-btn" data-index="${index}">
+                                <button class="dropdown-item text-danger delete-category-btn" data-id="${cage.id}">
                                     <i class="bi bi-trash me-2"></i> Xóa
                                 </button>
                             </li>
@@ -189,24 +190,26 @@ if (CagetoriesTableBody) {
     CagetoriesTableBody.addEventListener('click', function(e) {
         const deleteBtn = e.target.closest('.delete-category-btn');
         if (deleteBtn) {
-            const index = parseInt(deleteBtn.getAttribute('data-index'), 10);
+            const id = parseInt(deleteBtn.getAttribute('data-id'), 10);
             if (confirm('Bạn có chắc chắn muốn xóa danh mục này?')) {
                 let cagetories = getCagetories();
-                cagetories.splice(index, 1);
-                localStorage.setItem('categories', JSON.stringify(cagetories));
-                renderCagetoriesTable();
-                if (typeof showToast === 'function') {
-                    showToast('Xóa danh mục thành công!');
+                const index = cagetories.findIndex(c => c.id === id);
+                if (index > -1) {
+                    cagetories.splice(index, 1);
+                    localStorage.setItem('categories', JSON.stringify(cagetories));
+                    renderCagetoriesTable();
+                    if (typeof showToast === 'function') {
+                        showToast('Xóa danh mục thành công!');
+                    }
                 }
             }
         }
 
-        // Handle Edit
         const editBtn = e.target.closest('.edit-category-btn');
         if (editBtn) {
-            const index = parseInt(editBtn.getAttribute('data-index'), 10);
+            const id = parseInt(editBtn.getAttribute('data-id'), 10);
             let cagetories = getCagetories();
-            const category = cagetories[index];
+            const category = cagetories.find(c => c.id === id);
             if (category) {
                 document.getElementById('edit-cat-name').value = category.name || '';
                 
@@ -220,7 +223,7 @@ if (CagetoriesTableBody) {
                     colorRadio.checked = true;
                 }
 
-                document.getElementById('edit-cat-index').value = index;
+                document.getElementById('edit-cat-index').value = id;
 
                 // Show modal
                 const editModalElem = document.getElementById('editCategoryModal');
@@ -247,7 +250,7 @@ if (btnSaveEditCategory) {
         }
 
         if (isValid) {
-            const index = parseInt(document.getElementById('edit-cat-index').value, 10);
+            const id = parseInt(document.getElementById('edit-cat-index').value, 10);
             const cageName = nameInput.value.trim();
             const iconRadio = document.querySelector('input[name="editCategoryIcon"]:checked');
             const cageIcon = iconRadio ? iconRadio.id.replace('edit-icon-', '') : 'tag';
@@ -255,7 +258,8 @@ if (btnSaveEditCategory) {
             const cageColor = colorRadio ? colorRadio.id.replace('edit-color-', '') : 'secondary';
 
             let cagetories = getCagetories();
-            if (cagetories[index]) {
+            const index = cagetories.findIndex(c => c.id === id);
+            if (index > -1) {
                 cagetories[index].name = cageName;
                 cagetories[index].icon = cageIcon;
                 cagetories[index].color = cageColor;
@@ -277,54 +281,7 @@ if (btnSaveEditCategory) {
     });
 }
 
-// Handle Save New Category
-const btnSaveNewCategory = document.getElementById('btn-save-new-category');
-if (btnSaveNewCategory) {
-    btnSaveNewCategory.addEventListener('click', function() {
-        let isValid = true;
-        const nameInput = document.getElementById('new-cat-name');
-        
-        if (!nameInput.value.trim()) {
-            nameInput.classList.add('is-invalid');
-            isValid = false;
-        } else {
-            nameInput.classList.remove('is-invalid');
-        }
 
-        if (isValid) {
-            const cageName = nameInput.value.trim();
-            const iconRadio = document.querySelector('input[name="newCategoryIcon"]:checked');
-            const cageIcon = iconRadio ? iconRadio.id.replace('new-icon-', '') : 'tag';
-            const colorRadio = document.querySelector('input[name="newCategoryColor"]:checked');
-            const cageColor = colorRadio ? colorRadio.id.replace('new-color-', '') : 'secondary';
-
-            let cagetories = getCagetories();
-            cagetories.push({
-                name: cageName,
-                icon: cageIcon,
-                color: cageColor
-            });
-            
-            localStorage.setItem('categories', JSON.stringify(cagetories));
-            renderCagetoriesTable();
-
-            if (typeof showToast === 'function') {
-                showToast('Thêm danh mục thành công!');
-            }
-
-            const addModalElem = document.getElementById('addCategoryModal');
-            if (addModalElem) {
-                const addModal = bootstrap.Modal.getInstance(addModalElem);
-                if (addModal) addModal.hide();
-            }
-
-            // reset form
-            nameInput.value = '';
-            document.getElementById('new-icon-airplane').checked = true;
-            document.getElementById('new-color-primary').checked = true;
-        }
-    });
-}
 
 // Helper to get categories
 function getCagetories() {
@@ -332,3 +289,39 @@ function getCagetories() {
 }
 
 renderCagetoriesTable();
+function saveExcelCagetories() {
+    let cagetories = getCagetories();
+    if (!cagetories || cagetories.length === 0) {
+        if (typeof showToast === 'function') {
+            showToast('Không có dữ liệu để xuất!');
+        }
+        return;
+    }
+
+    const data = [];
+    data.push(['ID', 'Tên danh mục', 'Icon', 'Màu sắc']);
+    
+    for (const c of cagetories) {
+        data.push([
+            c.id || '',
+            c.name || '',
+            c.icon || '',
+            c.color || ''
+        ]);
+    }
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.aoa_to_sheet(data);
+    XLSX.utils.book_append_sheet(wb, ws, "Danh mục");
+
+    XLSX.writeFile(wb, "categories.xlsx");
+
+    if (typeof showToast === 'function') {
+        showToast('Xuất dữ liệu Excel thành công!');
+    }
+}
+
+const btnExportCagetories = document.getElementById('btn-export-excel-cagetories');
+if (btnExportCagetories) {
+    btnExportCagetories.addEventListener('click', saveExcelCagetories);
+}
+

@@ -9,19 +9,19 @@ function generateMockData() {
     const savedCategories = JSON.parse(
         localStorage.getItem('categories')
     ) || [
-        { name: 'Ăn uống' },
-        { name: 'Lương' },
-        { name: 'Mua sắm' }
-    ];
+            { id: 1, name: 'Ăn uống' },
+            { id: 2, name: 'Lương' },
+            { id: 3, name: 'Mua sắm' }
+        ];
 
     // Lấy tài khoản từ localStorage
     // Nếu chưa có thì dùng dữ liệu mặc định
     const savedAccounts = JSON.parse(
         localStorage.getItem('accounts')
     ) || [
-        { name: 'Tiền mặt' },
-        { name: 'Thẻ ATM' }
-    ];
+            { id: 1, name: 'Tiền mặt' },
+            { id: 2, name: 'Thẻ ATM' }
+        ];
 
     const newMockTransactions = [];
 
@@ -39,13 +39,13 @@ function generateMockData() {
         const randomCategory =
             savedCategories[
                 getRandomInt(0, savedCategories.length - 1)
-            ].name;
+            ].id;
 
         // Random tài khoản
         const randomAccount =
             savedAccounts[
                 getRandomInt(0, savedAccounts.length - 1)
-            ].name;
+            ].id;
 
         // Random số tiền
         // Chi: 50.000 - 2.000.000

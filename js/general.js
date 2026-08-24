@@ -137,3 +137,31 @@ document.addEventListener('click', function(e) {
     }
 });
 
+function translateColor(color){
+    switch(color){
+        case 'primary':
+            return 'Xanh dương';
+            break;
+        case 'secondary':
+            return 'Xám';
+            break;
+        case 'success':
+            return 'Xanh lá';
+            break;
+        case 'danger':
+            return 'Đỏ';
+            break;
+        case 'warning':
+            return 'Vàng';
+            break;
+        case 'info':
+            return 'Xanh lơ';
+            break;
+        case 'light':
+            return 'Trắng';
+            break;
+        case 'dark':
+            return 'Đen';
+            break;
+    }
+}

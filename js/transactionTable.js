@@ -501,12 +501,12 @@ function renderPagination(totalPages) {
     
     if (endPage < totalPages) {
         if (endPage < totalPages - 1) {
-            html += `<li class="page-item"><span class="page-link text-secondary border-0 bg-transparent">...</span></li>`;
+            html += `<li class="page-item m-1"><span class="page-link text-secondary border-0 bg-transparent">...</span></li>`;
         }
-        html += `<li class="page-item"><a class="page-link text-secondary pagination-btn" href="#" data-page="${totalPages}">${totalPages}</a></li>`;
+        html += `<li class="page-item m-1"><a class="page-link text-secondary pagination-btn" href="#" data-page="${totalPages}">${totalPages}</a></li>`;
     }
     
-    html += `<li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+    html += `<li class="page-item m-1 ${currentPage === totalPages ? 'disabled' : ''}">
                 <a class="page-link text-secondary pagination-btn" href="#" data-page="${currentPage + 1}">
                     <i class="bi bi-chevron-right"></i>
                 </a>

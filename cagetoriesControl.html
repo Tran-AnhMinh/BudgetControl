@@ -47,7 +47,7 @@
             </div>
         </nav>
         <div class="main-content flex-grow-1">
-        <div class="container-fluid p-4 flex" style="margin: 0 auto;">
+        <div class="container-fluid p-4 flex" style="max-width: 1400px; margin: 0 auto;">
             <div class="d-flex justify-content-between align-items-center mb-2">
                 <div>
                     <h1 class="header-title mb-1">Danh mục</h1>
@@ -85,11 +85,10 @@
 
         </div>
 
-        <div class="container-fluid p-0 m-0 d-flex justify-content-start">
-            <div class="container p-0 m-0 ms-0 me-auto">
+
                 <div class="filter-card d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3">
                     <div class="d-flex gap-2 flex-wrap flex-grow-1 justify-content-lg-end">
-                        <div class="fw-bold mb-2 mb-md-0" style="font-size: 15px;" id="total-transaction">Tổng <span
+                        <div class="fw-bold mb-2 mb-md-0 me-auto" style="font-size: 15px;" id="total-transaction">Tổng <span
                             id="category-count">42</span> danh mục
                         </div>
 
@@ -115,20 +114,20 @@
                             <tr>
                                 <th scope="col" class="fw-medium text-nowrap text-center">Số</th>
                                 <th scope="col" class="fw-medium text-nowrap text-center">Tên <button type="button"
-                                        class="btn btn-link p-0 ms-1 align-baseline" id="btn-sort-type" style="line-height: 1;"><i class="bi bi-chevron-expand"
+                                        class="btn btn-link p-0 ms-1 align-baseline" id="btn-sort-cage-name" style="line-height: 1;"><i class="bi bi-chevron-expand"
                                             style="font-size: 12px; cursor: pointer;"></i></button></th>
-                                <th scope="col" class="fw-medium text-nowrap text-center">Tài khoản <button
-                                        type="button" class="btn btn-link p-0 ms-1 align-baseline" id="btn-sort-account" style="line-height: 1;"><i
+                                <th scope="col" class="fw-medium text-nowrap text-center">Icon <button
+                                        type="button" class="btn btn-link p-0 ms-1 align-baseline" id="btn-sort-cage-icon" style="line-height: 1;"><i
                                             class="bi bi-chevron-expand"
                                             style="font-size: 12px; cursor: pointer;"></i></button></th>
-                                <th scope="col" class="fw-medium text-end text-nowrap text-center">Số tiền <button
-                                        type="button" class="btn btn-link p-0 ms-1 align-baseline" id="btn-sort-amount" style="line-height: 1;"><i
+                                <th scope="col" class="fw-medium text-end text-nowrap text-center">Màu <button
+                                        type="button" class="btn btn-link p-0 ms-1 align-baseline" id="btn-sort-cage-color" style="line-height: 1;"><i
                                             class="bi bi-chevron-expand"
                                             style="font-size: 12px; cursor: pointer;"></i></button></th>
                                 <th scope="col" class="fw-medium text-end text-nowrap text-center">Thao tác</th>
                             </tr>
                         </thead>
-                        <tbody class="border-top-0" id="transaction-table-body">
+                        <tbody class="border-top-0" id="cagetories-table-body">
                         </tbody>
                     </table>
                 </div>
@@ -150,14 +149,384 @@
                         </select>
                     </div>
                 </div>
-            </div>
 
-            <div 
+    </div>
+
+    <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content shadow border-0">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Thêm danh mục</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form">
+                        <p class="mb-2">Tên danh mục <span class="text-danger">*</span></p>
+                        <div>
+                            <input type="text" class="form-control mb-3" id="new-cat-name" placeholder="Nhập tên danh mục">
+                            <div class="invalid-feedback" style="margin-top:-10px; margin-bottom: 10px;">Vui lòng nhập tên danh mục.</div>
+                        </div>
+                        <p class="mb-2">Biểu tượng</p>
+                        <div class="d-flex flex-wrap gap-2 mb-3" id="new-cat-icon">
+<input type="radio" class="btn-check selected" name="newCategoryIcon" id="new-icon-airplane"
+                                autocomplete="off" checked>
+                            <label class="btn btn-outline-secondary p-2" for="new-icon-airplane"><i
+                                    class="bi bi-airplane fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="newCategoryIcon" id="new-icon-bag" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="new-icon-bag"><i
+                                    class="bi bi-bag fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="newCategoryIcon" id="new-icon-bandaid"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="new-icon-bandaid"><i
+                                    class="bi bi-bandaid fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="newCategoryIcon" id="new-icon-bank" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="new-icon-bank"><i
+                                    class="bi bi-bank fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="newCategoryIcon" id="new-icon-basket"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="new-icon-basket"><i
+                                    class="bi bi-basket fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="newCategoryIcon" id="new-icon-building"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="new-icon-building"><i
+                                    class="bi bi-building fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="newCategoryIcon" id="new-icon-bus-front"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="new-icon-bus-front"><i
+                                    class="bi bi-bus-front fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="newCategoryIcon" id="new-icon-cake" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="new-icon-cake"><i
+                                    class="bi bi-cake fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="newCategoryIcon" id="new-icon-calculator"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="new-icon-calculator"><i
+                                    class="bi bi-calculator fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="newCategoryIcon" id="new-icon-camera"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="new-icon-camera"><i
+                                    class="bi bi-camera fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="newCategoryIcon" id="new-icon-camera-reels"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="new-icon-camera-reels"><i
+                                    class="bi bi-camera-reels fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="newCategoryIcon" id="new-icon-capsule"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="new-icon-capsule"><i
+                                    class="bi bi-hospital fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="newCategoryIcon" id="new-icon-car-front"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="new-icon-car-front"><i
+                                    class="bi bi-car-front fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="newCategoryIcon" id="new-icon-cart" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="new-icon-cart"><i
+                                    class="bi bi-cart fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="newCategoryIcon" id="new-icon-cash" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="new-icon-cash"><i
+                                    class="bi bi-cash fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="newCategoryIcon" id="new-icon-controller"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="new-icon-controller"><i
+                                    class="bi bi-controller fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="newCategoryIcon" id="new-icon-fuel-pump"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="new-icon-fuel-pump"><i
+                                    class="bi bi-fuel-pump fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="newCategoryIcon" id="new-icon-gem" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="new-icon-gem"><i
+                                    class="bi bi-gem fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="newCategoryIcon" id="new-icon-heart-pulse"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="new-icon-heart-pulse"><i
+                                    class="bi bi-heart-pulse fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="newCategoryIcon" id="new-icon-house"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="new-icon-house"><i
+                                    class="bi bi-house fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="newCategoryIcon" id="new-icon-lightning-charge"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="new-icon-lightning-charge"><i
+                                    class="bi bi-lightning-charge fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="newCategoryIcon" id="new-icon-mortarboard"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="new-icon-mortarboard"><i
+                                    class="bi bi-mortarboard fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="newCategoryIcon" id="new-icon-people"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="new-icon-people"><i
+                                    class="bi bi-cup-hot fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="newCategoryIcon" id="new-icon-phone"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="new-icon-phone"><i
+                                    class="bi bi-phone fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="newCategoryIcon" id="new-icon-shop" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="new-icon-shop"><i
+                                    class="bi bi-shop fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="newCategoryIcon" id="new-icon-suitcase"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="new-icon-suitcase"><i
+                                    class="bi bi-suitcase fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="newCategoryIcon" id="new-icon-ticket-detailed"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="new-icon-ticket-detailed"><i
+                                    class="bi bi-ticket-detailed fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="newCategoryIcon" id="new-icon-wallet"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="new-icon-wallet"><i
+                                    class="bi bi-wallet fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="newCategoryIcon" id="new-icon-book" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="new-icon-book"><i
+                                    class="bi bi-book fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="newCategoryIcon" id="new-icon-piggy-bank"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="new-icon-piggy-bank"><i
+                                    class="bi bi-piggy-bank fs-5"></i></label>
+</div>
+                        <p class="mb-2">Màu sắc</p>
+                        <div class="d-flex flex-wrap gap-2" id="new-cat-color">
+                            <input type="radio" class="btn-check selected" name="newCategoryColor" id="new-color-primary" autocomplete="off" checked>
+                            <label class="btn btn-outline-primary fw-bold" for="new-color-primary">Xanh biển</label>
+                            <input type="radio" class="btn-check" name="newCategoryColor" id="new-color-secondary" autocomplete="off">
+                            <label class="btn btn-outline-secondary fw-bold" for="new-color-secondary">Xám</label>
+                            <input type="radio" class="btn-check" name="newCategoryColor" id="new-color-success" autocomplete="off">
+                            <label class="btn btn-outline-success fw-bold" for="new-color-success">Xanh lá</label>
+                            <input type="radio" class="btn-check" name="newCategoryColor" id="new-color-danger" autocomplete="off">
+                            <label class="btn btn-outline-danger fw-bold" for="new-color-danger">Đỏ</label>
+                            <input type="radio" class="btn-check" name="newCategoryColor" id="new-color-warning" autocomplete="off">
+                            <label class="btn btn-outline-warning fw-bold" for="new-color-warning">Vàng</label>
+                            <input type="radio" class="btn-check" name="newCategoryColor" id="new-color-info" autocomplete="off">
+                            <label class="btn btn-outline-info fw-bold" for="new-color-info">Xanh lơ</label>
+                            <input type="radio" class="btn-check" name="newCategoryColor" id="new-color-dark" autocomplete="off">
+                            <label class="btn btn-outline-dark fw-bold" for="new-color-dark">Tối</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-primary" id="btn-save-new-category">Lưu</button>
+                </div>
+            </div>
         </div>
     </div>
+
+    <div class="modal fade" id="editCategoryModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content shadow border-0">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Chỉnh sửa danh mục</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form">
+                        <p class="mb-2">Tên danh mục <span class="text-danger">*</span></p>
+                        <div>
+                            <input type="text" class="form-control mb-3" id="edit-cat-name" placeholder="Nhập tên danh mục">
+                            <div class="invalid-feedback" style="margin-top:-10px; margin-bottom: 10px;">Vui lòng nhập tên danh mục.</div>
+                        </div>
+                        <p class="mb-2">Biểu tượng</p>
+                        <div class="d-flex flex-wrap gap-2 mb-3" id="edit-cat-icon">
+                            <input type="radio" class="btn-check" name="editCategoryIcon" id="edit-icon-airplane"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="edit-icon-airplane"><i
+                                    class="bi bi-airplane fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="editCategoryIcon" id="edit-icon-bag" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="edit-icon-bag"><i
+                                    class="bi bi-bag fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="editCategoryIcon" id="edit-icon-bandaid"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="edit-icon-bandaid"><i
+                                    class="bi bi-bandaid fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="editCategoryIcon" id="edit-icon-bank" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="edit-icon-bank"><i
+                                    class="bi bi-bank fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="editCategoryIcon" id="edit-icon-basket"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="edit-icon-basket"><i
+                                    class="bi bi-basket fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="editCategoryIcon" id="edit-icon-building"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="edit-icon-building"><i
+                                    class="bi bi-building fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="editCategoryIcon" id="edit-icon-bus-front"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="edit-icon-bus-front"><i
+                                    class="bi bi-bus-front fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="editCategoryIcon" id="edit-icon-cake" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="edit-icon-cake"><i
+                                    class="bi bi-cake fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="editCategoryIcon" id="edit-icon-calculator"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="edit-icon-calculator"><i
+                                    class="bi bi-calculator fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="editCategoryIcon" id="edit-icon-camera"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="edit-icon-camera"><i
+                                    class="bi bi-camera fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="editCategoryIcon" id="edit-icon-camera-reels"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="edit-icon-camera-reels"><i
+                                    class="bi bi-camera-reels fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="editCategoryIcon" id="edit-icon-capsule"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="edit-icon-capsule"><i
+                                    class="bi bi-hospital fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="editCategoryIcon" id="edit-icon-car-front"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="edit-icon-car-front"><i
+                                    class="bi bi-car-front fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="editCategoryIcon" id="edit-icon-cart" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="edit-icon-cart"><i
+                                    class="bi bi-cart fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="editCategoryIcon" id="edit-icon-cash" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="edit-icon-cash"><i
+                                    class="bi bi-cash fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="editCategoryIcon" id="edit-icon-controller"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="edit-icon-controller"><i
+                                    class="bi bi-controller fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="editCategoryIcon" id="edit-icon-fuel-pump"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="edit-icon-fuel-pump"><i
+                                    class="bi bi-fuel-pump fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="editCategoryIcon" id="edit-icon-gem" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="edit-icon-gem"><i
+                                    class="bi bi-gem fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="editCategoryIcon" id="edit-icon-heart-pulse"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="edit-icon-heart-pulse"><i
+                                    class="bi bi-heart-pulse fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="editCategoryIcon" id="edit-icon-house"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="edit-icon-house"><i
+                                    class="bi bi-house fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="editCategoryIcon" id="edit-icon-lightning-charge"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="edit-icon-lightning-charge"><i
+                                    class="bi bi-lightning-charge fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="editCategoryIcon" id="edit-icon-mortarboard"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="edit-icon-mortarboard"><i
+                                    class="bi bi-mortarboard fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="editCategoryIcon" id="edit-icon-people"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="edit-icon-people"><i
+                                    class="bi bi-cup-hot fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="editCategoryIcon" id="edit-icon-phone"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="edit-icon-phone"><i
+                                    class="bi bi-phone fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="editCategoryIcon" id="edit-icon-shop" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="edit-icon-shop"><i
+                                    class="bi bi-shop fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="editCategoryIcon" id="edit-icon-suitcase"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="edit-icon-suitcase"><i
+                                    class="bi bi-suitcase fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="editCategoryIcon" id="edit-icon-ticket-detailed"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="edit-icon-ticket-detailed"><i
+                                    class="bi bi-ticket-detailed fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="editCategoryIcon" id="edit-icon-wallet"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="edit-icon-wallet"><i
+                                    class="bi bi-wallet fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="editCategoryIcon" id="edit-icon-book" autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="edit-icon-book"><i
+                                    class="bi bi-book fs-5"></i></label>
+
+                            <input type="radio" class="btn-check" name="editCategoryIcon" id="edit-icon-piggy-bank"
+                                autocomplete="off">
+                            <label class="btn btn-outline-secondary p-2" for="edit-icon-piggy-bank"><i
+                                    class="bi bi-piggy-bank fs-5"></i></label>
+</div>
+                        <p class="mb-2">Màu sắc</p>
+                        <div class="d-flex flex-wrap gap-2" id="edit-cat-color">
+                            <input type="radio" class="btn-check selected" name="editCategoryColor" id="edit-color-primary" autocomplete="off">
+                            <label class="btn btn-outline-primary fw-bold" for="edit-color-primary">Xanh biển</label>
+                            <input type="radio" class="btn-check" name="editCategoryColor" id="edit-color-secondary" autocomplete="off">
+                            <label class="btn btn-outline-secondary fw-bold" for="edit-color-secondary">Xám</label>
+                            <input type="radio" class="btn-check" name="editCategoryColor" id="edit-color-success" autocomplete="off">
+                            <label class="btn btn-outline-success fw-bold" for="edit-color-success">Xanh lá</label>
+                            <input type="radio" class="btn-check" name="editCategoryColor" id="edit-color-danger" autocomplete="off">
+                            <label class="btn btn-outline-danger fw-bold" for="edit-color-danger">Đỏ</label>
+                            <input type="radio" class="btn-check" name="editCategoryColor" id="edit-color-warning" autocomplete="off">
+                            <label class="btn btn-outline-warning fw-bold" for="edit-color-warning">Vàng</label>
+                            <input type="radio" class="btn-check" name="editCategoryColor" id="edit-color-info" autocomplete="off">
+                            <label class="btn btn-outline-info fw-bold" for="edit-color-info">Xanh lơ</label>
+                            <input type="radio" class="btn-check" name="editCategoryColor" id="edit-color-dark" autocomplete="off">
+                            <label class="btn btn-outline-dark fw-bold" for="edit-color-dark">Tối</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer border-0">
+                    <input type="hidden" id="edit-cat-index" value="">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-primary" id="edit-btn-save-category">Lưu</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="js/sidebar.js"></script>
+    <script src="js/general.js"></script>
+    <script src="js/addCategories.js"></script>
+    <script src="js/cagetoriesTable.js"></script>
 </body>
 
 </html>

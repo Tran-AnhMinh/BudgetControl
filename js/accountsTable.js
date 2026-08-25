@@ -240,7 +240,6 @@ if (AccountsTableBody) {
 
                 document.getElementById('edit-acc-index').value = id;
 
-                // Show modal
                 const editModalElem = document.getElementById('editAccountModal');
                 if (editModalElem) {
                     const editModal = bootstrap.Modal.getOrCreateInstance(editModalElem);

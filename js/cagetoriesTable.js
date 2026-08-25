@@ -1,3 +1,4 @@
+let searchQueryCage = '';
 let currentSortCage = '';
 let curruentPageCage = 1;
 let itemsPerPageCage = 10;
@@ -9,7 +10,6 @@ let sortOrdersCage = {
 };
 
 const CagetoriesTableBody = document.getElementById("cagetories-table-body");
-
 function applyCurrentCageSort(cagetories){
     switch (currentSortCage) {
         case 'name':
@@ -51,8 +51,22 @@ if (btnSortCageColor) {
     });
 }
 
+const searchCategoryInput = document.getElementById('search-category-input');
+if (searchCategoryInput) {
+    searchCategoryInput.addEventListener('input', function(e) {
+        searchQueryCage = e.target.value;
+        curruentPageCage = 1;
+        renderCagetoriesTable();
+    });
+}
+
 function renderCagetoriesTable() {
     let cagetories = JSON.parse(localStorage.getItem('categories')) || [];
+    
+    if (searchQueryCage.trim() !== '') {
+        const query = searchQueryCage.toLowerCase();
+        cagetories = cagetories.filter(c => (c.name || '').toLowerCase().includes(query));
+    }
     
     applyCurrentCageSort(cagetories);
 
@@ -113,11 +127,13 @@ function renderCagetoriesTable() {
             </tr>
         `;
     }).join('');
-
     if (CagetoriesTableBody) {
         CagetoriesTableBody.innerHTML = rowsHTMLCage;
     }
 }
+
+const addCageBtn = document.getElementById('btn-add-category');
+if (addCageBtn) {fromTrans = 0;}
 
 function renderPaginationCage(totalPages) {
     const container = document.getElementById('pagination-container');

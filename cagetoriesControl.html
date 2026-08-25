@@ -87,30 +87,28 @@
             </div>
 
             <div class="main-area d-flex flex-column flex-xl-row w-100">
-                
                 <div class="cagetoriy-area m-3 w-100">
                     <div class="filter-card d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 m-3">
-                        <div class="d-flex gap-2 flex-wrap flex-grow-1 justify-content-lg-end">
-                            <div class="fw-bold mb-2 mb-md-0 me-auto" style="font-size: 15px;" id="total-transaction">Tổng <span
+                        <div class="d-flex gap-2 flex-wrap flex-grow-1 justify-content-lg-end align-items-center">
+                            <div class="fw-bold mb-2 mb-md-0 me-auto" style="font-size: 14px;" id="total-transaction">Tổng <span
                                 id="category-count">42</span> danh mục
+                            </div><div class="position-relative flex-grow-1" style="max-width: 180px;">
+                                <i class="bi bi-search search-icon"></i>
+                                <input type="text" id="search-category-input" class="form-control search-input py-1" style="font-size: 14px;" placeholder="Tìm theo tên">
                             </div>
-
-                            <div class="d-flex gap-2 ms-lg-2">
-                                <button type="button" class="btn btn-export px-3 py-2 d-flex align-items-center"
-                                    id="btn-export-excel-cagetories">
-                                    <i class="bi bi-download me-2"></i> Xuất Excel
+                            <div class="d-flex gap-2 ms-lg-1">
+                                <button type="button" class="btn btn-export px-2 py-1 d-flex align-items-center"
+                                    id="btn-export-excel-cagetories" style="font-size: 14px;">
+                                    <i class="bi bi-download me-1"></i> Xuất
                                 </button>
-                                <button type="button" class="btn btn-add px-3 py-2 d-flex align-items-center"
+                                <button type="button" class="btn btn-add px-2 py-1 d-flex align-items-center"
                                     data-bs-toggle="modal" data-bs-target="#add-category"
-                                    id="add-category-btn">
-                                    <i class="bi bi-plus-lg me-2"></i> Thêm danh mục
+                                    id="add-category-btn" style="font-size: 14px;">
+                                    <i class="bi bi-plus-lg me-1"></i> Thêm
                                 </button>
-
                             </div>
                         </div>
                     </div>
-
-                    
                     <div class="table-responsive bg-white rounded-3 border mb-3">
                         <table class="table table-hover align-middle mb-0" style="font-size: 14px;">
                             <thead class="table-light text-secondary">
@@ -156,20 +154,23 @@
 
                 <div class="accounts-area m-3 w-100">
                     <div class="filter-card d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 m-3">
-                        <div class="d-flex gap-2 flex-wrap flex-grow-1 justify-content-lg-end">
-                            <div class="fw-bold mb-2 mb-md-0 me-auto" style="font-size: 15px;" id="total-transaction">Tổng <span
+                        <div class="d-flex gap-2 flex-wrap flex-grow-1 justify-content-lg-end align-items-center">
+                            <div class="fw-bold mb-2 mb-md-0 me-auto" style="font-size: 14px;" id="total-transaction">Tổng <span
                                 id="account-count">42</span> Tài khoản
                             </div>
-
-                            <div class="d-flex gap-2 ms-lg-2">
-                                <button type="button" class="btn btn-export px-3 py-2 d-flex align-items-center"
-                                    id="btn-export-excel-accounts">
-                                    <i class="bi bi-download me-2"></i> Xuất Excel
+                            <div class="position-relative flex-grow-1" style="max-width: 180px;">
+                                <i class="bi bi-search search-icon"></i>
+                                <input type="text" id="search-account-input" class="form-control search-input py-1" style="font-size: 14px;" placeholder="Tìm theo tên">
+                            </div>
+                            <div class="d-flex gap-2 ms-lg-1">
+                                <button type="button" class="btn btn-export px-2 py-1 d-flex align-items-center"
+                                    id="btn-export-excel-accounts" style="font-size: 14px;">
+                                    <i class="bi bi-download me-1"></i> Xuất
                                 </button>
-                                <button type="button" class="btn btn-add px-3 py-2 d-flex align-items-center"
+                                <button type="button" class="btn btn-add px-2 py-1 d-flex align-items-center"
                                     data-bs-toggle="modal" data-bs-target="#add-account"
-                                    id="add-account-btn">
-                                    <i class="bi bi-plus-lg me-2"></i> Thêm tài khoản
+                                    id="add-account-btn" style="font-size: 14px;">
+                                    <i class="bi bi-plus-lg me-1"></i> Thêm
                                 </button>
 
                             </div>

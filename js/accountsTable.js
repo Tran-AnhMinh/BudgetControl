@@ -1,3 +1,4 @@
+let searchQueryAcc = '';
 let currentSortAcc = '';
 let curruentPageAcc = 1;
 let itemsPerPageAcc = 10;
@@ -51,8 +52,22 @@ if (btnSortAccColor) {
     });
 }
 
+const searchAccountInput = document.getElementById('search-account-input');
+if (searchAccountInput) {
+    searchAccountInput.addEventListener('input', function(e) {
+        searchQueryAcc = e.target.value;
+        curruentPageAcc = 1;
+        renderAccountsTable();
+    });
+}
+
 function renderAccountsTable() {
     let accounts = JSON.parse(localStorage.getItem('accounts')) || [];
+    
+    if (searchQueryAcc.trim() !== '') {
+        const query = searchQueryAcc.toLowerCase();
+        accounts = accounts.filter(a => (a.name || '').toLowerCase().includes(query));
+    }
     
     applyCurrentAccSort(accounts);
 

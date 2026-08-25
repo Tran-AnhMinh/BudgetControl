@@ -141,6 +141,17 @@ if (btnSaveAccount) {
                 alert('Thêm tài khoản thành công!');
             }
 
+            const accInput = document.getElementById('trans-account');
+            const btnAcc = document.getElementById('btn-trans-account');
+            if (accInput && btnAcc) {
+                accInput.value = newId;
+                btnAcc.innerHTML = `<span class="icon-circle bg-${accColor}-subtle text-${accColor} me-2"><i class="bi bi-${accIcon}"></i></span>${accName}`;
+                btnAcc.classList.remove('text-secondary');
+                btnAcc.classList.remove('is-invalid');
+                const err = document.getElementById('error-trans-account');
+                if (err) err.classList.add('d-none');
+            }
+
             const addAccountModalElem = document.getElementById('add-account');
             if (addAccountModalElem) {
                 const addAccountModal = bootstrap.Modal.getInstance(addAccountModalElem);

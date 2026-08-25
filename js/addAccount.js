@@ -3,8 +3,8 @@ function updateAccountSelect() {
     const accountHtml = `
         ${accounts.map(a => `
             <li>
-                <a class="dropdown-item account-item py-2" href="#" data-value="${a.id}">
-                    <span class="icon-circle bg-${a.color}-subtle text-${a.color} me-2"><i class="bi bi-${a.icon}"></i></span>${a.name}
+                <a class="dropdown-item account-item py-2 d-flex align-items-center" href="#" data-value="${a.id}">
+                    <span class="icon-circle bg-${a.color}-subtle text-${a.color} me-2 flex-shrink-0"><i class="bi bi-${a.icon}"></i></span><span class="text-truncate">${a.name}</span>
                 </a>
             </li>
         `).join('')}
@@ -23,7 +23,7 @@ function updateAccountSelect() {
                 const val = this.getAttribute('data-value');
                 accInput.value = val;
                 if (val === '') {
-                    btnAcc.innerHTML = 'Chọn tài khoản';
+                    btnAcc.innerHTML = '<span class="text-truncate">Chọn tài khoản</span>';
                     btnAcc.classList.add('text-secondary');
                 } else {
                     btnAcc.innerHTML = this.innerHTML;
@@ -46,7 +46,7 @@ function updateAccountSelect() {
                 const val = this.getAttribute('data-value');
                 multiAccInput.value = val;
                 if (val === '') {
-                    btnMultiAcc.innerHTML = 'Chọn tài khoản';
+                    btnMultiAcc.innerHTML = '<span class="text-truncate">Chọn tài khoản</span>';
                     btnMultiAcc.classList.add('text-secondary');
                 } else {
                     btnMultiAcc.innerHTML = this.innerHTML;
@@ -86,7 +86,7 @@ function updateAccountSelect() {
         const filterAccMenu = filterBtnAcc.nextElementSibling;
         if (filterAccMenu && filterAccMenu.classList.contains('dropdown-menu')) {
             filterAccMenu.innerHTML = `
-                <li><a class="dropdown-item account-item text-secondary py-2" href="#" data-value="">Chọn tài khoản</a></li>
+                <li><a class="dropdown-item account-item text-secondary py-2 d-flex align-items-center" href="#" data-value=""><span class="text-truncate">Tất cả tài khoản</span></a></li>
                 ${accountHtml}
             `;
         }

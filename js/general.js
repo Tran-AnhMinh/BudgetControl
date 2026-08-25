@@ -112,7 +112,7 @@ document.addEventListener('click', function(e) {
                         const val = dropdownItem.getAttribute('data-value');
                         
                         if (val === '') {
-                            button.innerHTML = dropdownItem.classList.contains('category-item') ? 'Chọn danh mục' : 'Chọn tài khoản';
+                            button.innerHTML = dropdownItem.innerHTML;
                             button.classList.add('text-secondary');
                         } else {
                             button.innerHTML = dropdownItem.innerHTML;

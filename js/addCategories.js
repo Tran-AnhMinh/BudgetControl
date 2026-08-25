@@ -3,8 +3,8 @@ function updateCategorySelect() {
     const categoryHtml = `
         ${categories.map(c => `
             <li>
-                <a class="dropdown-item category-item py-2" href="#" data-value="${c.id}">
-                    <span class="icon-circle bg-${c.color}-subtle text-${c.color} me-2"><i class="bi bi-${c.icon}"></i></span>${c.name}
+                <a class="dropdown-item category-item py-2 d-flex align-items-center" href="#" data-value="${c.id}">
+                    <span class="icon-circle bg-${c.color}-subtle text-${c.color} me-2 flex-shrink-0"><i class="bi bi-${c.icon}"></i></span><span class="text-truncate">${c.name}</span>
                 </a>
             </li>
         `).join('')}
@@ -23,7 +23,7 @@ function updateCategorySelect() {
                 const val = this.getAttribute('data-value');
                 categoryInput.value = val;
                 if (val === '') {
-                    btnCategory.innerHTML = 'Chọn danh mục';
+                    btnCategory.innerHTML = '<span class="text-truncate">Chọn danh mục</span>';
                     btnCategory.classList.add('text-secondary');
                 } else {
                     btnCategory.innerHTML = this.innerHTML;
@@ -50,7 +50,7 @@ function updateCategorySelect() {
                 const val = this.getAttribute('data-value');
                 multiCategoryInput.value = val;
                 if (val === '') {
-                    btnMultiCategory.innerHTML = 'Danh mục';
+                    btnMultiCategory.innerHTML = '<span class="text-truncate">Danh mục</span>';
                     btnMultiCategory.classList.add('text-secondary');
                 } else {
                     btnMultiCategory.innerHTML = this.innerHTML;
@@ -66,7 +66,7 @@ function updateCategorySelect() {
         const filterCatMenu = filterBtnCat.nextElementSibling;
         if (filterCatMenu && filterCatMenu.classList.contains('dropdown-menu')) {
             filterCatMenu.innerHTML = `
-                <li><a class="dropdown-item category-item text-secondary py-2" href="#" data-value="">Tất cả danh mục</a></li>
+                <li><a class="dropdown-item category-item text-secondary py-2 d-flex align-items-center" href="#" data-value=""><span class="text-truncate">Tất cả danh mục</span></a></li>
                 ${categoryHtml}
             `;
         }

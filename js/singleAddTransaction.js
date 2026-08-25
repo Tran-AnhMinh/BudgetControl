@@ -94,7 +94,7 @@ if (btnSaveTransaction) {
             amount.value = '';
             category.value = '';
             if (btnCategory) {
-                btnCategory.innerHTML = 'Chọn danh mục';
+                btnCategory.innerHTML = '<span class="text-truncate">Chọn danh mục</span>';
                 btnCategory.classList.add('text-secondary');
             }
             date.value = '';
@@ -102,7 +102,7 @@ if (btnSaveTransaction) {
 
             const btnAcc = document.getElementById('btn-trans-account');
             if (btnAcc) {
-                btnAcc.innerHTML = 'Chọn tài khoản';
+                btnAcc.innerHTML = '<span class="text-truncate">Chọn tài khoản</span>';
                 btnAcc.classList.add('text-secondary');
             }
         }

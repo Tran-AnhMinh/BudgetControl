@@ -248,7 +248,7 @@ transactionTableBody.addEventListener('click', function(e) {
             const catBtn = document.getElementById('edit-btn-trans-category');
             if (catBtn) {
                 const editCat = categories.find(c => String(c.id) === String(transaction.category));
-                catBtn.innerHTML = editCat ? `<span class="icon-circle bg-${editCat.color}-subtle text-${editCat.color} me-2"><i class="bi bi-${editCat.icon}"></i></span>${editCat.name}` : 'Chọn danh mục';
+                catBtn.innerHTML = editCat ? `<span class="icon-circle bg-${editCat.color}-subtle text-${editCat.color} me-2"><i class="bi bi-${editCat.icon}"></i></span><span class="text-truncate">${editCat.name}</span>` : '<span class="text-truncate">Chọn danh mục</span>';
                 if (transaction.category) {
                     catBtn.classList.remove('text-secondary');
                 } else {
@@ -261,7 +261,7 @@ transactionTableBody.addEventListener('click', function(e) {
             const accBtn = document.getElementById('edit-btn-trans-account');
             if (accBtn) {
                 const editAcc = accounts.find(a => String(a.id) === String(transaction.account));
-                accBtn.innerHTML = editAcc ? `<span class="icon-circle bg-${editAcc.color}-subtle text-${editAcc.color} me-2"><i class="bi bi-${editAcc.icon}"></i></span>${editAcc.name}` : 'Chọn tài khoản';
+                accBtn.innerHTML = editAcc ? `<span class="icon-circle bg-${editAcc.color}-subtle text-${editAcc.color} me-2"><i class="bi bi-${editAcc.icon}"></i></span><span class="text-truncate">${editAcc.name}</span>` : '<span class="text-truncate">Chọn tài khoản</span>';
                 if (transaction.account) {
                     accBtn.classList.remove('text-secondary');
                 } else {
@@ -423,7 +423,7 @@ if (btnResetFilters) {
             catInput.value = '';
             const btn = document.getElementById('btn-table-sort-category');
             if (btn) {
-                btn.innerHTML = 'Tất cả danh mục';
+                btn.innerHTML = '<span class="text-truncate">Tất cả danh mục</span>';
                 btn.classList.add('text-secondary');
             }
         }
@@ -433,7 +433,7 @@ if (btnResetFilters) {
             accInput.value = '';
             const btn = document.getElementById('btn-table-sort-account');
             if (btn) {
-                btn.innerHTML = 'Tất cả tài khoản';
+                btn.innerHTML = '<span class="text-truncate">Tất cả tài khoản</span>';
                 btn.classList.add('text-secondary');
             }
         }

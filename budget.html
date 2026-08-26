@@ -3,298 +3,384 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
-    <link rel="stylesheet" href="./css/sidebar.css" />
-    <link rel="stylesheet" href="./css/budget.css" />
-    <meta name="description" content="quản lý giao dịch" />
-    <title>Ngân sách</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
+  <link rel="stylesheet" href="./css/sidebar.css" />
+  <link rel="stylesheet" href="./css/budget.css" />
+  <meta name="description" content="quản lý giao dịch" />
+  <title>Ngân sách</title>
 </head>
 
 <body>
-    <div class="d-flex">
-        <nav class="sidebar collapsed d-flex flex-column flex-shrink-0 position-fixed">
-            <button class="toggle-btn" onclick="toggleSidebar()">
-                <i class="bi bi-caret-left-fill"></i>
-            </button>
+  <div class="d-flex">
+    <nav class="sidebar collapsed d-flex flex-column flex-shrink-0 position-fixed">
+      <button class="toggle-btn" onclick="toggleSidebar()">
+        <i class="bi bi-caret-left-fill"></i>
+      </button>
 
-            <div class="p-4">
-                <h4 class="logo-text fw-bold mb-0">Finora</h4>
-            </div>
+      <div class="p-4">
+        <h4 class="logo-text fw-bold mb-0">Finora</h4>
+      </div>
 
-            <div class="nav flex-column">
-                <a href="index.html" class="sidebar-link text-decoration-none p-3">
-                    <i class="bi bi-house me-3"></i>
-                    <span class="hide-on-collapse">Dashboard</span>
-                </a>
-                <a href="transactionControl.html" class="sidebar-link text-decoration-none p-3">
-                    <i class="bi bi-wallet me-3"></i>
-                    <span class="hide-on-collapse">Chi tiêu</span>
-                </a>
-                <a href="cagetoriesControl.html" class="sidebar-link text-decoration-none p-3">
-                    <i class="bi bi-tags me-3"></i>
-                    <span class="hide-on-collapse">Danh mục</span>
-                </a>
+      <div class="nav flex-column">
+        <a href="index.html" class="sidebar-link text-decoration-none p-3">
+          <i class="bi bi-house me-3"></i>
+          <span class="hide-on-collapse">Dashboard</span>
+        </a>
+        <a href="transactionControl.html" class="sidebar-link text-decoration-none p-3">
+          <i class="bi bi-wallet me-3"></i>
+          <span class="hide-on-collapse">Chi tiêu</span>
+        </a>
+        <a href="cagetoriesControl.html" class="sidebar-link text-decoration-none p-3">
+          <i class="bi bi-tags me-3"></i>
+          <span class="hide-on-collapse">Danh mục</span>
+        </a>
 
-                <a href="budget.html " class="sidebar-link active text-decoration-none p-3">
-                    <i class="bi bi-wallet2 me-3"></i>
-                    <span class="hide-on-collapse">Ngân sách</span>
-                </a>
-            </div>
-        </nav>
+        <a href="budget.html " class="sidebar-link active text-decoration-none p-3">
+          <i class="bi bi-wallet2 me-3"></i>
+          <span class="hide-on-collapse">Ngân sách</span>
+        </a>
+      </div>
+    </nav>
 
-        <div class="main-content flex-grow-1">
-            <div class="header d-flex justify-content-between w-100 align-items-center">
-                <div class="header-left">
-                    <h3 class="mb-1">Ngân sách</h3>
+    <div class="main-content flex-grow-1">
+      <div class="header d-flex justify-content-between w-100 align-items-center">
+        <div class="header-left">
+          <h3 class="mb-1">Ngân sách</h3>
 
-                    <p class="mb-0">Thiết lập giới hạn ngân sách</p>
-                </div>
-
-                <div class="dropdown-toggle user-info d-flex align-items-center gap-2" style="cursor: pointer"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    <div class="avatar-circle me-2">M</div>
-
-                    <div class="user-info d-none d-md-block pe-1">
-                        <p class="user-name">Minh</p>
-                        <p class="user-role">Sinh viên năm 2</p>
-                    </div>
-
-                    <i class="bi bi-chevron-down user-arrow"></i>
-                </div>
-
-                <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
-                    <li><a class="dropdown-item" href="#">Thông tin cá nhân</a></li>
-                    <li><a class="dropdown-item text-danger" href="#">Đăng xuất</a></li>
-                </ul>
-            </div>
-
-            <div class="budget-content">
-                <div class="row g-3">
-                    <div class="col-12 col-md-4 col-lg-4">
-                        <div class="budget-card daily-card">
-                            <div class="section-title">
-                                <i class="bi bi-calendar-day"></i>
-                                Ngân sách hôm nay
-                            </div>
-
-                            <div class="section-description">
-                                Giới hạn chi tiêu mỗi ngày
-                            </div>
-
-                            <div class="daily-budget-input">
-                                <input type="text" id="dailyBudgetInput" class="form-control" value="500.000"
-                                    inputmode="numeric" />
-
-                                <span class="currency"> ₫ </span>
-                            </div>
-
-                            <div class="daily-help">
-                                Áp dụng cho tổng chi tiêu trong một ngày
-                            </div>
-
-                            <button type="button" id="saveDailyBudget" class="btn save-btn">
-                                Lưu thay đổi
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="col-12 col-md-8 col-lg-8">
-                        <div class="budget-card category-card">
-                            <!-- Header -->
-                            <div class="category-header">
-                                <div class="section-title">
-                                    <i class="bi bi-grid-fill"></i>
-                                    Ngân sách theo tháng
-                                </div>
-
-                                <select id="monthPicker" class="month-picker">
-                                    <option value="2026-08">Tháng 08/2026</option>
-
-                                    <option value="2026-09">Tháng 09/2026</option>
-                                </select>
-                            </div>
-
-                            <!-- Danh sách category -->
-                            <div id="categoryList" class="category-list">
-                                <!-- Category 1 -->
-                                <div class="category-item">
-                                    <div class="category-info">
-                                        <div class="category-icon bg-success">
-                                            <i class="bi bi-egg-fried"></i>
-                                        </div>
-
-                                        <span class="category-name"> Ăn uống </span>
-                                    </div>
-
-                                    <span class="category-amount">
-                                        3.000.000
-                                        <small>₫</small>
-                                    </span>
-
-                                    <div class="dropdown">
-                                        <button type="button" class="category-action" data-bs-toggle="dropdown"
-                                            aria-expanded="false">
-                                            <i class="bi bi-three-dots"></i>
-                                        </button>
-
-                                        <ul class="dropdown-menu dropdown-menu-end shadow-sm">
-                                            <li>
-                                                <button class="dropdown-item" type="button" onclick="editCategory()">
-                                                    <i class="bi bi-pencil me-2"></i>
-                                                    Thiết lập
-                                                </button>
-                                            </li>
-
-                                            <li>
-                                                <button class="dropdown-item text-danger" type="button"
-                                                    onclick="deleteCategory()">
-                                                    <i class="bi bi-trash me-2"></i>
-                                                    Xóa
-                                                </button>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <!-- Category 2 -->
-                                <div class="category-item">
-                                    <div class="category-info">
-                                        <div class="category-icon bg-primary">
-                                            <i class="bi bi-car-front-fill"></i>
-                                        </div>
-
-                                        <span class="category-name"> Di chuyển </span>
-                                    </div>
-
-                                    <span class="category-amount">
-                                        1.500.000
-                                        <small>₫</small>
-                                    </span>
-
-                                    <button type="button" class="category-action">
-                                        <i class="bi bi-three-dots"></i>
-                                    </button>
-                                </div>
-
-                                <!-- Category 3 -->
-                                <div class="category-item">
-                                    <div class="category-info">
-                                        <div class="category-icon bg-danger">
-                                            <i class="bi bi-bag-fill"></i>
-                                        </div>
-
-                                        <span class="category-name"> Mua sắm </span>
-                                    </div>
-
-                                    <span class="category-amount">
-                                        2.000.000
-                                        <small>₫</small>
-                                    </span>
-
-                                    <button type="button" class="category-action">
-                                        <i class="bi bi-three-dots"></i>
-                                    </button>
-                                </div>
-
-                            </div>
-
-                            <!-- Add -->
-                            <button type="button" id="addBudgetBtn" class="add-budget-btn" data-bs-toggle="modal" data-bs-target="#budgetModal">
-                                <i class=" bi bi-plus-lg me-1"></i>
-                                Thêm ngân sách
-                            </button>
-
-                            <div class="modal fade" id="budgetModal" tabindex="-1" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered budget-modal-dialog">
-                                    <div class="modal-content budget-modal">
-
-                                        <!-- Header -->
-                                        <div class="budget-modal-header">
-                                            <h5 class="budget-modal-title">
-                                                Thêm ngân sách
-                                            </h5>
-
-                                            <button type="button" class="budget-modal-close" data-bs-dismiss="modal"
-                                                aria-label="Close">
-                                                <i class="bi bi-x-lg"></i>
-                                            </button>
-                                        </div>
-
-                                        <!-- Body -->
-                                        <div class="budget-modal-body">
-
-                                            <!-- Category -->
-                                            <div class="budget-form-group">
-                                                <label for="budgetCategory">
-                                                    DANH MỤC
-                                                </label>
-
-                                                <div class="budget-select-wrapper">
-                                                    <select id="budgetCategory" class="form-select budget-input">
-                                                        <option value="health">
-                                                            🏥 Sức khỏe
-                                                        </option>
-                                                        <option value="food">
-                                                            🍜 Ăn uống
-                                                        </option>
-                                                        <option value="transport">
-                                                            🚗 Di chuyển
-                                                        </option>
-                                                        <option value="shopping">
-                                                            🛍️ Mua sắm
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <!-- Amount -->
-                                            <div class="budget-form-group">
-                                                <label for="budgetAmount">
-                                                    NGÂN SÁCH HÀNG THÁNG
-                                                </label>
-
-                                                <div class="budget-amount-wrapper">
-                                                    <input type="text" id="budgetAmount"
-                                                        class="form-control budget-input" value="2.000.000">
-
-                                                    <span class="budget-currency">
-                                                        ₫
-                                                    </span>
-                                                </div>
-                                            </div>
-
-                                        
-                                        </div>
-
-                                        <!-- Footer -->
-                                        <div class="budget-modal-footer">
-
-                                            <button type="button" class="budget-cancel-btn" data-bs-dismiss="modal">
-                                                Hủy
-                                            </button>
-
-                                            <button type="button" class="budget-save-btn" id="saveBudgetBtn">
-                                                Lưu ngân sách
-                                            </button>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
+          <p class="mb-0">Thiết lập giới hạn ngân sách</p>
         </div>
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="./js/sidebar.js"></script>
+        <div class="dropdown-toggle user-info d-flex align-items-center gap-2" style="cursor: pointer"
+          data-bs-toggle="dropdown" aria-expanded="false">
+          <div class="avatar-circle me-2">M</div>
+
+          <div class="user-info d-none d-md-block pe-1">
+            <p class="user-name">Minh</p>
+            <p class="user-role">Sinh viên năm 2</p>
+          </div>
+
+          <i class="bi bi-chevron-down user-arrow"></i>
+        </div>
+
+        <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+          <li><a class="dropdown-item" href="#">Thông tin cá nhân</a></li>
+          <li><a class="dropdown-item text-danger" href="#">Đăng xuất</a></li>
+        </ul>
+      </div>
+
+      <div class="budget-content">
+        <div class="row">
+          <div class="col-12 col-md-12 col-lg-12">
+            <div class="budget-card daily-card">
+              <div class="section-title">
+                <i class="bi bi-calendar-day"></i>
+                Ngân sách hôm nay
+              </div>
+
+              <div class="section-description">
+                Giới hạn chi tiêu mỗi ngày
+              </div>
+
+              <div class="daily-budget-input">
+                <input type="text" id="dailyBudgetInput" class="form-control" value="500.000" inputmode="numeric" />
+
+                <span class="currency"> ₫ </span>
+              </div>
+
+              <div class="daily-help">
+                Áp dụng cho tổng chi tiêu trong một ngày
+              </div>
+
+              <button type="button" id="saveDailyBudget" class="btn btn-primary btn-sm save-btn d-block mx-auto px-4">
+                Lưu thay đổi
+              </button>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-12 col-lg-12">
+            <div class="budget-card category-card">
+              <!-- Header -->
+              <div class="category-header">
+                <div class="section-title">
+                  <i class="bi bi-grid-fill"></i>
+                  Ngân sách theo tháng
+                </div>
+                <div class="position-relative">
+                  <button type="button" id="monthPickerBtn"
+                    class="btn date-picker-btn d-flex align-items-center rounded-3 px-3 py-2">
+                    <i class="bi bi-calendar3 me-2 text-secondary"></i>
+
+                    <span id="monthPickerText" class="me-2" style="font-size: 14px">
+                      Tháng 08/2025
+                    </span>
+
+                    <i class="bi bi-chevron-down ms-1 text-secondary" style="font-size: 12px"></i>
+                  </button>
+                  <input type="month" id="monthPicker" />
+                </div>
+              </div>
+
+              <!-- Top Alert & Total Box -->
+              <div class="row g-3 mb-4">
+                <div class="col-12 col-md-4">
+                  <div class="p-3 border rounded-3 bg-light-subtle h-100">
+                    <div class="text-muted small mb-1">
+                      Tổng ngân sách tháng
+                    </div>
+
+                    <!-- Chế độ Xem: Chỉ hiển thị text -->
+                    <h4 class="fw-bold text-primary mb-0" id="totalBudgetText">
+                      3.000.000đ
+                    </h4>
+
+                    <!-- Chế độ Chỉnh sửa: Hiện ô input (mặc định ẩn) -->
+                    <div class="input-group input-group-sm d-none mt-1" id="totalBudgetInputWrapper">
+                      <input type="text" class="form-control fw-bold text-primary" id="totalBudgetInput"
+                        value="3.000.000" />
+                      <span class="input-group-text bg-white text-muted">đ</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Danh sách category -->
+              <div class="table-responsive">
+                <table class="table align-middle">
+                  <thead>
+                    <tr class="text-muted small text-uppercase">
+                      <th style="min-width: 120px">Danh mục</th>
+                      <th style="min-width: 120px">Ngân sách (đ)</th>
+                      <th style="min-width: 180px">Tỷ lệ</th>
+                      <th class="text-center" style="width: 120px">
+                        Hành động
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody id="categoryTableBody">
+                    <!-- Ăn uống -->
+                    <tr>
+                      <!-- Cột 1: Danh mục -->
+                      <td>
+                        <div class="d-flex align-items-center gap-3">
+                          <div
+                            class="rounded-circle d-flex align-items-center justify-content-center bg-warning-subtle text-warning"
+                            style="width: 40px; height: 40px">
+                            <i class="bi bi-egg-fried fs-5"></i>
+                          </div>
+                          <div>
+                            <div class="fw-bold text-dark">Ăn uống</div>
+                          </div>
+                        </div>
+                      </td>
+
+                      <!-- Cột 2: Ngân sách -->
+                      <td>
+                        <div class="input-group input-group-sm">
+                          <input type="text" class="form-control text-start fw-semibold budget-input"
+                            value="1.200.000" />
+                          <span class="input-group-text bg-white text-muted">đ</span>
+                        </div>
+                      </td>
+
+                      <!-- Cột 3: Tỷ lệ -->
+                      <td>
+                        <div class="d-flex align-items-center gap-2">
+                          <span class="small fw-semibold text-muted text-nowrap" style="width: 35px">40%</span>
+                          <div class="progress flex-grow-1" style="height: 6px">
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"></div>
+                          </div>
+                        </div>
+                      </td>
+
+                      <!-- Cột 4: Hành động -->
+                      <td class="text-center">
+                        <button class="btn btn-sm btn-link text-secondary p-1">
+                          <i class="bi bi-arrow-counterclockwise"></i>
+                        </button>
+                        <button class="btn btn-sm btn-link text-secondary p-1">
+                          <i class="bi bi-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+
+                    <!-- Khác -->
+                    <tr>
+                      <!-- Cột 1: Danh mục -->
+                      <td>
+                        <div class="d-flex align-items-center gap-3">
+                          <div
+                            class="rounded-circle d-flex align-items-center justify-content-center bg-secondary-subtle text-secondary"
+                            style="width: 40px; height: 40px">
+                            <i class="bi bi-three-dots fs-5"></i>
+                          </div>
+                          <div>
+                            <div class="fw-bold text-dark">Khác</div>
+                            <small class="text-muted">Chi phí phát sinh khác</small>
+                          </div>
+                        </div>
+                      </td>
+
+                      <!-- Cột 2: Ngân sách -->
+                      <td>
+                        <div class="input-group input-group-sm">
+                          <input type="text" class="form-control text-end fw-semibold budget-input" value="50.000" />
+                          <span class="input-group-text bg-white text-muted">đ</span>
+                        </div>
+                      </td>
+
+                      <!-- Cột 3: Tỷ lệ -->
+                      <td>
+                        <div class="d-flex align-items-center gap-2">
+                          <span class="small fw-semibold text-muted text-nowrap" style="width: 35px">2%</span>
+                          <div class="progress flex-grow-1" style="height: 6px">
+                            <div class="progress-bar bg-secondary" role="progressbar" style="width: 2%"></div>
+                          </div>
+                        </div>
+                      </td>
+
+                      <!-- Cột 4: Hành động -->
+                      <td class="text-center">
+                        <button class="btn btn-sm btn-link text-secondary p-1">
+                          <i class="bi bi-arrow-counterclockwise"></i>
+                        </button>
+                        <button class="btn btn-sm btn-link text-secondary p-1">
+                          <i class="bi bi-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Add Category Button -->
+              <button type="button" id="addCategoryBtn"
+                class="btn btn-outline-primary border-dashed w-100 py-2 rounded-3 my-3 d-none d-flex align-items-center justify-content-center gap-2"
+                data-bs-toggle="modal" data-bs-target="#budgetModal">
+                <i class="bi bi-plus-lg"></i> Thêm danh mục
+              </button>
+
+              <div class="modal fade" id="budgetModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content rounded-4 border-0 shadow">
+                    <div class="modal-header border-0 pb-0">
+                      <h5 class="modal-title fw-bold">
+                        Chọn danh mục thêm vào
+                      </h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body py-3">
+                      <div class="list-group list-group-flush gap-2" id="availableCategoryList">
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bottom Stat Cards -->
+              <div class="row g-2 p-3 bg-light align-items-center mb-4 rounded-3">
+                <!-- 1. Tổng ngân sách -->
+                <div class="col">
+                  <div class="d-flex align-items-center gap-2">
+                    <div class="rounded-3 p-2 bg-primary-subtle text-primary">
+                      <i class="bi bi-wallet2"></i>
+                    </div>
+                    <div>
+                      <div class="text-muted text-nowrap" style="font-size: 11px">
+                        Tổng ngân sách
+                      </div>
+                      <strong class="text-primary small text-nowrap" id="statTotalBudget">3.000.000đ</strong>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 2. Đã phân bổ -->
+                <div class="col">
+                  <div class="d-flex align-items-center gap-2">
+                    <div class="rounded-3 p-2 bg-success-subtle text-success">
+                      <i class="bi bi-pie-chart-fill"></i>
+                    </div>
+                    <div>
+                      <div class="text-muted text-nowrap" style="font-size: 11px">
+                        Đã phân bổ
+                      </div>
+                      <strong class="text-success small text-nowrap" id="statAllocated">3.000.000đ</strong>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 3. Còn lại -->
+                <div class="col">
+                  <div class="d-flex align-items-center gap-2">
+                    <div class="rounded-3 p-2 bg-warning-subtle text-warning">
+                      <i class="bi bi-coin"></i>
+                    </div>
+                    <div>
+                      <div class="text-muted text-nowrap" style="font-size: 11px">
+                        Còn lại
+                      </div>
+                      <strong class="text-warning small text-nowrap" id="statRemaining">0đ</strong>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 4. Tổng tỷ lệ -->
+                <div class="col">
+                  <div class="d-flex align-items-center gap-2">
+                    <div class="rounded-3 p-2 bg-info-subtle text-info">
+                      <i class="bi bi-bullseye"></i>
+                    </div>
+                    <div>
+                      <div class="text-muted text-nowrap" style="font-size: 11px">
+                        Tổng tỷ lệ
+                      </div>
+                      <strong class="text-dark small text-nowrap" id="statTotalPercent">100%</strong>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 5. Nhãn trạng thái Hợp lệ / Vượt ngân sách -->
+                <div class="col-auto text-end">
+                  <span id="statStatusBadge"
+                    class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1 rounded-pill small">
+                    Đã hợp lệ <i class="bi bi-check"></i>
+                  </span>
+                </div>
+              </div>
+
+              <!-- Footer Action -->
+              <div class="d-flex justify-content-end gap-2">
+                <!-- Trạng thái 1: Nút chỉnh sửa ban đầu -->
+                <div id="viewModeActions">
+                  <button type="button" class="btn btn-primary px-4 save-btn" id="editBtn">
+                    Chỉnh sửa
+                  </button>
+                </div>
+
+                <!-- Trạng thái 2: Nút Hủy & Lưu (Ban đầu ẩn bằng d-none) -->
+                <div id="editModeActions" class="d-none d-flex gap-2">
+                  <button type="button" class="btn btn-light px-4 cancel-btn" id="cancelBtn">
+                    Hủy
+                  </button>
+                  <button type="button" class="btn btn-primary px-4 save-btn" id="saveBtn">
+                    Lưu ngân sách
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="./js/sidebar.js"></script>
+  <script src="./js/budgetPage.js"></script>
 </body>
 
 </html>

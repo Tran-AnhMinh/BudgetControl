@@ -1,105 +1,156 @@
-function formatCurrency(amount) {
-    return new Intl.NumberFormat("vi-VN").format(amount) + "đ";
-}
-/**Header calendar pick */
-const monthPickerBtn = document.getElementById("monthPickerBtn");
-const monthPicker = document.getElementById("monthPicker");
-const monthPickerText = document.getElementById("monthPickerText");
+const Dashboard = (function () {
 
-const now = new Date();
-const year = now.getFullYear();
-const month = String(now.getMonth() + 1).padStart(2, "0");
+    const STORAGE_KEY = "transactions";
 
-const currentMonth = `${year}-${month}`;
+    function formatCurrency(amount) {
+        return new Intl.NumberFormat("vi-VN").format(amount || 0) + "đ";
+    }
 
-monthPicker.max = currentMonth;
-monthPicker.value = currentMonth;
+    function formatMonth(yearMonthStr) {
+        if (!yearMonthStr) return "";
+        const [year, month] = yearMonthStr.split("-");
+        return `Tháng ${month}/${year}`;
+    }
 
-function formatMonth(value) {
-    const [year, month] = value.split("-");
+    let currentYearMonth = "";
+    let transactions = [];
+    let statistics = {
+        totalIncome: 0,
+        totalExpense: 0,
+        balance: 0
+    };
 
-    return `Tháng ${month}/${year}`;
-}
+    let DOM = {};
 
-monthPickerText.textContent = formatMonth(monthPicker.value);
+    function cacheDOM() {
+        DOM = {
+            monthPickerBtn: document.getElementById("monthPickerBtn"),
+            monthPicker: document.getElementById("monthPicker"),
+            monthPickerText: document.getElementById("monthPickerText"),
 
-monthPickerBtn.addEventListener("click", () => {
-    monthPicker.showPicker();
-});
+            totalIncome: document.getElementById("totalIncome"),
+            totalExpense: document.getElementById("totalExpense"),
+            balance: document.getElementById("balance")
+        };
+    }
 
-monthPicker.addEventListener("change", () => {
-    const value = monthPicker.value;
+    function loadTransactions() {
+        try {
+            transactions = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        } catch (e) {
+            console.error("Lỗi đọc dữ liệu giao dịch:", e);
+            transactions = [];
+        }
+    }
 
-    if (!value) return;
+    function calculateStatistics() {
+        if (!currentYearMonth) return;
 
-    monthPickerText.textContent = formatMonth(value);
+        const [yearStr, monthStr] = currentYearMonth.split("-");
+        const targetYear = Number(yearStr);
+        const targetMonth = Number(monthStr) - 1;
 
-    const [year, month] = value.split("-");
+        let income = 0;
+        let expense = 0;
 
-    renderDashboard(Number(year), Number(month) - 1);
-});
+        transactions.forEach((transaction) => {
+            const transactionDate = new Date(transaction.time);
+            if (transactionDate.getFullYear() !== targetYear || transactionDate.getMonth() !== targetMonth) {
+                return;
+            }
 
+            const amount = Number(transaction.amount) || 0;
 
+            if (transaction.type === "expense") {
+                expense += amount;
+            } else if (transaction.type === "income") {
+                income += amount;
+            }
+        });
 
-function renderDashboard() {
-    const value = monthPicker.value;
+        statistics = {
+            totalIncome: income,
+            totalExpense: expense,
+            balance: income - expense
+        };
+    }
 
-    if (!value) return;
+    function setMonth(newMonth) {
+        currentYearMonth = newMonth;
+        calculateStatistics();
+        render();
+    }
 
-    const [year, month] = value.split("-");
+    function render() {
+        renderMonthPicker();
+        renderStats();
+    }
 
-    const statistics = getMonthlyStatistics(
-        Number(year),
-        Number(month) - 1,
-    );
+    function renderMonthPicker() {
+        if (DOM.monthPicker) {
+            DOM.monthPicker.value = currentYearMonth;
+        }
+        if (DOM.monthPickerText) {
+            DOM.monthPickerText.textContent = formatMonth(currentYearMonth);
+        }
+    }
 
-    document.getElementById("totalIncome").textContent = formatCurrency(
-        statistics.totalIncome,
-    );
+    function renderStats() {
+        if (DOM.totalIncome) {
+            DOM.totalIncome.textContent = formatCurrency(statistics.totalIncome);
+        }
+        if (DOM.totalExpense) {
+            DOM.totalExpense.textContent = formatCurrency(statistics.totalExpense);
+        }
+        if (DOM.balance) {
+            DOM.balance.textContent = formatCurrency(statistics.balance);
+        }
+    }
 
-    document.getElementById("totalExpense").textContent = formatCurrency(
-        statistics.totalExpense,
-    );
+    function bindEvents() {
+        DOM.monthPickerBtn?.addEventListener("click", () => {
+            if ("showPicker" in HTMLInputElement.prototype) {
+                DOM.monthPicker.showPicker();
+            } else {
+                DOM.monthPicker.focus();
+            }
+        });
 
-    document.getElementById("balance").textContent = formatCurrency(
-        statistics.balance,
-    );
-}
+        DOM.monthPicker?.addEventListener("change", (e) => {
+            if (!e.target.value) return;
+            setMonth(e.target.value);
+        });
+    }
 
-function getTransactions() {
-    return JSON.parse(localStorage.getItem("transactions")) || [];
-}
+    function init() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, "0");
+        const defaultMonth = `${year}-${month}`;
 
-function getMonthlyStatistics(year, month) {
-    const transactions = getTransactions();
-    let totalIncome = 0;
-    let totalExpense = 0;
+        cacheDOM();
 
-    transactions.forEach((transaction) => {
-        const date = new Date(transaction.time);
-        if (date.getFullYear() != year || date.getMonth() !== month) {
-            return;
+        if (DOM.monthPicker) {
+            DOM.monthPicker.max = defaultMonth;
         }
 
-        const amount = Number(transaction.amount);
-
-        if (transaction.type === "expense") {
-            totalExpense += amount;
-        } else if (transaction.type === "income") {
-            totalIncome += amount;
-        }
-    });
+        currentYearMonth = defaultMonth;
+        loadTransactions();
+        calculateStatistics();
+        bindEvents();
+        render();
+    }
 
     return {
-        totalIncome,
-        totalExpense,
-        balance: totalIncome - totalExpense,
+        init,
+        refresh: () => {
+            loadTransactions();
+            calculateStatistics();
+            render();
+        }
     };
-}
+})();
 
-function initDashboard() {
-    renderDashboard();
-}
-
-initDashboard();
-
+document.addEventListener("DOMContentLoaded", function () {
+    Dashboard.init();
+});

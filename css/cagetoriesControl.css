@@ -137,7 +137,7 @@ body {
     box-shadow: 0 2px 4px rgba(0,0,0,0.02);
 }
 
-/* Table and Pagination Styles */
+
 .table th {
     font-weight: 600;
     font-size: 14px;
@@ -183,7 +183,6 @@ body {
     color: white;
 }
 
-/* Add Buttons Style */
 .btn-add {
     background-color: var(--bs-primary);
     color: white;
@@ -194,11 +193,11 @@ body {
     transition: all 0.2s;
 }
 .btn-add:hover {
-    background-color: var(--bs-primary); /* Darker primary for hover */
+    background-color: var(--bs-primary);
     border-color: var(--bs-primary);
     color: white;
 }
-/* Ensure the second add button has a slightly different, secondary style if they are side-by-side to avoid visual clutter */
+
 .btn-add:nth-of-type(4) {
     background-color: white;
     color: var(--bs-primary);
@@ -209,7 +208,7 @@ body {
     color: var(--bs-primary);
 }
 
-/* Custom Radio Toggle Buttons */
+
 .btn-type-toggle {
     border: 1px solid transparent; 
     color: var(--bs-secondary);
@@ -226,7 +225,7 @@ body {
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
-/* Quick Amount Buttons Hover */
+
 .btn-quick-amount {
     color: var(--bs-body-color);
     transition: all 0.2s ease-in-out;
@@ -238,7 +237,7 @@ body {
     border-color: var(--bs-primary) !important;
 }
 
-/* Action Icon Button Hover in Tables */
+
 .table .btn.text-secondary {
     border-radius: 50%;
     width: 32px;
@@ -255,7 +254,6 @@ body {
     color: var(--bs-dark) !important;
 }
 
-/* Table Header Icon Hover */
 .table th i.bi-chevron-expand {
     transition: color 0.2s ease;
     padding: 4px;
@@ -267,7 +265,6 @@ body {
     background-color: var(--bs-gray-200);
 }
 
-/* Category and Account Icon Selection Hover and Active State */
 input[name="categoryIcon"] + label.btn-outline-secondary,
 input[name="accountIcon"] + label.btn-outline-secondary {
     border-color: var(--bs-border-color);
@@ -289,7 +286,6 @@ input[name="accountIcon"]:checked + label.btn-outline-secondary {
     border-color: var(--bs-primary);
 }
 
-/* Fix flatpickr overlapping issue with bootstrap modals */
 .flatpickr-calendar {
     z-index: 1060 !important;
 }
@@ -304,7 +300,31 @@ input[name="accountIcon"]:checked + label.btn-outline-secondary {
     border-color: var(--bs-primary) !important;
 }
 
-/* Allow dropdown menus to overflow table-responsive containers */
+
 .table-responsive {
     overflow: visible !important;
+}
+
+@media (max-width: 767.98px) {
+    .header-title {
+        font-size: 22px;
+    }
+
+    .container-fluid.p-4 {
+        padding: 12px !important;
+    }
+
+    .table-responsive {
+        overflow-x: auto !important;
+    }
+
+    .table th,
+    .table td {
+        padding: 8px 10px;
+        font-size: 13px;
+    }
+
+    .filter-card {
+        margin-top: 12px;
+    }
 }

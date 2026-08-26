@@ -1,140 +1,158 @@
-body { 
-    background-color: var(--bs-light); 
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
+body {
+    background-color: var(--bs-light);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
-.header-title { 
-    font-weight: 700; 
-    font-size: 28px; 
+
+.header-title {
+    font-weight: 700;
+    font-size: 28px;
     color: var(--bs-dark);
 }
-.text-muted-custom { 
-    color: var(--bs-secondary); 
-    font-size: 14px; 
+
+.text-muted-custom {
+    color: var(--bs-secondary);
+    font-size: 14px;
 }
-.date-picker-btn { 
-    border: 1px solid var(--bs-border-color); 
-    background: white; 
-    color: var(--bs-body-color); 
-    box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+
+.date-picker-btn {
+    border: 1px solid var(--bs-border-color);
+    background: white;
+    color: var(--bs-body-color);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
 }
+
 .date-picker-btn:hover {
     background-color: var(--bs-light);
 }
-.avatar-circle { 
-    width: 40px; 
-    height: 40px; 
-    background-color: var(--bs-info); 
-    color: white; 
-    border-radius: 50%; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    font-weight: 600; 
-    font-size: 16px; 
+
+.avatar-circle {
+    width: 40px;
+    height: 40px;
+    background-color: var(--bs-info);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 16px;
 }
-.user-info { 
-    text-align: left; 
-    line-height: 1.2; 
+
+.user-info {
+    text-align: left;
+    line-height: 1.2;
 }
-.user-name { 
-    font-weight: 600; 
-    font-size: 15px; 
-    margin: 0; 
+
+.user-name {
+    font-weight: 600;
+    font-size: 15px;
+    margin: 0;
     color: var(--bs-dark);
 }
-.user-role { 
-    font-size: 12px; 
-    color: var(--bs-secondary); 
-    margin: 0; 
+
+.user-role {
+    font-size: 12px;
+    color: var(--bs-secondary);
+    margin: 0;
 }
-.filter-card { 
-    background: white; 
-    border: 1px solid var(--bs-border-color); 
-    border-radius: 12px; 
-    padding: 16px; 
-    margin-top: 24px; 
-    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+
+.filter-card {
+    background: white;
+    border: 1px solid var(--bs-border-color);
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 24px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
 }
-.search-input { 
-    border-radius: 8px; 
-    border: 1px solid var(--bs-border-color); 
-    padding-left: 38px; 
+
+.search-input {
+    border-radius: 8px;
+    border: 1px solid var(--bs-border-color);
+    padding-left: 38px;
     font-size: 14px;
 }
-.search-icon { 
-    position: absolute; 
-    left: 14px; 
-    top: 50%; 
-    transform: translateY(-50%); 
-    color: var(--bs-secondary); 
+
+.search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--bs-secondary);
 }
-.filter-select { 
-    border-radius: 8px; 
-    border: 1px solid var(--bs-border-color); 
-    color: var(--bs-body-color); 
+
+.filter-select {
+    border-radius: 8px;
+    border: 1px solid var(--bs-border-color);
+    color: var(--bs-body-color);
     font-size: 14px;
     cursor: pointer;
 }
-.btn-filter { 
-    color: var(--bs-primary); 
-    background-color: rgba(var(--bs-primary-rgb), 0.1); 
-    border: none; 
-    font-weight: 500; 
-    border-radius: 8px; 
+
+.btn-filter {
+    color: var(--bs-primary);
+    background-color: rgba(var(--bs-primary-rgb), 0.1);
+    border: none;
+    font-weight: 500;
+    border-radius: 8px;
     font-size: 14px;
     transition: all 0.2s;
 }
+
 .btn-filter:hover {
     background-color: rgba(var(--bs-primary-rgb), 0.2);
 }
-.btn-export { 
-    border: 1px solid var(--bs-border-color); 
-    background-color: white; 
-    color: var(--bs-body-color); 
-    font-weight: 500; 
-    border-radius: 8px; 
+
+.btn-export {
+    border: 1px solid var(--bs-border-color);
+    background-color: white;
+    color: var(--bs-body-color);
+    font-weight: 500;
+    border-radius: 8px;
     font-size: 14px;
     transition: all 0.2s;
 }
+
 .btn-export:hover {
     background-color: var(--bs-light);
 }
-.notification-bell { 
-    position: relative; 
-    font-size: 20px; 
-    color: var(--bs-body-color); 
-    margin-right: 20px; 
-    cursor: pointer; 
+
+.notification-bell {
+    position: relative;
+    font-size: 20px;
+    color: var(--bs-body-color);
+    margin-right: 20px;
+    cursor: pointer;
 }
-.notification-badge { 
-    position: absolute; 
-    top: -2px; 
-    right: -6px; 
-    background-color: var(--bs-danger); 
-    color: white; 
-    border-radius: 50%; 
-    font-size: 10px; 
+
+.notification-badge {
+    position: absolute;
+    top: -2px;
+    right: -6px;
+    background-color: var(--bs-danger);
+    color: white;
+    border-radius: 50%;
+    font-size: 10px;
     font-weight: bold;
-    padding: 2px 5px; 
-    border: 2px solid var(--bs-light); 
+    padding: 2px 5px;
+    border: 2px solid var(--bs-light);
 }
 
-.extra-filter-card{
-    background: white; 
-    border: 1px solid var(--bs-border-color); 
-    border-radius: 12px; 
-    padding: 16px; 
-    margin-top: 30px; 
-    box-shadow: 0 2px 4px rgba(0,0,0,0.02); 
+.extra-filter-card {
+    background: white;
+    border: 1px solid var(--bs-border-color);
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
 }
 
-.summary-card { 
-    background: white; 
-    border: 1px solid var(--bs-border-color); 
-    border-radius: 12px; 
-    padding: 16px; 
-    margin-top: 30px; 
-    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+.summary-card {
+    background: white;
+    border: 1px solid var(--bs-border-color);
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
 }
 
 /* Table and Pagination Styles */
@@ -145,12 +163,14 @@ body {
     border-bottom: 1px solid var(--bs-border-color);
     padding: 12px 16px;
 }
+
 .table td {
     font-size: 14px;
     vertical-align: middle;
     color: var(--bs-body-color);
     padding: 12px 16px;
 }
+
 .icon-circle {
     width: 28px;
     height: 28px;
@@ -160,12 +180,14 @@ body {
     justify-content: center;
     font-size: 14px;
 }
+
 .badge-custom {
     padding: 6px 10px;
     border-radius: 6px;
     font-weight: 500;
     font-size: 12px;
 }
+
 .page-link {
     border-radius: 6px !important;
     margin: 0 2px;
@@ -178,6 +200,7 @@ body {
     align-items: center;
     justify-content: center;
 }
+
 .page-item.active .page-link {
     background-color: var(--bs-primary);
     color: white;
@@ -193,25 +216,26 @@ body {
     font-size: 14px;
     transition: all 0.2s;
 }
+
 .btn-add:hover {
-    background-color: var(--bs-primary); /* Darker primary for hover */
+    background-color: var(--bs-primary);
     border-color: var(--bs-primary);
     color: white;
 }
-/* Ensure the second add button has a slightly different, secondary style if they are side-by-side to avoid visual clutter */
+
 .btn-add:nth-of-type(4) {
     background-color: white;
     color: var(--bs-primary);
     border: 1px solid var(--bs-primary);
 }
+
 .btn-add:nth-of-type(4):hover {
     background-color: var(--bs-light);
     color: var(--bs-primary);
 }
 
-/* Custom Radio Toggle Buttons */
 .btn-type-toggle {
-    border: 1px solid transparent; 
+    border: 1px solid transparent;
     color: var(--bs-secondary);
     background-color: transparent;
     border-radius: 6px !important;
@@ -219,14 +243,13 @@ body {
     transition: all 0.2s;
 }
 
-.btn-check:checked + .btn-type-toggle {
+.btn-check:checked+.btn-type-toggle {
     background-color: white;
     border-color: var(--bs-primary);
     color: var(--bs-primary);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
-/* Quick Amount Buttons Hover */
 .btn-quick-amount {
     color: var(--bs-body-color);
     transition: all 0.2s ease-in-out;
@@ -238,7 +261,6 @@ body {
     border-color: var(--bs-primary) !important;
 }
 
-/* Action Icon Button Hover in Tables */
 .table .btn.text-secondary {
     border-radius: 50%;
     width: 32px;
@@ -255,7 +277,6 @@ body {
     color: var(--bs-dark) !important;
 }
 
-/* Table Header Icon Hover */
 .table th i.bi-chevron-expand {
     transition: color 0.2s ease;
     padding: 4px;
@@ -267,29 +288,27 @@ body {
     background-color: var(--bs-gray-200);
 }
 
-/* Category and Account Icon Selection Hover and Active State */
-input[name="categoryIcon"] + label.btn-outline-secondary,
-input[name="accountIcon"] + label.btn-outline-secondary {
+input[name="categoryIcon"]+label.btn-outline-secondary,
+input[name="accountIcon"]+label.btn-outline-secondary {
     border-color: var(--bs-border-color);
     color: var(--bs-secondary);
     transition: all 0.2s ease;
 }
 
-input[name="categoryIcon"] + label.btn-outline-secondary:hover,
-input[name="accountIcon"] + label.btn-outline-secondary:hover {
+input[name="categoryIcon"]+label.btn-outline-secondary:hover,
+input[name="accountIcon"]+label.btn-outline-secondary:hover {
     background-color: rgba(var(--bs-primary-rgb), 0.1);
     color: var(--bs-primary);
     border-color: var(--bs-primary);
 }
 
-input[name="categoryIcon"]:checked + label.btn-outline-secondary,
-input[name="accountIcon"]:checked + label.btn-outline-secondary {
+input[name="categoryIcon"]:checked+label.btn-outline-secondary,
+input[name="accountIcon"]:checked+label.btn-outline-secondary {
     background-color: var(--bs-primary);
     color: white;
     border-color: var(--bs-primary);
 }
 
-/* Fix flatpickr overlapping issue with bootstrap modals */
 .flatpickr-calendar {
     z-index: 1060 !important;
 }
@@ -304,7 +323,136 @@ input[name="accountIcon"]:checked + label.btn-outline-secondary {
     border-color: var(--bs-primary) !important;
 }
 
-/* Allow dropdown menus to overflow table-responsive containers */
 .table-responsive {
     overflow: visible !important;
 }
+
+@media (max-width: 767.98px) {
+    .container-fluid.p-4 {
+        padding: 8px !important;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .header-title { font-size: 20px; }
+    .text-muted-custom { font-size: 13px; }
+
+    .filter-card {
+        padding: 10px !important;
+        margin-top: 8px;
+        gap: 8px !important;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .filter-card > div:first-child {
+        max-width: 100% !important;
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    .mobile-filter-row {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        gap: 6px !important;
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    .mobile-filter-row > .dropdown {
+        flex: 1 1 0 !important;
+        min-width: 0 !important;
+        max-width: calc(33.33% - 4px) !important;
+        height: auto !important;
+    }
+
+    .mobile-filter-row > .dropdown > button {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        font-size: 11px !important;
+        padding: 6px 6px !important;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .mobile-filter-row > .dropdown > button > span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        min-width: 0;
+        display: block;
+    }
+
+    .mobile-action-row {
+        display: flex !important;
+        flex-direction: row !important;
+        width: 100% !important;
+        gap: 6px !important;
+        min-width: 0 !important;
+    }
+
+    .mobile-action-row > .btn {
+        flex: 1 1 0 !important;
+        min-width: 0 !important;
+        justify-content: center !important;
+        padding: 7px 4px !important;
+        font-size: 12px !important;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .mobile-action-row .btn-filter i {
+        margin-right: 0 !important;
+    }
+    .mobile-action-row .btn-filter span {
+        display: none !important;
+    }
+
+    .mobile-action-row .btn-label-full {
+        display: inline;
+    }
+
+    .table-responsive {
+        overflow-x: auto !important;
+        overflow-y: visible !important;
+        -webkit-overflow-scrolling: touch;
+        max-width: 100%;
+        display: block;
+        scrollbar-width: thin;
+        scrollbar-color: #cbd5e1 transparent;
+    }
+
+    .table-responsive::-webkit-scrollbar { height: 4px; }
+    .table-responsive::-webkit-scrollbar-track { background: transparent; }
+    .table-responsive::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 2px;
+    }
+
+    .table th,
+    .table td {
+        padding: 8px 10px;
+        font-size: 13px;
+        white-space: nowrap;
+    }
+
+    .summary-card {
+        margin-top: 8px;
+        padding: 12px;
+        font-size: 13px;
+    }
+
+    #remaining-balance {
+        padding-left: 0 !important;
+        margin-left: 0 !important;
+    }
+
+    .extra-filter-card {
+        margin-top: 8px;
+        padding: 10px;
+    }
+}
+

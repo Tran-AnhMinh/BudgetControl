@@ -6,10 +6,10 @@ const Helper = {
 
     formatMoney(value, hasCurrency = true) {
         const formatted = new Intl.NumberFormat("vi-VN").format(value || 0);
-        return hasCurrency ? `${formatted}d` : formatted;
+        return hasCurrency ? `${formatted}` : formatted;
     },
 
-    fomartMonth(yearMonthStr) {
+    formatMonth(yearMonthStr) {
         if (!yearMonthStr) return "";
         const [year, month] = yearMonthStr.split("-");
         return `Tháng ${month}/${year}`;
@@ -32,16 +32,6 @@ const MonthlyBudgetModule = (function () {
         return parseInt(value.toString().replace(/[^0-9]/g, ""), 10) || 0;
     }
 
-    function formatMoney(value, hasCurrency = true) {
-        const formatted = new Intl.NumberFormat("vi-VN").format(value || 0);
-        return hasCurrency ? `${formatted}` : formatted;
-    }
-
-    function formatMonth(yearMonthStr) {
-        if (!yearMonthStr) return "";
-        const [year, month] = yearMonthStr.split("-");
-        return `Tháng ${month}/${year}`;
-    }
 
 
     // ========================================
@@ -233,9 +223,9 @@ const MonthlyBudgetModule = (function () {
 
     function renderHeader() {
         if (DOM.monthPicker) DOM.monthPicker.value = currentMonth;
-        if (DOM.monthPickerText) DOM.monthPickerText.textContent = formatMonth(currentMonth);
+        if (DOM.monthPickerText) DOM.monthPickerText.textContent = Helper.formatMonth(currentMonth);
 
-        if (DOM.totalBudgetText) DOM.totalBudgetText.textContent = `${formatMoney(totalBudget)}đ`;
+        if (DOM.totalBudgetText) DOM.totalBudgetText.textContent = `${Helper.formatMoney(totalBudget)}đ`;
         if (DOM.totalBudgetInput) DOM.totalBudgetInput.value = totalBudget;
     }
 
@@ -259,7 +249,7 @@ const MonthlyBudgetModule = (function () {
             <td>
                 <div class="input-group input-group-sm">
                     <input type="text" class="form-control text-start fw-semibold budget-input" 
-                           data-index="${index}" value="${formatMoney(cat.amount)}"}" ${!isEditing ? 'disabled' : ''} />
+                           data-index="${index}" value="${Helper.formatMoney(cat.amount)}"}" ${!isEditing ? 'disabled' : ''} />
                     <span class="input-group-text bg-white text-muted">đ</span>
                 </div>
             </td>
@@ -300,10 +290,10 @@ const MonthlyBudgetModule = (function () {
             }
         });
 
-        if (DOM.statTotal) DOM.statTotal.textContent = `${formatMoney(totalBudget)}đ`;
-        if (DOM.statAllocated) DOM.statAllocated.textContent = `${formatMoney(allocatedTotal)}đ`;
-        if (DOM.statRemaining) DOM.statRemaining.textContent = `${formatMoney(remaining)}đ`;
-        if (DOM.statTotalPercent) DOM.statTotalPercent.textContent = `${formatMoney(totalPercent)}%`;
+        if (DOM.statTotal) DOM.statTotal.textContent = `${Helper.formatMoney(totalBudget)}đ`;
+        if (DOM.statAllocated) DOM.statAllocated.textContent = `${Helper.formatMoney(allocatedTotal)}đ`;
+        if (DOM.statRemaining) DOM.statRemaining.textContent = `${Helper.formatMoney(remaining)}đ`;
+        if (DOM.statTotalPercent) DOM.statTotalPercent.textContent = `${Helper.formatMoney(totalPercent)}%`;
 
         // Badge Status
         if (DOM.statStatusBadge) {
@@ -384,13 +374,13 @@ const MonthlyBudgetModule = (function () {
             if (e.target.classList.contains("budget-input")) {
                 const index = parseInt(e.target.dataset.index, 10);
                 if (categories[index]) {
-                    e.target.value = formatMoney(categories[index].amount);
+                    e.target.value = Helper.formatMoney(categories[index].amount);
                 }
             }
         });
 
         DOM.totalBudgetInput?.addEventListener("focusout", (e) => {
-            e.target.value = formatMoney(totalBudget);
+            e.target.value = Helper.formatMoney(totalBudget);
         });
 
 
@@ -453,9 +443,6 @@ const DailyBudgetModule = (function () {
         return parseInt(value.toString().replace(/[^0-9]/g, ""), 10) || 0;
     }
 
-    function formatMoney(value) {
-        return new Intl.NumberFormat("vi-VN").format(value || 0);
-    }
 
     // ========================================
     // 2. STATE
@@ -527,7 +514,7 @@ const DailyBudgetModule = (function () {
     function render() {
         if (DOM.input) {
 
-            DOM.input.value = formatMoney(dailyBudget);
+            DOM.input.value = Helper.formatMoney(dailyBudget);
         }
     }
 

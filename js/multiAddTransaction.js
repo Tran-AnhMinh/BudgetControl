@@ -101,7 +101,7 @@ if (btnAddrowMultiAddTrans) {
                     </div>
                 </td>
                 <td>
-                    <input type="text" class="multi-add-trans-detail form-control form-control-sm" value="" placeholder="Nhập ghi chú" style="font-size: 13px;">
+                    <input type="text" class="multi-add-trans-detail form-control form-control-sm" value="" placeholder="Nhập ghi chú" style="font-size: 13px; min-width: 280px;">
                 </td>
                 <td>
                     <input type="text" inputmode="numeric" class="amount-input-multi-add form-control form-control-sm text-end" value="" placeholder="0" style="font-size: 13px;">

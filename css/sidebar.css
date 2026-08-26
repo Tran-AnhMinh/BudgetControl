@@ -136,3 +136,110 @@ body {
 .dropdown-toggle::after{
     display:none !important;
 }
+
+/* ===== MOBILE RESPONSIVE: Sidebar chuyển lên trên ===== */
+@media (max-width: 767.98px) {
+    :root {
+        --topbar-height: 56px;
+    }
+
+    /* Sidebar trở thành top navbar */
+    .sidebar {
+        position: fixed !important;
+        top: 0;
+        left: 0;
+        width: 100% !important;
+        height: var(--topbar-height) !important;
+        flex-direction: row !important;
+        align-items: center;
+        z-index: 1000;
+        overflow: hidden;
+        padding: 0 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Ẩn trạng thái collapsed trên mobile */
+    .sidebar.collapsed {
+        width: 100% !important;
+        height: var(--topbar-height) !important;
+    }
+
+    /* Logo nằm bên trái topbar */
+    .sidebar > div:first-of-type {
+        padding: 0 8px !important;
+        flex-shrink: 0;
+    }
+
+    .logo-text {
+        opacity: 1 !important;
+        font-size: 20px;
+    }
+
+    /* Nav links nằm ngang */
+    .sidebar .nav {
+        flex-direction: row !important;
+        align-items: center;
+        flex: 1;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE */
+    }
+
+    .sidebar .nav::-webkit-scrollbar {
+        display: none; /* Chrome/Safari */
+    }
+
+    .sidebar-link {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0 4px;
+        padding: 6px 12px !important;
+        border-radius: 8px;
+        white-space: nowrap;
+        font-size: 11px;
+        min-width: 56px;
+    }
+
+    .sidebar-link i {
+        margin: 0 0 2px 0 !important;
+        font-size: 18px;
+    }
+
+    /* Hiện text label trên mobile dù sidebar đang "collapsed" */
+    .collapsed .hide-on-collapse {
+        opacity: 1 !important;
+        display: inline !important;
+        font-size: 11px;
+    }
+
+    .collapsed .logo-text {
+        opacity: 1 !important;
+    }
+
+    .collapsed .sidebar-link {
+        padding: 6px 12px !important;
+        margin: 0 4px;
+    }
+
+    .collapsed .sidebar-link i {
+        margin: 0 0 2px 0 !important;
+    }
+
+    /* Ẩn toggle button trên mobile */
+    .toggle-btn {
+        display: none !important;
+    }
+
+    /* Main content xuống dưới topbar */
+    .main-content {
+        margin-left: 0 !important;
+        padding-top: calc(var(--topbar-height) + 16px) !important;
+    }
+
+    .collapsed ~ .main-content {
+        margin-left: 0 !important;
+    }
+}

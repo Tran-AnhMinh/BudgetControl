@@ -25,7 +25,7 @@
             <button class="toggle-btn" onclick="toggleSidebar()">
                 <i class="bi bi-caret-left-fill"></i>
             </button>
-            
+
             <div class="p-4">
                 <h4 class="logo-text fw-bold mb-0">Finora</h4>
             </div>
@@ -89,13 +89,13 @@
 
 
                 <div
-                    class="filter-card d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3">
-                        <div class="position-relative flex-grow-1" style="max-width: 380px;">
-                            <i class="bi bi-search search-icon"></i>
-                            <input type="text" class="form-control search-input py-2" placeholder="Tìm theo mô tả">
-                        </div>
+                    class="filter-card d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3" style="margin-bottom: 0 !important;">
+                    <div class="position-relative flex-grow-1" style="max-width: 380px;">
+                        <i class="bi bi-search search-icon"></i>
+                        <input type="text" class="form-control search-input py-2" placeholder="Tìm theo mô tả">
+                    </div>
 
-                    <div class="d-flex gap-2 flex-wrap flex-grow-1 justify-content-lg-end">
+                    <div class="d-flex row-gap-3 column-gap-2 flex-wrap flex-grow-1 justify-content-lg-end">
                         <div class="dropdown">
                             <button
                                 class="form-select text-secondary text-start w-100 bg-white d-flex align-items-center"
@@ -181,12 +181,12 @@
                 </div>
 
                 <div class="collapse" id="extraFilterCollapse">
-                    <div class="extra-filter-card d-flex flex-wrap align-items-center gap-3 mt-3">
+                    <div class="extra-filter-card d-flex flex-wrap align-items-center gap-3">
                         <!-- <button class="btn date-picker-btn d-flex align-items-center rounded-3 px-3 py-2">
                     <i class="bi bi-calendar3 me-2 text-secondary"></i>
                     <span class="me-2" style="font-size: 14px;">01/08/2025 - 31/08/2025</span>
                     <i class="bi bi-chevron-down ms-1 text-secondary" style="font-size: 12px;"></i>
-                </button> -->
+                        </button> -->
 
                         <div class="input-group" style="max-width: 250px;">
                             <span class="input-group-text bg-white text-secondary pe-2 border-end-0"
@@ -229,7 +229,7 @@
                 </div>
 
                 <div
-                    class="summary-card d-flex flex-column flex-md-row justify-content-between align-items-md-center mt-4 mb-3 px-2">
+                    class="summary-card d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3 px-2">
                     <div class="fw-bold mb-2 mb-md-0" style="font-size: 15px;" id="total-transaction">Tổng <span
                             id="transaction-count">42</span> giao dịch</div>
                     <div class="d-flex flex-wrap gap-3 gap-md-4" style="font-size: 15px;">
@@ -250,27 +250,29 @@
                             <tr>
                                 <th scope="col" class="fw-medium text-nowrap text-center">Số</th>
                                 <th scope="col" class="fw-medium text-nowrap text-center">Ngày <button type="button"
-                                        class="btn btn-link p-0 ms-1 align-baseline" id="btn-sort-date" style="line-height: 1;"><i class="bi bi-chevron-expand"
+                                        class="btn btn-link p-0 ms-1 align-baseline" id="btn-sort-date"
+                                        style="line-height: 1;"><i class="bi bi-chevron-expand"
                                             style="font-size: 12px; cursor: pointer;"></i></button></th>
                                 <th scope="col" class="fw-medium text-nowrap text-right">Loại <button type="button"
-                                        class="btn btn-link p-0 ms-1 align-baseline" id="btn-sort-type" style="line-height: 1;"><i class="bi bi-chevron-expand"
+                                        class="btn btn-link p-0 ms-1 align-baseline" id="btn-sort-type"
+                                        style="line-height: 1;"><i class="bi bi-chevron-expand"
                                             style="font-size: 12px; cursor: pointer;"></i></button></th>
                                 <th scope="col" class="fw-medium text-nowrap">Danh mục <button type="button"
-                                        class="btn btn-link p-0 ms-1 align-baseline" id="btn-sort-category" style="line-height: 1;"><i
-                                            class="bi bi-chevron-expand"
+                                        class="btn btn-link p-0 ms-1 align-baseline" id="btn-sort-category"
+                                        style="line-height: 1;"><i class="bi bi-chevron-expand"
                                             style="font-size: 12px; cursor: pointer;"></i></button></th>
                                 <th scope="col" class="fw-medium">Mô tả</th>
-                                <th scope="col" class="fw-medium text-nowrap text-right">Tài khoản <button
-                                        type="button" class="btn btn-link p-0 ms-1 align-baseline" id="btn-sort-account" style="line-height: 1;"><i
-                                            class="bi bi-chevron-expand"
+                                <th scope="col" class="fw-medium text-nowrap text-right">Tài khoản <button type="button"
+                                        class="btn btn-link p-0 ms-1 align-baseline" id="btn-sort-account"
+                                        style="line-height: 1;"><i class="bi bi-chevron-expand"
                                             style="font-size: 12px; cursor: pointer;"></i></button></th>
                                 <th scope="col" class="fw-medium text-end text-nowrap text-left">Số tiền <button
-                                        type="button" class="btn btn-link p-0 ms-1 align-baseline" id="btn-sort-amount" style="line-height: 1;"><i
-                                            class="bi bi-chevron-expand"
+                                        type="button" class="btn btn-link p-0 ms-1 align-baseline" id="btn-sort-amount"
+                                        style="line-height: 1;"><i class="bi bi-chevron-expand"
                                             style="font-size: 12px; cursor: pointer;"></i></button></th>
                                 <th scope="col" class="fw-medium text-nowrap text-center">Tần suất <button type="button"
-                                        class="btn btn-link p-0 ms-1 align-baseline" id="btn-sort-frequency" style="line-height: 1;"><i
-                                            class="bi bi-chevron-expand"
+                                        class="btn btn-link p-0 ms-1 align-baseline" id="btn-sort-frequency"
+                                        style="line-height: 1;"><i class="bi bi-chevron-expand"
                                             style="font-size: 12px; cursor: pointer;"></i></button></th>
                                 <th scope="col" class="fw-medium text-end text-nowrap text-center">Thao tác</th>
                             </tr>

@@ -4,11 +4,12 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
   <link rel="stylesheet" href="./css/sidebar.css" />
   <link rel="stylesheet" href="./css/budget.css" />
+  <link rel="stylesheet" href="./css/qr.css" />
   <meta name="description" content="quản lý giao dịch" />
   <title>QR page</title>
 </head>
@@ -54,9 +55,7 @@
         <div class="header-left">
           <h3 class="mb-1">Mã QR của tôi</h3>
 
-          <p class="mb-0">
-            Danh sách mã QR dùng để nhận hoặc chuyển khoản
-          </p>
+          <p class="mb-0">Danh sách mã QR dùng để nhận hoặc chuyển khoản</p>
         </div>
         <div class="dropdown-toggle user-info d-flex align-items-center gap-2" style="cursor: pointer"
           data-bs-toggle="dropdown" aria-expanded="false">
@@ -76,12 +75,131 @@
         </ul>
       </div>
 
+      <div class="page-content">
+        <div class="d-flex justify-content-end align-items-center mb-4 pb-2">
+          <button class="btn btn-primary px-3 py-2 btn-sm fw-medium" data-bs-toggle="modal"
+            data-bs-target="#uploadModal" style="border-radius:10px;">
+            Tải lên mã QR mới
+          </button>
+        </div>
 
-      
+
+        <div class="table-responsive">
+          <table class="table align-middle">
+            <thead class="border-bottom text-secondary">
+              <tr class="text-mute small text-uppercase">
+                <th scope="col" style="min-width: 100px">Mã QR</th>
+                <th scope="col" style="min-width: 200px">Tên hiển thị</th>
+                <th scope="col" style="min-width: 250px">Ngân hàng / Ví</th>
+                <th scope="col" style="min-width: 200px">
+                  Số tài khoản / SĐT
+                </th>
+                <th scope="col" style="min-width: 200px">Mô tả</th>
+                <th scope="col" style="min-width: 80px">Hành động</th>
+              </tr>
+            </thead>
+
+            <tbody id="qrTableBody">
+
+            </tbody>
+          </table>
+        </div>
+
+        <div
+          class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3 pt-4 border-top mt-2">
+          <div class="d-flex align-items-center gap-3">
+            <div class="d-flex align-items-center gap-2">
+              <label class="text-sub mb-0 small text-nowrap">Hiển thị:</label>
+              <select class="form-select form-select-sm w-auto" id="pageSizeSelect">
+                <option value="5" selected>5</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+              </select>
+            </div>
+            <div class="text-sub small" id="tableSummary">Hiển thị 0 đến 0 trong 0 mã QR</div>
+          </div>
+          <nav>
+            <ul class="pagination pagination-sm mb-0" id="pagination"></ul>
+          </nav>
+        </div>
+
+        <div class="modal fade" id="uploadModal" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 shadow">
+              <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold">Thêm mã QR mới</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form id="qrForm">
+                  <div class="mb-3">
+                    <label class="form-label small fw-semibold">Tải ảnh QR <span class="text-danger">*</span></label>
+                    <input type="file" class="form-control" id="imageInput" accept="image/*" required>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label small fw-semibold">Tên hiển thị <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="nameInput"
+                      placeholder="VD: Momo chính, VCB công việc..." required>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label small fw-semibold" for="bankInput">
+                      Ngân hàng / Ví <span class="text-danger">*</span>
+                    </label>
+                    <input type="text" class="form-control" id="bankInput"
+                      placeholder="Nhập tên ngân hàng hoặc ví (VD: MoMo, MB Bank...)" required>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label small fw-semibold">Số tài khoản / SĐT <span
+                        class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="accountInput" placeholder="Nhập số tài khoản/SĐT"
+                      required>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label small fw-semibold">Chủ tài khoản <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="holderInput" placeholder="VD: LE MINH" required>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label small fw-semibold">Mô tả</label>
+                    <input type="text" class="form-control" id="descInput" placeholder="VD: Dùng nhận tiền online...">
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="defaultInput">
+                    <label class="form-check-label small" for="defaultInput">Đặt làm tài khoản mặc định</label>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary rounded-pill px-4" id="btnSubmitForm">Lưu QR</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="zoomModal" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" style="max-width: 600px;">
+            <div class="modal-content rounded-4 border-0 shadow p-4 text-center">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="d-flex align-items-center gap-2">
+                  <h5 class="fw-bold mb-0 text-dark" id="modalZoomName"></h5>
+                  <span id="modalZoomDefaultTag" class="badge badge-default">Mặc định</span>
+                </div>
+              </div>
+
+              <div class="p-3 bg-light rounded-4 mb-3 border">
+                <img id="modalZoomQRImage" src="" class="img-fluid rounded" alt="QR Large">
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
   <script src="./js/sidebar.js"></script>
+  <script src="./js/qr.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

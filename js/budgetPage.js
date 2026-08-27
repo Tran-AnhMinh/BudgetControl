@@ -262,7 +262,7 @@ const MonthlyBudgetModule = (function () {
                 </div>
             </td>
             <td class="text-center">
-                <button type="button" class="btn btn-sm btn-link text-secondary p-1 delete-cat-btn" 
+                <button type="button" class="${isEditing ? 'btn btn-sm btn-outline-danger border-0 rounded-circle btn-delete-qr' : 'btn btn-sm btn-link text-secondary p-1 delete-cat-btn'}"
                         data-index="${index}" ${!isEditing ? 'disabled' : ''}>
                     <i class="bi bi-trash"></i>
                 </button>

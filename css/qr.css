@@ -1,0 +1,140 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+
+.page-content {
+    padding: 0 24px 24px;
+}   
+
+.table td, .table th {
+  padding: 1.1rem 1rem;
+  vertical-align: middle;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.table thead th {
+  color: #64748b;
+  font-weight: 600;
+  font-size: 1rem;
+  background-color: #fafbfc;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* QR Thumbnail */
+.qr-thumb-box {
+  width: 100px;
+  height: 100px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.qr-thumb-box:hover {
+  border-color: #94a3b8;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.qr-thumb-img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.qr-tag {
+  font-size: 8px;
+  font-weight: 800;
+  line-height: 1;
+  color: #dc2626;
+  margin-bottom: 2px;
+}
+
+
+.badge-default {
+  background-color: #eff6ff;
+  color: #2563eb;
+  font-weight: 500;
+  font-size: 11.5px;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.text-sub {
+  color: #64748b;
+  font-size: 13px;
+}
+
+/* Lightbox Overlay */
+.qr-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(6px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.qr-overlay.active {
+  display: flex;
+  opacity: 1;
+}
+
+.qr-overlay-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 24px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  position: relative;
+  transform: scale(0.92);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.qr-overlay.active .qr-overlay-card {
+  transform: scale(1);
+}
+
+
+.qr-large-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 16px;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+
+.pagination .page-link {
+  color: #475569;
+  border-radius: 8px !important;
+  margin: 0 2px;
+  border: 1px solid #e2e8f0;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+  color: #fff;
+}

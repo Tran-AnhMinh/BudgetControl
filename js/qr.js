@@ -76,6 +76,17 @@ const DBModule = (function () {
     });
   }
 
+  function update(item) {
+    return new Promise((resolve, reject) => {
+      const tx = dbInstance.transaction(STORE_NAME, "readwrite");
+      const store = tx.objectStore(STORE_NAME);
+      const request = store.put(item);
+
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+    });
+  }
+
   function remove(id) {
     return new Promise((resolve, reject) => {
       const tx = dbInstance.transaction(STORE_NAME, "readwrite");
@@ -87,36 +98,12 @@ const DBModule = (function () {
     });
   }
 
-  function clearDefaults() {
-    return new Promise((resolve, reject) => {
-      const tx = dbInstance.transaction(STORE_NAME, "readwrite");
-      const store = tx.objectStore(STORE_NAME);
-      const request = store.openCursor();
-
-      request.onsuccess = (e) => {
-        const cursor = e.target.result;
-        if (cursor) {
-          const record = cursor.value;
-          if (record.isDefault) {
-            record.isDefault = false;
-            cursor.update(record);
-          }
-          cursor.continue();
-        } else {
-          resolve();
-        }
-      };
-
-      request.onerror = () => reject(request.error);
-    });
-  }
-
   return {
     init,
     getAll,
     add,
+    update,
     delete: remove,
-    clearDefaults
   };
 })();
 
@@ -137,9 +124,12 @@ const QRPageModule = (function (DB, utils) {
   let cachedData = [];
   let currentPage = 1;
   let pageSize = DEFAULT_PAGE_SIZE;
+  let editingId = null;
+  let currentImageBlob = null; // Quản lý Blob của ảnh hiện tại (cũ hoặc mới)
 
   let activeObjectURLs = [];
   let zoomObjectURL = null;
+  let previewObjectURL = null;
 
   // ========================================
   // 3. DOM CACHE
@@ -154,23 +144,30 @@ const QRPageModule = (function (DB, utils) {
       pagination: document.getElementById("pagination"),
       pageSizeSelect: document.getElementById("pageSizeSelect"),
 
-      // Create Form Modal
+      // Create / Edit Form Modal
       form: document.getElementById("qrForm"),
       uploadModal: document.getElementById("uploadModal"),
+      modalTitle: document.querySelector("#uploadModal .modal-title"),
       submitBtn: document.getElementById("btnSubmitForm"),
-      inputImage: document.getElementById("imageInput"),
+      
+      // Upload & Preview Containers
+      imageUploadWrapper: document.getElementById("imageUploadWrapper"),
+      imageInput: document.getElementById("imageInput"),
+      imagePreviewWrapper: document.getElementById("imagePreviewWrapper"),
+      imagePreview: document.getElementById("imagePreview"),
+      btnRemovePreview: document.getElementById("btnRemovePreview"),
+
+      // Other Form Inputs
       inputName: document.getElementById("nameInput"),
       inputBank: document.getElementById("bankInput"),
       inputAccount: document.getElementById("accountInput"),
       inputHolder: document.getElementById("holderInput"),
       inputDesc: document.getElementById("descInput"),
       inputStatus: document.getElementById("statusInput"),
-      inputDefault: document.getElementById("defaultInput"),
 
       // Zoom Modal
       zoomModal: document.getElementById("zoomModal"),
       zoomImage: document.getElementById("modalZoomQRImage"),
-      zoomDefaultTag: document.getElementById("modalZoomDefaultTag")
     };
   }
 
@@ -189,8 +186,42 @@ const QRPageModule = (function (DB, utils) {
     }
   }
 
+  function cleanupPreviewURL() {
+    if (previewObjectURL) {
+      URL.revokeObjectURL(previewObjectURL);
+      previewObjectURL = null;
+    }
+  }
+
   // ========================================
-  // 5. DATA & BUSINESS LOGIC
+  // 5. PREVIEW & UPLOAD STATE TOGGLING
+  // ========================================
+  function showPreviewState(blobOrFile) {
+    cleanupPreviewURL();
+    currentImageBlob = blobOrFile;
+
+    previewObjectURL = URL.createObjectURL(blobOrFile);
+    if (DOM.imagePreview) DOM.imagePreview.src = previewObjectURL;
+
+    // Ẩn vùng chọn tệp, hiện vùng xem trước
+    if (DOM.imageUploadWrapper) DOM.imageUploadWrapper.classList.add("d-none");
+    if (DOM.imagePreviewWrapper) DOM.imagePreviewWrapper.classList.remove("d-none");
+  }
+
+  function showUploadState() {
+    cleanupPreviewURL();
+    currentImageBlob = null;
+
+    if (DOM.imageInput) DOM.imageInput.value = "";
+    if (DOM.imagePreview) DOM.imagePreview.src = "";
+
+    // Hiện vùng chọn tệp, ẩn vùng xem trước
+    if (DOM.imagePreviewWrapper) DOM.imagePreviewWrapper.classList.add("d-none");
+    if (DOM.imageUploadWrapper) DOM.imageUploadWrapper.classList.remove("d-none");
+  }
+
+  // ========================================
+  // 6. DATA & BUSINESS LOGIC
   // ========================================
   async function loadData() {
     try {
@@ -215,45 +246,103 @@ const QRPageModule = (function (DB, utils) {
     render();
   }
 
-  async function handleCreateQR() {
-    const file = DOM.inputImage?.files[0];
+  function resetForm() {
+    editingId = null;
+    DOM.form?.reset();
+    showUploadState();
+    if (DOM.modalTitle) DOM.modalTitle.textContent = "Thêm mã QR mới";
+    if (DOM.submitBtn) DOM.submitBtn.textContent = "Lưu QR";
+  }
+
+  function openEditModal(id) {
+    const item = cachedData.find((q) => q.id === id);
+    if (!item) return;
+
+    editingId = id;
+
+    // Đổ dữ liệu vào Form
+    if (DOM.inputName) DOM.inputName.value = item.name || "";
+    if (DOM.inputBank) DOM.inputBank.value = item.bankName || "";
+    if (DOM.inputAccount) DOM.inputAccount.value = item.accountNumber || "";
+    if (DOM.inputHolder) DOM.inputHolder.value = item.accountHolder || "";
+    if (DOM.inputDesc) DOM.inputDesc.value = item.description || "";
+    if (DOM.inputStatus) DOM.inputStatus.checked = item.status === "active";
+
+    // Hiển thị ảnh hiện có và ẩn input chọn file
+    if (item.imageBlob) {
+      showPreviewState(item.imageBlob);
+    } else {
+      showUploadState();
+    }
+
+    if (DOM.modalTitle) DOM.modalTitle.textContent = "Chỉnh sửa mã QR";
+    if (DOM.submitBtn) DOM.submitBtn.textContent = "Cập nhật";
+
+    const modal = bootstrap.Modal.getOrCreateInstance(DOM.uploadModal);
+    modal.show();
+  }
+
+  function handleImageFileChange(e) {
+    const file = e.target.files?.[0];
+    if (file) {
+      showPreviewState(file);
+    }
+  }
+
+  async function handleSaveQR() {
     const name = DOM.inputName?.value.trim();
     const bankName = DOM.inputBank?.value;
     const accountNumber = DOM.inputAccount?.value.trim();
     const accountHolder = DOM.inputHolder?.value.trim();
     const description = DOM.inputDesc?.value.trim();
     const status = DOM.inputStatus?.checked ? "active" : "paused";
-    const isDefault = Boolean(DOM.inputDefault?.checked);
 
-    if (!file || !name || !accountNumber || !accountHolder) {
-      alert("Vui lòng chọn ảnh QR và điền đầy đủ các thông tin bắt buộc.");
+    if (!currentImageBlob) {
+      alert("Vui lòng chọn ảnh QR.");
       return;
     }
 
-    if (isDefault) {
-      await DB.clearDefaults();
+    if (!name || !accountNumber || !accountHolder) {
+      alert("Vui lòng điền đầy đủ các thông tin bắt buộc.");
+      return;
     }
 
-    const newRecord = {
-      id: Date.now(),
-      imageBlob: file,
-      name,
-      bankName,
-      accountNumber,
-      accountHolder,
-      description,
-      status,
-      isDefault,
-      createdDate: utils.formatCurrentDate()
-    };
-
     try {
-      await DB.add(newRecord);
+      if (editingId) {
+        const existingRecord = cachedData.find((q) => q.id === editingId);
+        const updatedRecord = {
+          ...existingRecord,
+          imageBlob: currentImageBlob,
+          name,
+          bankName,
+          accountNumber,
+          accountHolder,
+          description,
+          status,
+          updatedDate: utils.formatCurrentDate()
+        };
 
-      DOM.form?.reset();
+        await DB.update(updatedRecord);
+      } else {
+        const newRecord = {
+          id: Date.now(),
+          imageBlob: currentImageBlob,
+          name,
+          bankName,
+          accountNumber,
+          accountHolder,
+          description,
+          status,
+          createdDate: utils.formatCurrentDate()
+        };
+
+        await DB.add(newRecord);
+      }
+
       const modal = bootstrap.Modal.getInstance(DOM.uploadModal);
       if (modal) modal.hide();
 
+      resetForm();
       await loadData();
     } catch (error) {
       console.error("Lỗi khi lưu QR:", error);
@@ -280,19 +369,13 @@ const QRPageModule = (function (DB, utils) {
 
     cleanupZoomURL();
     zoomObjectURL = URL.createObjectURL(item.imageBlob);
-    console.log(zoomObjectURL);
     if (DOM.zoomImage) DOM.zoomImage.src = zoomObjectURL;
-    if (DOM.zoomDefaultTag) {
-      DOM.zoomDefaultTag.style.display = item.isDefault ? "inline-block" : "none";
-    }
 
     const modal = bootstrap.Modal.getOrCreateInstance(DOM.zoomModal);
     modal.show();
   }
+  // 7. RENDER
 
-  // ========================================
-  // 6. RENDER
-  // ========================================
   function render() {
     cleanupBlobURLs();
 
@@ -343,7 +426,6 @@ const QRPageModule = (function (DB, utils) {
             <td>
               <div class="d-flex align-items-center gap-2">
                 <span class="fw-semibold text-dark">${utils.escapeHTML(item.name)}</span>
-                ${item.isDefault ? '<span class="badge badge-default">Mặc định</span>' : ""}
               </div>
               <div class="text-sub mt-1">Tạo ngày ${item.createdDate}</div>
             </td>
@@ -360,9 +442,14 @@ const QRPageModule = (function (DB, utils) {
               </div>
             </td>
             <td class="text-center">
-              <button type="button" class="btn btn-sm btn-outline-danger border-0 rounded-circle btn-delete-qr" data-id="${item.id}" title="Xóa">
-                <i class="bi bi-trash"></i>
-              </button>
+              <div class="d-inline-flex gap-1">
+                <button type="button" class="btn btn-sm btn-outline-primary border-0 rounded-circle btn-edit-qr" data-id="${item.id}" title="Sửa">
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-danger border-0 rounded-circle btn-delete-qr" data-id="${item.id}" title="Xóa">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
             </td>
           </tr>
         `;
@@ -409,16 +496,27 @@ const QRPageModule = (function (DB, utils) {
   }
 
   // ========================================
-  // 7. EVENTS
+  // 8. EVENTS
   // ========================================
   function bindEvents() {
-
     DOM.pageSizeSelect?.addEventListener("change", (e) => setPageSize(e.target.value));
 
+    DOM.submitBtn?.addEventListener("click", handleSaveQR);
 
-    DOM.submitBtn?.addEventListener("click", handleCreateQR);
+    // 1. Khi chọn file: tự động ẩn ô chọn, hiện ảnh preview
+    DOM.imageInput?.addEventListener("change", handleImageFileChange);
 
+    // 2. Khi bấm nút X trên ảnh preview: xóa ảnh, hiện lại ô chọn file
+    DOM.btnRemovePreview?.addEventListener("click", showUploadState);
+
+    // Xử lý click trong bảng (Xem ảnh, Sửa, Xóa)
     DOM.tableBody?.addEventListener("click", (e) => {
+      const editBtn = e.target.closest(".btn-edit-qr");
+      if (editBtn) {
+        openEditModal(Number(editBtn.dataset.id));
+        return;
+      }
+
       const deleteBtn = e.target.closest(".btn-delete-qr");
       if (deleteBtn) {
         handleDeleteQR(Number(deleteBtn.dataset.id));
@@ -437,6 +535,9 @@ const QRPageModule = (function (DB, utils) {
       setPage(Number(button.dataset.page));
     });
 
+    // Reset Form & huỷ preview khi đóng Modal
+    DOM.uploadModal?.addEventListener("hidden.bs.modal", resetForm);
+
     // Modal Zoom Hidden Event
     DOM.zoomModal?.addEventListener("hidden.bs.modal", () => {
       cleanupZoomURL();
@@ -445,7 +546,7 @@ const QRPageModule = (function (DB, utils) {
   }
 
   // ========================================
-  // 8. INIT & PUBLIC API
+  // 9. INIT & PUBLIC API
   // ========================================
   async function init() {
     try {

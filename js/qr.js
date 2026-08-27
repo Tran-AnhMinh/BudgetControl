@@ -1,8 +1,3 @@
-/**
- * =======================================================
- * 0. COMMON HELPERS
- * =======================================================
- */
 const Helper = {
   escapeHTML(value) {
     return String(value ?? "")
@@ -22,11 +17,7 @@ const Helper = {
   }
 };
 
-/**
- * =======================================================
- * DATABASE MODULE (INDEXEDDB)
- * =======================================================
- */
+/** DATABASE  */
 const DBModule = (function () {
   const DB_NAME = "QRManagerDB";
   const DB_VERSION = 1;
@@ -107,33 +98,22 @@ const DBModule = (function () {
   };
 })();
 
-/**
- * =======================================================
- * QR PAGE MODULE
- * =======================================================
- */
+
 const QRPageModule = (function (DB, utils) {
-  // ========================================
-  // 1. CONSTANTS & CONFIG
-  // ========================================
+
   const DEFAULT_PAGE_SIZE = 5;
 
-  // ========================================
-  // 2. STATE
-  // ========================================
+
   let cachedData = [];
   let currentPage = 1;
   let pageSize = DEFAULT_PAGE_SIZE;
   let editingId = null;
-  let currentImageBlob = null; // Quản lý Blob của ảnh hiện tại (cũ hoặc mới)
+  let currentImageBlob = null;
 
   let activeObjectURLs = [];
   let zoomObjectURL = null;
   let previewObjectURL = null;
 
-  // ========================================
-  // 3. DOM CACHE
-  // ========================================
   let DOM = {};
 
   function cacheDOM() {
@@ -171,9 +151,7 @@ const QRPageModule = (function (DB, utils) {
     };
   }
 
-  // ========================================
-  // 4. MEMORY & OBJECT URL CLEANUP
-  // ========================================
+
   function cleanupBlobURLs() {
     activeObjectURLs.forEach((url) => URL.revokeObjectURL(url));
     activeObjectURLs = [];
@@ -193,9 +171,7 @@ const QRPageModule = (function (DB, utils) {
     }
   }
 
-  // ========================================
-  // 5. PREVIEW & UPLOAD STATE TOGGLING
-  // ========================================
+
   function showPreviewState(blobOrFile) {
     cleanupPreviewURL();
     currentImageBlob = blobOrFile;
@@ -203,7 +179,7 @@ const QRPageModule = (function (DB, utils) {
     previewObjectURL = URL.createObjectURL(blobOrFile);
     if (DOM.imagePreview) DOM.imagePreview.src = previewObjectURL;
 
-    // Ẩn vùng chọn tệp, hiện vùng xem trước
+
     if (DOM.imageUploadWrapper) DOM.imageUploadWrapper.classList.add("d-none");
     if (DOM.imagePreviewWrapper) DOM.imagePreviewWrapper.classList.remove("d-none");
   }
@@ -215,14 +191,12 @@ const QRPageModule = (function (DB, utils) {
     if (DOM.imageInput) DOM.imageInput.value = "";
     if (DOM.imagePreview) DOM.imagePreview.src = "";
 
-    // Hiện vùng chọn tệp, ẩn vùng xem trước
+
     if (DOM.imagePreviewWrapper) DOM.imagePreviewWrapper.classList.add("d-none");
     if (DOM.imageUploadWrapper) DOM.imageUploadWrapper.classList.remove("d-none");
   }
 
-  // ========================================
-  // 6. DATA & BUSINESS LOGIC
-  // ========================================
+
   async function loadData() {
     try {
       const data = await DB.getAll();
@@ -495,21 +469,17 @@ const QRPageModule = (function (DB, utils) {
     DOM.pagination.innerHTML = html;
   }
 
-  // ========================================
-  // 8. EVENTS
-  // ========================================
+
   function bindEvents() {
     DOM.pageSizeSelect?.addEventListener("change", (e) => setPageSize(e.target.value));
 
     DOM.submitBtn?.addEventListener("click", handleSaveQR);
 
-    // 1. Khi chọn file: tự động ẩn ô chọn, hiện ảnh preview
     DOM.imageInput?.addEventListener("change", handleImageFileChange);
 
-    // 2. Khi bấm nút X trên ảnh preview: xóa ảnh, hiện lại ô chọn file
     DOM.btnRemovePreview?.addEventListener("click", showUploadState);
 
-    // Xử lý click trong bảng (Xem ảnh, Sửa, Xóa)
+
     DOM.tableBody?.addEventListener("click", (e) => {
       const editBtn = e.target.closest(".btn-edit-qr");
       if (editBtn) {
@@ -535,19 +505,16 @@ const QRPageModule = (function (DB, utils) {
       setPage(Number(button.dataset.page));
     });
 
-    // Reset Form & huỷ preview khi đóng Modal
     DOM.uploadModal?.addEventListener("hidden.bs.modal", resetForm);
 
-    // Modal Zoom Hidden Event
+
     DOM.zoomModal?.addEventListener("hidden.bs.modal", () => {
       cleanupZoomURL();
       if (DOM.zoomImage) DOM.zoomImage.src = "";
     });
   }
 
-  // ========================================
-  // 9. INIT & PUBLIC API
-  // ========================================
+
   async function init() {
     try {
       cacheDOM();
@@ -565,11 +532,7 @@ const QRPageModule = (function (DB, utils) {
   };
 })(DBModule, Helper);
 
-/**
- * =======================================================
- * ENTRY POINT
- * =======================================================
- */
+
 document.addEventListener("DOMContentLoaded", () => {
   QRPageModule.init();
 });

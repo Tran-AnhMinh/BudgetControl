@@ -249,7 +249,7 @@ const MonthlyBudgetModule = (function () {
             <td>
                 <div class="input-group input-group-sm">
                     <input type="text" class="form-control text-start fw-semibold budget-input" 
-                           data-index="${index}" value="${Helper.formatMoney(cat.amount)}"}" ${!isEditing ? 'disabled' : ''} />
+                           data-index="${index}" value="${Helper.formatMoney(cat.amount)}" ${!isEditing ? 'disabled' : ''} />
                     <span class="input-group-text bg-white text-muted">đ</span>
                 </div>
             </td>
@@ -262,16 +262,18 @@ const MonthlyBudgetModule = (function () {
                 </div>
             </td>
             <td class="text-center">
-                <button type="button" class="${isEditing ? 'btn btn-sm btn-outline-danger border-0 rounded-circle btn-delete-qr' : 'btn btn-sm btn-link text-secondary p-1 delete-cat-btn'}"
-                        data-index="${index}" ${!isEditing ? 'disabled' : ''}>
-                    <i class="bi bi-trash"></i>
+                <button type="button" 
+                        class="delete-cat-btn ${isEditing ? 'btn btn-sm btn-outline-danger border-0 rounded-circle' : 'btn btn-sm btn-link text-secondary p-1'}"
+                        data-index="${index}" 
+                        title="Xóa"
+                        ${!isEditing ? 'disabled' : ''}>
+                    <i class="bi bi-trash" style="pointer-events: none;"></i>
                 </button>
             </td>
         `;
             DOM.tableBody.appendChild(tr);
         });
     }
-
     function renderRealtimeCalculations() {
         const allocatedTotal = categories.reduce((sum, item) => sum + item.amount, 0);
         const remaining = totalBudget - allocatedTotal;
@@ -385,11 +387,18 @@ const MonthlyBudgetModule = (function () {
 
 
 
-        // Xóa dòng trong bảng
         DOM.tableBody?.addEventListener("click", (e) => {
+            // Tìm phần tử button gần nhất có class .delete-cat-btn
             const btn = e.target.closest(".delete-cat-btn");
-            if (!btn || !isEditing) return;
-            removeCategory(parseInt(btn.dataset.index, 10));
+            if (!btn) return;
+
+            // Nếu không trong chế độ chỉnh sửa thì bỏ qua
+            if (!isEditing) return;
+
+            const index = parseInt(btn.getAttribute("data-index"), 10);
+            if (!isNaN(index)) {
+                removeCategory(index);
+            }
         });
 
         // Chọn danh mục từ Modal

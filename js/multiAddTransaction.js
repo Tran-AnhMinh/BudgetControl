@@ -49,7 +49,7 @@ if (btnAddrowMultiAddTrans) {
             `).join('')}
         `;
 
-        const accounts = JSON.parse(localStorage.getItem('accounts')) || [];
+        const accounts = JSON.parse(localStorage.getItem('accounts')) || [];    
         const accountHtml = `
             ${accounts.map(a => `
                 <li>

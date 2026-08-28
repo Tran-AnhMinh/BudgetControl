@@ -108,7 +108,7 @@ function renderAccountsTable() {
                 </td>
                 <td class="text-center text-nowrap">
                     <div class="dropdown">
-                        <button class="btn btn-sm text-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="dropdownMenuButtonAcc${acc.id}">
+                        <button class="btn btn-sm text-secondary" type="button" data-bs-toggle="dropdown" data-bs-popper-config='{"strategy":"fixed"}' aria-expanded="false" id="dropdownMenuButtonAcc${acc.id}">
                             <i class="bi bi-three-dots-vertical"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">

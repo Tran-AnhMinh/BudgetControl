@@ -347,10 +347,6 @@ input[name="accountIcon"]:checked+label.btn-outline-secondary {
 }
 
 
-.table-responsive {
-    overflow: visible !important;
-}
-
 @media (max-width: 767.98px) {
     .header-title {
         font-size: 22px;
@@ -362,6 +358,11 @@ input[name="accountIcon"]:checked+label.btn-outline-secondary {
 
     .table-responsive {
         overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    .table-responsive > .table {
+        min-width: 600px !important;
     }
 
     .table th,

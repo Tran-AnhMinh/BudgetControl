@@ -71,7 +71,7 @@ if (btnAddrowMultiAddTrans) {
                 </td>
                 <td>
                     <div class="dropdown w-100">
-                        <button class="btn btn-sm border bg-white text-danger d-flex justify-content-center align-items-center w-100" style="font-size: 13px;" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn btn-sm border bg-white text-danger d-flex justify-content-center align-items-center w-100" style="font-size: 13px;" data-bs-toggle="dropdown" data-bs-popper-config='{"strategy":"fixed"}' aria-expanded="false">
                             <i class="bi bi-arrow-down me-1"></i> Chi
                         </button>
                         <ul class="dropdown-menu shadow-sm border-0">
@@ -91,7 +91,7 @@ if (btnAddrowMultiAddTrans) {
                 </td>
                 <td>
                     <div class="dropdown w-100">
-                        <button class="form-select text-start w-100 bg-white d-flex align-items-center" style="font-size: 12px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="form-select text-start w-100 bg-white d-flex align-items-center" style="font-size: 12px;" type="button" data-bs-toggle="dropdown" data-bs-popper-config='{"strategy":"fixed"}' aria-expanded="false">
                             Danh mục
                         </button>
                         <ul class="dropdown-menu shadow border-0" style="max-height: 250px; overflow-y: auto; min-width: 220px;">
@@ -108,7 +108,7 @@ if (btnAddrowMultiAddTrans) {
                 </td>
                 <td>
                     <div class="dropdown w-100">
-                        <button class="btn btn-sm border bg-white text-dark text-start d-flex justify-content-between align-items-center w-100" style="font-size: 13px;" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn btn-sm border bg-white text-dark text-start d-flex justify-content-between align-items-center w-100" style="font-size: 13px;" data-bs-toggle="dropdown" data-bs-popper-config='{"strategy":"fixed"}' aria-expanded="false">
                             <span class="text-truncate dropdown-text">Chọn tần suất</span>
                             <i class="bi bi-chevron-down text-secondary" style="font-size: 10px;"></i>
                         </button>
@@ -125,7 +125,7 @@ if (btnAddrowMultiAddTrans) {
                 </td>
                 <td>
                     <div class="dropdown w-100">
-                        <button class="form-select text-start w-100 bg-white d-flex align-items-center" style="font-size: 12px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="form-select text-start w-100 bg-white d-flex align-items-center" style="font-size: 12px;" type="button" data-bs-toggle="dropdown" data-bs-popper-config='{"strategy":"fixed"}' aria-expanded="false">
                             Tài khoản
                         </button>
                         <ul class="dropdown-menu shadow border-0" style="max-height: 250px; overflow-y: auto; min-width: 200px;">
@@ -356,6 +356,17 @@ updateAccountSelect();
 const multiAddTbodyEvents = document.getElementById('multi-add-trans-tbody');
 if (multiAddTbodyEvents) {
     multiAddTbodyEvents.addEventListener('show.bs.dropdown', function (e) {
+        const toggleBtn = e.target.closest('[data-bs-toggle="dropdown"]');
+        if (toggleBtn) {
+            bootstrap.Dropdown.getOrCreateInstance(toggleBtn, {
+                popperConfig: function (defaultConfig) {
+                    return {
+                        ...defaultConfig,
+                        strategy: 'fixed'
+                    };
+                }
+            });
+        }
         const tr = e.target.closest('tr');
         if (tr) {
             tr.classList.add('dropdown-open');

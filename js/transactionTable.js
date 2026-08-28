@@ -192,7 +192,7 @@ function renderTable() {
                 <td class="text-nowrap text-center"><span class="badge badge-custom bg-${frequencyColor}-subtle text-${frequencyColor}">${frequencyText}</span></td>
                 <td class="text-end">
                     <div class="dropdown">
-                        <button class="btn btn-sm text-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="dropdownMenuButton${index}">
+                        <button class="btn btn-sm text-secondary" type="button" data-bs-toggle="dropdown" data-bs-popper-config='{"strategy":"fixed"}' aria-expanded="false" id="dropdownMenuButton${index}">
                             <i class="bi bi-three-dots-vertical"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
@@ -214,6 +214,22 @@ function renderTable() {
     }).join('');
 
     transactionTableBody.innerHTML = rowsHTML;
+}
+
+if (transactionTableBody) {
+    transactionTableBody.addEventListener('show.bs.dropdown', function (e) {
+        const toggleBtn = e.target.closest('[data-bs-toggle="dropdown"]');
+        if (toggleBtn) {
+            bootstrap.Dropdown.getOrCreateInstance(toggleBtn, {
+                popperConfig: function (defaultConfig) {
+                    return {
+                        ...defaultConfig,
+                        strategy: 'fixed'
+                    };
+                }
+            });
+        }
+    });
 }
 
 transactionTableBody.addEventListener('click', function(e) {

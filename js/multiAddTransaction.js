@@ -94,7 +94,7 @@ if (btnAddrowMultiAddTrans) {
                         <button class="form-select text-start w-100 bg-white d-flex align-items-center" style="font-size: 12px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Danh mục
                         </button>
-                        <ul class="dropdown-menu w-100 shadow-sm border-0" style="max-height: 250px; overflow-y: auto;">
+                        <ul class="dropdown-menu shadow border-0" style="max-height: 250px; overflow-y: auto; min-width: 220px;">
                             ${categoryHtml}
                         </ul>
                         <input type="hidden" value="" class="multi-add-trans-category-row">
@@ -128,7 +128,7 @@ if (btnAddrowMultiAddTrans) {
                         <button class="form-select text-start w-100 bg-white d-flex align-items-center" style="font-size: 12px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Tài khoản
                         </button>
-                        <ul class="dropdown-menu w-100 shadow-sm border-0" style="max-height: 250px; overflow-y: auto;">
+                        <ul class="dropdown-menu shadow border-0" style="max-height: 250px; overflow-y: auto; min-width: 200px;">
                             ${accountHtml}
                         </ul>
                         <input type="hidden" value="" class="multi-add-trans-account-row">
@@ -342,3 +342,21 @@ if (dropZone && fileUpload) {
 
 updateCategorySelect();
 updateAccountSelect();
+
+const multiAddTbodyEvents = document.getElementById('multi-add-trans-tbody');
+if (multiAddTbodyEvents) {
+    multiAddTbodyEvents.addEventListener('show.bs.dropdown', function (e) {
+        const tr = e.target.closest('tr');
+        if (tr) {
+            tr.classList.add('dropdown-open');
+            tr.style.zIndex = '1055';
+        }
+    });
+    multiAddTbodyEvents.addEventListener('hidden.bs.dropdown', function (e) {
+        const tr = e.target.closest('tr');
+        if (tr) {
+            tr.classList.remove('dropdown-open');
+            tr.style.zIndex = '';
+        }
+    });
+}

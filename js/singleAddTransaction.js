@@ -1,6 +1,8 @@
 const btnSingleAddTransOpen = document.getElementById('btn-single-add-trans-open');
 if(btnSingleAddTransOpen){
     btnSingleAddTransOpen.addEventListener('click', function(){
+        const expRadio = document.getElementById('expense');
+        if (expRadio) expRadio.checked = true;
         flatpickr(".date-picker-input", {
         enableTime: true,
         dateFormat: "d/m/Y H:i",
@@ -9,6 +11,19 @@ if(btnSingleAddTransOpen){
         defaultDate: new Date()
         });
     });
+}
+
+const singleAddModalEl = document.getElementById('single-add-transaction');
+if (singleAddModalEl) {
+    singleAddModalEl.addEventListener('show.bs.modal', function () {
+        const expRadio = document.getElementById('expense');
+        if (expRadio) expRadio.checked = true;
+    });
+}
+
+const initialExpenseRadio = document.getElementById('expense');
+if (initialExpenseRadio) {
+    initialExpenseRadio.checked = true;
 }
 
 const btnSaveTransaction = document.getElementById('btn-save-transaction');
@@ -84,6 +99,10 @@ if (btnSaveTransaction) {
 
             showToast('Thêm giao dịch thành công!');
 
+            if (newTransaction.type === 'expense' && newTransaction.category && typeof checkBudget === 'function') {
+                checkBudget(newTransaction.category, newTransaction.time);
+            }
+
             const modal = bootstrap.Modal.getInstance(document.getElementById('single-add-transaction'));
             if (modal) {
                 modal.hide();
@@ -104,6 +123,11 @@ if (btnSaveTransaction) {
             if (btnAcc) {
                 btnAcc.innerHTML = '<span class="text-truncate">Chọn tài khoản</span>';
                 btnAcc.classList.add('text-secondary');
+            }
+
+            const expRadio = document.getElementById('expense');
+            if (expRadio) {
+                expRadio.checked = true;
             }
         }
     });

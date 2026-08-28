@@ -270,6 +270,16 @@ if (btnSaveMultiTransaction) {
         renderTable();
         showToast(`Đã thêm thành công ${newTransactions.length} giao dịch!`);
 
+        if (typeof checkBudget === 'function') {
+            const checkedCats = new Set();
+            newTransactions.forEach(t => {
+                if (t.type === 'expense' && t.category && !checkedCats.has(t.category)) {
+                    checkedCats.add(t.category);
+                    checkBudget(t.category, t.time);
+                }
+            });
+        }
+
         const modalEl = document.getElementById('multi-add-transaction');
         const modal = bootstrap.Modal.getInstance(modalEl);
         if (modal) {

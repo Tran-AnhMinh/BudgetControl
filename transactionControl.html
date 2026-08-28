@@ -325,12 +325,13 @@
                 <div class="modal-body">
                     <div class="form">
                         <div class="btn-group w-100 bg-light rounded p-1" role="group">
-                            <input type="radio" class="btn-check" name="transactionType" id="expense" autocomplete="off"
+                            <input type="radio" class="btn-check" name="singleTransactionType" id="expense" autocomplete="off"
                                 checked>
-                            <label class="btn btn-type-toggle" for="expense"><i class="bi bi-arrow-down-short"></i>Chi
-                                tiêu</label>
+                            <label class="btn btn-type-toggle" for="expense"><i class="bi bi-arrow-down-short text-danger"></i>Chi
+                                tiêu
+                            </label>
 
-                            <input type="radio" class="btn-check" name="transactionType" id="income" autocomplete="off">
+                            <input type="radio" class="btn-check" name="singleTransactionType" id="income" autocomplete="off">
                             <label class="btn btn-type-toggle" for="income">
                                 <i class="bi bi-arrow-up-short text-success"></i>Thu nhập
                             </label>
@@ -972,13 +973,13 @@
                 <div class="modal-body">
                     <div class="form">
                         <div class="btn-group w-100 bg-light rounded p-1" role="group">
-                            <input type="radio" class="btn-check" name="transactionType" id="edit-expense"
+                            <input type="radio" class="btn-check" name="editTransactionType" id="edit-expense"
                                 autocomplete="off" checked>
                             <label class="btn btn-type-toggle" for="edit-expense"><i
-                                    class="bi bi-arrow-down-short"></i>Chi
+                                    class="bi bi-arrow-down-short text-danger"></i>Chi
                                 tiêu</label>
 
-                            <input type="radio" class="btn-check" name="transactionType" id="edit-income"
+                            <input type="radio" class="btn-check" name="editTransactionType" id="edit-income"
                                 autocomplete="off">
                             <label class="btn btn-type-toggle" for="edit-income">
                                 <i class="bi bi-arrow-up-short text-success"></i>Thu nhập
@@ -1087,13 +1088,13 @@
 
     <script src="js/sidebar.js"></script>
     <script src="./js/seed.js"></script>
-    <script src="js/general.js"></script>
+    <script src="js/general.js?v=2"></script>
     <script src="js/transactionControl.js"></script>
-    <script src="js/transactionTable.js"></script>
+    <script src="js/transactionTable.js?v=2"></script>
     <script src="js/addCategories.js"></script>
     <script src="js/addAccount.js"></script>
-    <script src="js/singleAddTransaction.js"></script>
-    <script src="js/multiAddTransaction.js?v=3"></script>
+    <script src="js/singleAddTransaction.js?v=3"></script>
+    <script src="js/multiAddTransaction.js?v=4"></script>
 
 </body>
 

@@ -363,6 +363,10 @@ if (saveEditBtn) {
         if (typeof showToast === 'function') {
             showToast('Cập nhật giao dịch thành công!');
         }
+
+        if (type === 'expense' && category && typeof checkBudget === 'function') {
+            checkBudget(category, time);
+        }
     });
 }
 

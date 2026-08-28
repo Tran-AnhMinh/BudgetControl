@@ -30,116 +30,78 @@ function updateMultiAddTotals() {
     if (incomeDisplay) incomeDisplay.textContent = totalIncome.toLocaleString('vi-VN') + 'đ';
 }
 
+function createNewRowHTML(rowCount) {
+    const defaultAccSelect = document.getElementById('multi-add-default-account');
+    const defaultAccVal = defaultAccSelect ? defaultAccSelect.value : '';
+    const defaultFreqSelect = document.getElementById('multi-add-default-frequency');
+    const defaultFreqVal = defaultFreqSelect ? defaultFreqSelect.value : 'one-time';
+
+    const accounts = JSON.parse(localStorage.getItem('accounts')) || [
+        { id: 1, name: 'Tiền mặt', icon: 'cash-stack', color: 'success' },
+        { id: 2, name: 'Thẻ ATM', icon: 'bank', color: 'primary' }
+    ];
+    const defaultAcc = accounts.find(a => String(a.id) === String(defaultAccVal));
+
+    let accBtnHTML = 'Tài khoản';
+    let accBtnClass = 'form-select text-start w-100 bg-white d-flex align-items-center btn-pick-account text-secondary';
+    if (defaultAcc) {
+        accBtnHTML = `<span class="icon-circle bg-${defaultAcc.color}-subtle text-${defaultAcc.color} me-2"><i class="bi bi-${defaultAcc.icon}"></i></span><span class="text-truncate">${defaultAcc.name}</span>`;
+        accBtnClass = 'form-select text-start w-100 bg-white d-flex align-items-center btn-pick-account';
+    }
+
+    const now = new Date();
+    const currentTime = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+
+    return `
+        <tr>
+            <td class="text-center fw-medium" style="padding-left: 1rem;" value="${rowCount}">${rowCount}</td>
+            <td>
+                <input type="time" class="multi-add-trans-time form-control form-control-sm text-center" value="${currentTime}" style="font-size: 13px;" placeholder="HH:mm">
+            </td>
+            <td>
+                <button type="button" class="btn btn-sm border bg-white text-danger d-flex justify-content-center align-items-center w-100 btn-toggle-multi-type" style="font-size: 13px;">
+                    <i class="bi bi-arrow-down me-1"></i> Chi
+                </button>
+                <input type="hidden" value="expense" class="multi-add-trans-type">
+            </td>
+            <td>
+                <button type="button" class="form-select text-start w-100 bg-white d-flex align-items-center btn-pick-category text-secondary" style="font-size: 12px;">
+                    Danh mục
+                </button>
+                <input type="hidden" value="" class="multi-add-trans-category-row">
+            </td>
+            <td>
+                <input type="text" class="multi-add-trans-detail form-control form-control-sm" value="" placeholder="Nhập ghi chú" style="font-size: 13px; min-width: 100px;">
+            </td>
+            <td>
+                <input type="text" inputmode="numeric" class="amount-input-multi-add form-control form-control-sm text-end" value="" placeholder="0" style="font-size: 13px; min-width: 130px;">
+            </td>
+            <td>
+                <select class="form-select form-select-sm text-secondary trans-frequency" style="font-size: 13px;">
+                    <option value="one-time" ${defaultFreqVal === 'one-time' ? 'selected' : ''}>Một lần</option>
+                    <option value="monthly" ${defaultFreqVal === 'monthly' ? 'selected' : ''}>Hàng tháng</option>
+                </select>
+            </td>
+            <td>
+                <button type="button" class="${accBtnClass}" style="font-size: 12px;">
+                    ${accBtnHTML}
+                </button>
+                <input type="hidden" value="${defaultAccVal}" class="multi-add-trans-account-row">
+            </td>
+            <td class="text-center">
+                <button type="button" class="btn-remove-row btn btn-sm text-secondary p-0"><i class="bi bi-trash"></i></button>
+            </td>
+        </tr>
+    `;
+}
 
 const btnAddrowMultiAddTrans = document.getElementById('btn-add-row-multi-add-trans');
 if (btnAddrowMultiAddTrans) {
     btnAddrowMultiAddTrans.addEventListener('click', function () {
         const multiaddtable = document.getElementById('multi-add-trans-tbody');
+        if (!multiaddtable) return;
         const rowCount = multiaddtable.querySelectorAll('tr').length + 1;
-        
-        
-        const categories = JSON.parse(localStorage.getItem('categories')) || [];
-        const categoryHtml = `
-            ${categories.map(c => `
-                <li>
-                    <a class="dropdown-item category-item py-2" href="#" data-value="${c.id}">
-                        <span class="icon-circle bg-${c.color}-subtle text-${c.color} me-2"><i class="bi bi-${c.icon}"></i></span>${c.name}
-                    </a>
-                </li>
-            `).join('')}
-        `;
-
-        const accounts = JSON.parse(localStorage.getItem('accounts')) || [];    
-        const accountHtml = `
-            ${accounts.map(a => `
-                <li>
-                    <a class="dropdown-item account-item py-2" href="#" data-value="${a.id}">
-                        <span class="icon-circle bg-${a.color}-subtle text-${a.color} me-2"><i class="bi bi-${a.icon}"></i></span>${a.name}
-                    </a>
-                </li>
-            `).join('')}
-        `;
-
-        const now = new Date();
-        const currentTime = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
-
-        const newRowHTML = `
-            <tr>
-                <td class="text-center fw-medium" style="padding-left: 1rem;" value="${rowCount}">${rowCount}</td>
-                <td>
-                    <input type="time" class="multi-add-trans-time form-control form-control-sm text-center" value="${currentTime}" style="font-size: 13px;" placeholder="HH:mm">
-                </td>
-                <td>
-                    <div class="dropdown w-100">
-                        <button class="btn btn-sm border bg-white text-danger d-flex justify-content-center align-items-center w-100" style="font-size: 13px;" data-bs-toggle="dropdown" data-bs-popper-config='{"strategy":"fixed"}' aria-expanded="false">
-                            <i class="bi bi-arrow-down me-1"></i> Chi
-                        </button>
-                        <ul class="dropdown-menu shadow-sm border-0">
-                            <li selected>
-                                <button class="dropdown-item d-flex align-items-center" type="button" value="expense">
-                                    <i class="bi bi-arrow-down me-2 text-danger"></i> Chi
-                                </button>
-                            </li>
-                            <li>
-                                <button class="dropdown-item d-flex align-items-center" type="button" value="income">
-                                    <i class="bi bi-arrow-up me-2 text-success"></i> Thu
-                                </button>
-                            </li>
-                        </ul>
-                        <input type="hidden" value="expense" class="multi-add-trans-type">
-                    </div>
-                </td>
-                <td>
-                    <div class="dropdown w-100">
-                        <button class="form-select text-start w-100 bg-white d-flex align-items-center" style="font-size: 12px;" type="button" data-bs-toggle="dropdown" data-bs-popper-config='{"strategy":"fixed"}' aria-expanded="false">
-                            Danh mục
-                        </button>
-                        <ul class="dropdown-menu shadow border-0" style="max-height: 250px; overflow-y: auto; min-width: 220px;">
-                            ${categoryHtml}
-                        </ul>
-                        <input type="hidden" value="" class="multi-add-trans-category-row">
-                    </div>
-                </td>
-                <td>
-                    <input type="text" class="multi-add-trans-detail form-control form-control-sm" value="" placeholder="Nhập ghi chú" style="font-size: 13px; min-width: 100px;">
-                </td>
-                <td>
-                    <input type="text" inputmode="numeric" class="amount-input-multi-add form-control form-control-sm text-end" value="" placeholder="0" style="font-size: 13px; min-width: 130px;">
-                </td>
-                <td>
-                    <div class="dropdown w-100">
-                        <button class="btn btn-sm border bg-white text-dark text-start d-flex justify-content-between align-items-center w-100" style="font-size: 13px;" data-bs-toggle="dropdown" data-bs-popper-config='{"strategy":"fixed"}' aria-expanded="false">
-                            <span class="text-truncate dropdown-text">Chọn tần suất</span>
-                            <i class="bi bi-chevron-down text-secondary" style="font-size: 10px;"></i>
-                        </button>
-                        <ul class="dropdown-menu shadow-sm border-0">
-                            <li>
-                                <button class="dropdown-item" type="button" value="one-time">Một lần</button>
-                            </li>
-                            <li>
-                                <button class="dropdown-item" type="button" value="monthly">Hàng tháng</button>
-                            </li>
-                        </ul>
-                        <input type="hidden" class="trans-frequency" value="one-time">
-                    </div>
-                </td>
-                <td>
-                    <div class="dropdown w-100">
-                        <button class="form-select text-start w-100 bg-white d-flex align-items-center" style="font-size: 12px;" type="button" data-bs-toggle="dropdown" data-bs-popper-config='{"strategy":"fixed"}' aria-expanded="false">
-                            Tài khoản
-                        </button>
-                        <ul class="dropdown-menu shadow border-0" style="max-height: 250px; overflow-y: auto; min-width: 200px;">
-                            ${accountHtml}
-                        </ul>
-                        <input type="hidden" value="" class="multi-add-trans-account-row">
-                    </div>
-                </td>
-                <td class="text-center">
-                    <button class="btn-remove-row btn btn-sm text-secondary p-0"><i class="bi bi-trash"></i></button>
-                </td>
-            </tr>
-        `;
-        multiaddtable.insertAdjacentHTML('beforeend', newRowHTML);
+        multiaddtable.insertAdjacentHTML('beforeend', createNewRowHTML(rowCount));
     });
 }
 
@@ -164,33 +126,25 @@ if (btnRemoveRowMultiAddTrans) {
             }
         }
     });
-}   
+}
 
-const multiAddDefaultFreq = document.getElementById('multi-add-default-frequency');
-if (multiAddDefaultFreq) {
-    multiAddDefaultFreq.addEventListener('change', function(e) {
+const multiAddDefaultAcc = document.getElementById('multi-add-default-account');
+if (multiAddDefaultAcc) {
+    multiAddDefaultAcc.addEventListener('change', function(e) {
         const val = e.target.value;
         if (!val) return;
-        
+        const accounts = JSON.parse(localStorage.getItem('accounts')) || [];
+        const acc = accounts.find(a => String(a.id) === String(val));
         const tbody = document.getElementById('multi-add-trans-tbody');
         if (tbody) {
-            const rows = tbody.querySelectorAll('tr');
-            rows.forEach(row => {
-                const freqHidden = row.querySelector('.trans-frequency');
-                if (freqHidden) {
-                    freqHidden.value = val;
-                    const dropdownDiv = freqHidden.closest('.dropdown');
-                    if (dropdownDiv) {
-                        const btn = dropdownDiv.querySelector('[data-bs-toggle="dropdown"]');
-                        if (btn) {
-                            const textSpan = btn.querySelector('.dropdown-text');
-                            const text = e.target.options[e.target.selectedIndex].text;
-                            if (textSpan) {
-                                textSpan.textContent = text;
-                            } else {
-                                btn.innerHTML = `<span class="text-truncate dropdown-text">${text}</span><i class="bi bi-chevron-down text-secondary" style="font-size: 10px;"></i>`;
-                            }
-                        }
+            tbody.querySelectorAll('tr').forEach(row => {
+                const accInput = row.querySelector('.multi-add-trans-account-row');
+                const accBtn = row.querySelector('.btn-pick-account');
+                if (accInput && accBtn) {
+                    accInput.value = val;
+                    if (acc) {
+                        accBtn.innerHTML = `<span class="icon-circle bg-${acc.color}-subtle text-${acc.color} me-2"><i class="bi bi-${acc.icon}"></i></span><span class="text-truncate">${acc.name}</span>`;
+                        accBtn.classList.remove('text-secondary');
                     }
                 }
             });
@@ -198,6 +152,19 @@ if (multiAddDefaultFreq) {
     });
 }
 
+const multiAddDefaultFreq = document.getElementById('multi-add-default-frequency');
+if (multiAddDefaultFreq) {
+    multiAddDefaultFreq.addEventListener('change', function(e) {
+        const val = e.target.value;
+        if (!val) return;
+        const tbody = document.getElementById('multi-add-trans-tbody');
+        if (tbody) {
+            tbody.querySelectorAll('.trans-frequency').forEach(select => {
+                select.value = val;
+            });
+        }
+    });
+}
 
 const btnSaveMultiTransaction = document.getElementById('btn-save-multi-transaction');
 if (btnSaveMultiTransaction) {
@@ -224,7 +191,7 @@ if (btnSaveMultiTransaction) {
         let newTransactions = [];
         let hasError = false;
 
-        rows.forEach((row, index) => {
+        rows.forEach((row) => {
             const timeInput = row.querySelector('.multi-add-trans-time');
             const typeInput = row.querySelector('.multi-add-trans-type');
             const catInput = row.querySelector('.multi-add-trans-category-row');
@@ -289,95 +256,155 @@ if (btnSaveMultiTransaction) {
     });
 }
 
-const dropZone = document.getElementById('drop-zone');
-const fileUpload = document.getElementById('file-upload');
+// ----------------------------------------------------
+// FLOATING PICKER ĐỘC LẬP CHO CATEGORY & ACCOUNT
+// ----------------------------------------------------
+let multiAddPickerEl = null;
+let currentPickerBtn = null;
+let currentPickerInput = null;
 
-if (dropZone && fileUpload) {
-    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-        dropZone.addEventListener(eventName, preventDefaults, false);
-        document.body.addEventListener(eventName, preventDefaults, false);
-    });
+function getOrCreateMultiAddPicker() {
+    if (!multiAddPickerEl) {
+        multiAddPickerEl = document.createElement('div');
+        multiAddPickerEl.id = 'multi-add-floating-picker';
+        multiAddPickerEl.className = 'shadow-lg border rounded-3 bg-white p-1';
+        multiAddPickerEl.style.cssText = 'position: fixed; display: none; z-index: 99999; max-height: 280px; overflow-y: auto; min-width: 220px; box-shadow: 0 10px 25px rgba(0,0,0,0.2) !important;';
+        document.body.appendChild(multiAddPickerEl);
 
-    function preventDefaults(e) {
-        e.preventDefault();
-        e.stopPropagation();
+        multiAddPickerEl.addEventListener('click', function (e) {
+            const item = e.target.closest('.picker-option-item');
+            if (item && currentPickerBtn && currentPickerInput) {
+                const val = item.getAttribute('data-value');
+                currentPickerInput.value = val;
+                currentPickerBtn.innerHTML = item.innerHTML;
+                currentPickerBtn.classList.remove('text-secondary');
+                closeMultiAddPicker();
+            }
+        });
     }
-
-    ['dragenter', 'dragover'].forEach(eventName => {
-        dropZone.addEventListener(eventName, () => {
-            dropZone.classList.add('bg-secondary-subtle');
-            dropZone.classList.remove('bg-light');
-        }, false);
-    });
-
-
-    ['dragleave', 'drop'].forEach(eventName => {
-        dropZone.addEventListener(eventName, () => {
-            dropZone.classList.remove('bg-secondary-subtle');
-            dropZone.classList.add('bg-light');
-        }, false);
-    });
-
-    dropZone.addEventListener('drop', (e) => {
-        const dt = e.dataTransfer;
-        const files = dt.files;
-        handleFiles(files);
-    }, false);
-
-    fileUpload.addEventListener('change', function () {
-        handleFiles(this.files);
-    });
-
-    function handleFiles(files) {
-        if (files.length > 0) {
-            const file = files[0];
-
-            if (file.size > 5 * 1024 * 1024) {
-                showToast('File vượt quá dung lượng tối đa 5MB', 'danger');
-                return;
-            }
-
-            const validTypes = ['image/jpeg', 'image/png', 'application/pdf'];
-            if (!validTypes.includes(file.type)) {
-                showToast('Vui lòng chọn đúng định dạng .jpg, .png, .pdf', 'danger');
-                return;
-            }
-            const textElem = dropZone.querySelector('.text-dark');
-            if (textElem) {
-                textElem.innerHTML = `Đã chọn: <span class="text-primary fw-bold">${file.name}</span>`;
-            }
-        }
-    }
+    return multiAddPickerEl;
 }
 
-updateCategorySelect();
-updateAccountSelect();
+function openMultiAddPicker(btn, input, type) {
+    if (currentPickerBtn === btn && multiAddPickerEl && multiAddPickerEl.style.display === 'block') {
+        closeMultiAddPicker();
+        return;
+    }
 
-const multiAddTbodyEvents = document.getElementById('multi-add-trans-tbody');
-if (multiAddTbodyEvents) {
-    multiAddTbodyEvents.addEventListener('show.bs.dropdown', function (e) {
-        const toggleBtn = e.target.closest('[data-bs-toggle="dropdown"]');
-        if (toggleBtn) {
-            bootstrap.Dropdown.getOrCreateInstance(toggleBtn, {
-                popperConfig: function (defaultConfig) {
-                    return {
-                        ...defaultConfig,
-                        strategy: 'fixed'
-                    };
-                }
-            });
+    currentPickerBtn = btn;
+    currentPickerInput = input;
+    const picker = getOrCreateMultiAddPicker();
+
+    const items = type === 'category'
+        ? (JSON.parse(localStorage.getItem('categories')) || [
+            { id: 1, name: 'Ăn uống', icon: 'cup-hot', color: 'danger' },
+            { id: 2, name: 'Lương', icon: 'cash', color: 'success' },
+            { id: 3, name: 'Mua sắm', icon: 'cart', color: 'primary' }
+        ])
+        : (JSON.parse(localStorage.getItem('accounts')) || [
+            { id: 1, name: 'Tiền mặt', icon: 'cash-stack', color: 'success' },
+            { id: 2, name: 'Thẻ ATM', icon: 'bank', color: 'primary' }
+        ]);
+
+    picker.innerHTML = items.map(item => `
+        <div class="picker-option-item d-flex align-items-center p-2 rounded-2" data-value="${item.id}" style="cursor: pointer; font-size: 13px;">
+            <span class="icon-circle bg-${item.color}-subtle text-${item.color} me-2 flex-shrink-0" style="width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%;">
+                <i class="bi bi-${item.icon}"></i>
+            </span>
+            <span class="text-truncate">${item.name}</span>
+        </div>
+    `).join('');
+
+    picker.querySelectorAll('.picker-option-item').forEach(el => {
+        el.onmouseenter = () => el.style.backgroundColor = '#f1f5f9';
+        el.onmouseleave = () => el.style.backgroundColor = 'transparent';
+    });
+
+    const rect = btn.getBoundingClientRect();
+    let top = rect.bottom + 4;
+    let left = rect.left;
+    const pickerWidth = 230;
+
+    if (left + pickerWidth > window.innerWidth - 10) {
+        left = Math.max(10, window.innerWidth - pickerWidth - 10);
+    }
+    if (left < 10) left = 10;
+
+    if (top + 250 > window.innerHeight - 10) {
+        top = Math.max(10, rect.top - 250);
+    }
+
+    picker.style.top = `${top}px`;
+    picker.style.left = `${left}px`;
+    picker.style.display = 'block';
+}
+
+function closeMultiAddPicker() {
+    if (multiAddPickerEl) {
+        multiAddPickerEl.style.display = 'none';
+    }
+    currentPickerBtn = null;
+    currentPickerInput = null;
+}
+
+document.addEventListener('click', function (e) {
+    // 1. Toggle Chi / Thu
+    const toggleTypeBtn = e.target.closest('.btn-toggle-multi-type');
+    if (toggleTypeBtn) {
+        const row = toggleTypeBtn.closest('tr');
+        const typeInput = row ? row.querySelector('.multi-add-trans-type') : null;
+        const isExpense = !typeInput || typeInput.value === 'expense';
+        
+        if (isExpense) {
+            if (typeInput) typeInput.value = 'income';
+            toggleTypeBtn.className = 'btn btn-sm border bg-white text-success d-flex justify-content-center align-items-center w-100 btn-toggle-multi-type';
+            toggleTypeBtn.innerHTML = '<i class="bi bi-arrow-up me-1"></i> Thu';
+        } else {
+            if (typeInput) typeInput.value = 'expense';
+            toggleTypeBtn.className = 'btn btn-sm border bg-white text-danger d-flex justify-content-center align-items-center w-100 btn-toggle-multi-type';
+            toggleTypeBtn.innerHTML = '<i class="bi bi-arrow-down me-1"></i> Chi';
         }
-        const tr = e.target.closest('tr');
-        if (tr) {
-            tr.classList.add('dropdown-open');
-            tr.style.zIndex = '1055';
+        if (typeof updateMultiAddTotals === 'function') {
+            updateMultiAddTotals();
+        }
+        return;
+    }
+
+    // 2. Bấm mở Danh mục
+    const catBtn = e.target.closest('.btn-pick-category');
+    if (catBtn) {
+        const row = catBtn.closest('tr');
+        const input = row ? row.querySelector('.multi-add-trans-category-row') : null;
+        openMultiAddPicker(catBtn, input, 'category');
+        return;
+    }
+
+    // 3. Bấm mở Tài khoản
+    const accBtn = e.target.closest('.btn-pick-account');
+    if (accBtn) {
+        const row = accBtn.closest('tr');
+        const input = row ? row.querySelector('.multi-add-trans-account-row') : null;
+        openMultiAddPicker(accBtn, input, 'account');
+        return;
+    }
+
+    // 4. Bấm ra ngoài đóng picker
+    if (multiAddPickerEl && multiAddPickerEl.style.display === 'block' && !multiAddPickerEl.contains(e.target)) {
+        closeMultiAddPicker();
+    }
+});
+
+const multiAddModalEl = document.getElementById('multi-add-transaction');
+if (multiAddModalEl) {
+    multiAddModalEl.addEventListener('hide.bs.modal', closeMultiAddPicker);
+    multiAddModalEl.addEventListener('show.bs.modal', function() {
+        const tbody = document.getElementById('multi-add-trans-tbody');
+        if (tbody && tbody.children.length === 0) {
+            tbody.insertAdjacentHTML('beforeend', createNewRowHTML(1));
         }
     });
-    multiAddTbodyEvents.addEventListener('hidden.bs.dropdown', function (e) {
-        const tr = e.target.closest('tr');
-        if (tr) {
-            tr.classList.remove('dropdown-open');
-            tr.style.zIndex = '';
-        }
-    });
+}
+const multiTableScroll = document.querySelector('#multi-add-transaction .table-responsive');
+if (multiTableScroll) {
+    multiTableScroll.addEventListener('scroll', closeMultiAddPicker);
 }

@@ -345,7 +345,7 @@ input[name="accountIcon"]:checked+label.btn-outline-secondary {
 }
 
 .multi-add-trans-detail {
-    min-width: 280px !important;
+    min-width: 100px;
 }
 
 .modal-dialog-scrollable .modal-body {
@@ -360,6 +360,39 @@ input[name="accountIcon"]:checked+label.btn-outline-secondary {
 
 .table-responsive {
     overflow: visible !important;
+}
+
+#multi-add-transaction .modal-dialog {
+    max-width: 1200px !important;
+    width: 95vw !important;
+}
+
+#multi-add-transaction .modal-content {
+    overflow: visible !important;
+}
+
+#multi-add-transaction .modal-body {
+    overflow: visible !important;
+    min-height: 420px;
+}
+
+#multi-add-transaction .table-responsive {
+    overflow: visible !important;
+}
+
+#multi-add-trans-tbody tr {
+    position: relative;
+}
+
+#multi-add-trans-tbody tr:has(.show),
+#multi-add-trans-tbody tr.dropdown-open {
+    position: relative;
+    z-index: 1055 !important;
+}
+
+#multi-add-transaction .dropdown-menu {
+    z-index: 1060 !important;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
 }
 
 @media (max-width: 767.98px) {

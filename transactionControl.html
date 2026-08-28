@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <link rel="stylesheet" href="css/transactionControl.css?v=4">
+    <link rel="stylesheet" href="css/transactionControl.css?v=7">
     <link rel="stylesheet" href="css/sidebar.css?v=2">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -182,7 +182,7 @@
 
                             <button class="btn btn-add px-3 py-2 d-flex align-items-center" data-bs-toggle="modal"
                                 data-bs-target="#multi-add-transaction">
-                                <i class="bi bi-plus-lg me-2"></i> Thêm nhiều giao dịch
+                                <i class="bi bi-plus-lg me-2"></i><span class="d-none d-md-inline">Thêm nhiều giao dịch</span><span class="d-inline d-md-none">Thêm nhiều</span>
                             </button>
 
                         </div>
@@ -325,12 +325,13 @@
                 <div class="modal-body">
                     <div class="form">
                         <div class="btn-group w-100 bg-light rounded p-1" role="group">
-                            <input type="radio" class="btn-check" name="transactionType" id="expense" autocomplete="off"
+                            <input type="radio" class="btn-check" name="singleTransactionType" id="expense" autocomplete="off"
                                 checked>
-                            <label class="btn btn-type-toggle" for="expense"><i class="bi bi-arrow-down-short"></i>Chi
-                                tiêu</label>
+                            <label class="btn btn-type-toggle" for="expense"><i class="bi bi-arrow-down-short text-danger"></i>Chi
+                                tiêu
+                            </label>
 
-                            <input type="radio" class="btn-check" name="transactionType" id="income" autocomplete="off">
+                            <input type="radio" class="btn-check" name="singleTransactionType" id="income" autocomplete="off">
                             <label class="btn btn-type-toggle" for="income">
                                 <i class="bi bi-arrow-up-short text-success"></i>Thu nhập
                             </label>
@@ -639,7 +640,7 @@
 
     <div class="modal fade" id="multi-add-transaction" role="dialog" aria-labelledby="multiAddTransactionLabel"
         aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content shadow border-0">
                 <div class="modal-header border-bottom align-items-start px-3 py-3">
                     <div>
@@ -700,23 +701,23 @@
                         </div>
                     </div>
 
-                    <div class="table-responsive bg-white rounded-3 border mb-3">
+                    <div class="table-responsive bg-white rounded-3 border mb-3" style="overflow: visible !important;">
                         <table class="table align-middle mb-0" style="font-size: 14px;">
                             <thead class="table-light text-secondary">
                                 <tr>
                                     <th scope="col" class="fw-medium text-center"
                                         style="width: 40px; padding-left: 1rem;">#</th>
                                     <th scope="col" class="fw-medium" style="width: 80px;">Giờ</th>
-                                    <th scope="col" class="fw-medium" style="width: 90px;">Loại</th>
-                                    <th scope="col" class="fw-medium" style="width: 150px;">Danh mục <span
+                                    <th scope="col" class="fw-medium" style="width: 85px;">Loại</th>
+                                    <th scope="col" class="fw-medium" style="width: 135px;">Danh mục <span
                                             class="text-danger">*</span></th>
-                                    <th scope="col" class="fw-medium" style="min-width: 280px; width: 300px;">Mô tả</th>
-                                    <th scope="col" class="fw-medium text-end" style="width: 110px;">Số tiền<span
+                                    <th scope="col" class="fw-medium" style="width: 140px;">Mô tả</th>
+                                    <th scope="col" class="fw-medium text-end" style="width: 135px;">Số tiền<span
                                             class="text-danger">*</span> (đ)</th>
-                                    <th scope="col" class="fw-medium" style="width: 150px;">Tần suất</th>
-                                    <th scope="col" class="fw-medium" style="width: 150px;">Tài khoản<span
+                                    <th scope="col" class="fw-medium" style="width: 130px;">Tần suất</th>
+                                    <th scope="col" class="fw-medium" style="width: 135px;">Tài khoản<span
                                             class="text-danger">*</span></th>
-                                    <th scope="col" class="fw-medium text-center" style="width: 60px;">Thao tác</th>
+                                    <th scope="col" class="fw-medium text-center" style="width: 50px;">Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody class="border-top-0" id="multi-add-trans-tbody">
@@ -972,13 +973,13 @@
                 <div class="modal-body">
                     <div class="form">
                         <div class="btn-group w-100 bg-light rounded p-1" role="group">
-                            <input type="radio" class="btn-check" name="transactionType" id="edit-expense"
+                            <input type="radio" class="btn-check" name="editTransactionType" id="edit-expense"
                                 autocomplete="off" checked>
                             <label class="btn btn-type-toggle" for="edit-expense"><i
-                                    class="bi bi-arrow-down-short"></i>Chi
+                                    class="bi bi-arrow-down-short text-danger"></i>Chi
                                 tiêu</label>
 
-                            <input type="radio" class="btn-check" name="transactionType" id="edit-income"
+                            <input type="radio" class="btn-check" name="editTransactionType" id="edit-income"
                                 autocomplete="off">
                             <label class="btn btn-type-toggle" for="edit-income">
                                 <i class="bi bi-arrow-up-short text-success"></i>Thu nhập
@@ -1087,13 +1088,13 @@
 
     <script src="js/sidebar.js"></script>
     <script src="./js/seed.js"></script>
-    <script src="js/general.js"></script>
+    <script src="js/general.js?v=2"></script>
     <script src="js/transactionControl.js"></script>
-    <script src="js/transactionTable.js"></script>
+    <script src="js/transactionTable.js?v=2"></script>
     <script src="js/addCategories.js"></script>
     <script src="js/addAccount.js"></script>
-    <script src="js/singleAddTransaction.js"></script>
-    <script src="js/multiAddTransaction.js"></script>
+    <script src="js/singleAddTransaction.js?v=3"></script>
+    <script src="js/multiAddTransaction.js?v=4"></script>
 
 </body>
 

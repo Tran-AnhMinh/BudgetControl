@@ -42,7 +42,7 @@ if (btnAddrowMultiAddTrans) {
         const categoryHtml = `
             ${categories.map(c => `
                 <li>
-                    <a class="dropdown-item category-item py-2" href="#" data-value="${c.name}">
+                    <a class="dropdown-item category-item py-2" href="#" data-value="${c.id}">
                         <span class="icon-circle bg-${c.color}-subtle text-${c.color} me-2"><i class="bi bi-${c.icon}"></i></span>${c.name}
                     </a>
                 </li>
@@ -53,7 +53,7 @@ if (btnAddrowMultiAddTrans) {
         const accountHtml = `
             ${accounts.map(a => `
                 <li>
-                    <a class="dropdown-item account-item py-2" href="#" data-value="${a.name}">
+                    <a class="dropdown-item account-item py-2" href="#" data-value="${a.id}">
                         <span class="icon-circle bg-${a.color}-subtle text-${a.color} me-2"><i class="bi bi-${a.icon}"></i></span>${a.name}
                     </a>
                 </li>
@@ -94,17 +94,17 @@ if (btnAddrowMultiAddTrans) {
                         <button class="form-select text-start w-100 bg-white d-flex align-items-center" style="font-size: 12px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Danh mục
                         </button>
-                        <ul class="dropdown-menu w-100 shadow-sm border-0" style="max-height: 250px; overflow-y: auto;">
+                        <ul class="dropdown-menu shadow border-0" style="max-height: 250px; overflow-y: auto; min-width: 220px;">
                             ${categoryHtml}
                         </ul>
                         <input type="hidden" value="" class="multi-add-trans-category-row">
                     </div>
                 </td>
                 <td>
-                    <input type="text" class="multi-add-trans-detail form-control form-control-sm" value="" placeholder="Nhập ghi chú" style="font-size: 13px; min-width: 280px;">
+                    <input type="text" class="multi-add-trans-detail form-control form-control-sm" value="" placeholder="Nhập ghi chú" style="font-size: 13px; min-width: 100px;">
                 </td>
                 <td>
-                    <input type="text" inputmode="numeric" class="amount-input-multi-add form-control form-control-sm text-end" value="" placeholder="0" style="font-size: 13px;">
+                    <input type="text" inputmode="numeric" class="amount-input-multi-add form-control form-control-sm text-end" value="" placeholder="0" style="font-size: 13px; min-width: 130px;">
                 </td>
                 <td>
                     <div class="dropdown w-100">
@@ -128,7 +128,7 @@ if (btnAddrowMultiAddTrans) {
                         <button class="form-select text-start w-100 bg-white d-flex align-items-center" style="font-size: 12px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Tài khoản
                         </button>
-                        <ul class="dropdown-menu w-100 shadow-sm border-0" style="max-height: 250px; overflow-y: auto;">
+                        <ul class="dropdown-menu shadow border-0" style="max-height: 250px; overflow-y: auto; min-width: 200px;">
                             ${accountHtml}
                         </ul>
                         <input type="hidden" value="" class="multi-add-trans-account-row">
@@ -270,6 +270,16 @@ if (btnSaveMultiTransaction) {
         renderTable();
         showToast(`Đã thêm thành công ${newTransactions.length} giao dịch!`);
 
+        if (typeof checkBudget === 'function') {
+            const checkedCats = new Set();
+            newTransactions.forEach(t => {
+                if (t.type === 'expense' && t.category && !checkedCats.has(t.category)) {
+                    checkedCats.add(t.category);
+                    checkBudget(t.category, t.time);
+                }
+            });
+        }
+
         const modalEl = document.getElementById('multi-add-transaction');
         const modal = bootstrap.Modal.getInstance(modalEl);
         if (modal) {
@@ -342,3 +352,21 @@ if (dropZone && fileUpload) {
 
 updateCategorySelect();
 updateAccountSelect();
+
+const multiAddTbodyEvents = document.getElementById('multi-add-trans-tbody');
+if (multiAddTbodyEvents) {
+    multiAddTbodyEvents.addEventListener('show.bs.dropdown', function (e) {
+        const tr = e.target.closest('tr');
+        if (tr) {
+            tr.classList.add('dropdown-open');
+            tr.style.zIndex = '1055';
+        }
+    });
+    multiAddTbodyEvents.addEventListener('hidden.bs.dropdown', function (e) {
+        const tr = e.target.closest('tr');
+        if (tr) {
+            tr.classList.remove('dropdown-open');
+            tr.style.zIndex = '';
+        }
+    });
+}

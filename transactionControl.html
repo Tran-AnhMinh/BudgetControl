@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <link rel="stylesheet" href="css/transactionControl.css?v=4">
+    <link rel="stylesheet" href="css/transactionControl.css?v=5">
     <link rel="stylesheet" href="css/sidebar.css?v=2">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -182,7 +182,7 @@
 
                             <button class="btn btn-add px-3 py-2 d-flex align-items-center" data-bs-toggle="modal"
                                 data-bs-target="#multi-add-transaction">
-                                <i class="bi bi-plus-lg me-2"></i> Thêm nhiều giao dịch
+                                <i class="bi bi-plus-lg me-2"></i><span class="d-none d-md-inline">Thêm nhiều giao dịch</span><span class="d-inline d-md-none">Thêm nhiều</span>
                             </button>
 
                         </div>
@@ -707,16 +707,16 @@
                                     <th scope="col" class="fw-medium text-center"
                                         style="width: 40px; padding-left: 1rem;">#</th>
                                     <th scope="col" class="fw-medium" style="width: 80px;">Giờ</th>
-                                    <th scope="col" class="fw-medium" style="width: 90px;">Loại</th>
-                                    <th scope="col" class="fw-medium" style="width: 150px;">Danh mục <span
+                                    <th scope="col" class="fw-medium" style="width: 85px;">Loại</th>
+                                    <th scope="col" class="fw-medium" style="width: 135px;">Danh mục <span
                                             class="text-danger">*</span></th>
-                                    <th scope="col" class="fw-medium" style="min-width: 280px; width: 300px;">Mô tả</th>
-                                    <th scope="col" class="fw-medium text-end" style="width: 110px;">Số tiền<span
+                                    <th scope="col" class="fw-medium" style="width: 140px;">Mô tả</th>
+                                    <th scope="col" class="fw-medium text-end" style="width: 135px;">Số tiền<span
                                             class="text-danger">*</span> (đ)</th>
-                                    <th scope="col" class="fw-medium" style="width: 150px;">Tần suất</th>
-                                    <th scope="col" class="fw-medium" style="width: 150px;">Tài khoản<span
+                                    <th scope="col" class="fw-medium" style="width: 130px;">Tần suất</th>
+                                    <th scope="col" class="fw-medium" style="width: 135px;">Tài khoản<span
                                             class="text-danger">*</span></th>
-                                    <th scope="col" class="fw-medium text-center" style="width: 60px;">Thao tác</th>
+                                    <th scope="col" class="fw-medium text-center" style="width: 50px;">Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody class="border-top-0" id="multi-add-trans-tbody">
@@ -1093,7 +1093,7 @@
     <script src="js/addCategories.js"></script>
     <script src="js/addAccount.js"></script>
     <script src="js/singleAddTransaction.js"></script>
-    <script src="js/multiAddTransaction.js"></script>
+    <script src="js/multiAddTransaction.js?v=2"></script>
 
 </body>
 

@@ -345,7 +345,7 @@ input[name="accountIcon"]:checked+label.btn-outline-secondary {
 }
 
 .multi-add-trans-detail {
-    min-width: 280px !important;
+    min-width: 100px;
 }
 
 .modal-dialog-scrollable .modal-body {

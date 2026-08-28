@@ -42,7 +42,7 @@ if (btnAddrowMultiAddTrans) {
         const categoryHtml = `
             ${categories.map(c => `
                 <li>
-                    <a class="dropdown-item category-item py-2" href="#" data-value="${c.name}">
+                    <a class="dropdown-item category-item py-2" href="#" data-value="${c.id}">
                         <span class="icon-circle bg-${c.color}-subtle text-${c.color} me-2"><i class="bi bi-${c.icon}"></i></span>${c.name}
                     </a>
                 </li>
@@ -53,7 +53,7 @@ if (btnAddrowMultiAddTrans) {
         const accountHtml = `
             ${accounts.map(a => `
                 <li>
-                    <a class="dropdown-item account-item py-2" href="#" data-value="${a.name}">
+                    <a class="dropdown-item account-item py-2" href="#" data-value="${a.id}">
                         <span class="icon-circle bg-${a.color}-subtle text-${a.color} me-2"><i class="bi bi-${a.icon}"></i></span>${a.name}
                     </a>
                 </li>
@@ -101,10 +101,10 @@ if (btnAddrowMultiAddTrans) {
                     </div>
                 </td>
                 <td>
-                    <input type="text" class="multi-add-trans-detail form-control form-control-sm" value="" placeholder="Nhập ghi chú" style="font-size: 13px; min-width: 280px;">
+                    <input type="text" class="multi-add-trans-detail form-control form-control-sm" value="" placeholder="Nhập ghi chú" style="font-size: 13px; min-width: 100px;">
                 </td>
                 <td>
-                    <input type="text" inputmode="numeric" class="amount-input-multi-add form-control form-control-sm text-end" value="" placeholder="0" style="font-size: 13px;">
+                    <input type="text" inputmode="numeric" class="amount-input-multi-add form-control form-control-sm text-end" value="" placeholder="0" style="font-size: 13px; min-width: 130px;">
                 </td>
                 <td>
                     <div class="dropdown w-100">

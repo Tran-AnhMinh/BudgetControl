@@ -31,8 +31,8 @@ function updateMultiAddTotals() {
 }
 
 function createNewRowHTML(rowCount) {
-    const defaultAccSelect = document.getElementById('multi-add-default-account');
-    const defaultAccVal = defaultAccSelect ? defaultAccSelect.value : '';
+    const defaultAccInput = document.getElementById('multi-add-transac-select-account');
+    const defaultAccVal = defaultAccInput ? defaultAccInput.value : '';
     const defaultFreqSelect = document.getElementById('multi-add-default-frequency');
     const defaultFreqVal = defaultFreqSelect ? defaultFreqSelect.value : 'one-time';
 
@@ -45,7 +45,7 @@ function createNewRowHTML(rowCount) {
     let accBtnHTML = 'Tài khoản';
     let accBtnClass = 'form-select text-start w-100 bg-white d-flex align-items-center btn-pick-account text-secondary';
     if (defaultAcc) {
-        accBtnHTML = `<span class="icon-circle bg-${defaultAcc.color}-subtle text-${defaultAcc.color} me-2"><i class="bi bi-${defaultAcc.icon}"></i></span><span class="text-truncate">${defaultAcc.name}</span>`;
+        accBtnHTML = `<span class="icon-circle bg-${defaultAcc.color}-subtle text-${defaultAcc.color} me-2 flex-shrink-0" style="width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%;"><i class="bi bi-${defaultAcc.icon}"></i></span><span class="text-truncate">${defaultAcc.name}</span>`;
         accBtnClass = 'form-select text-start w-100 bg-white d-flex align-items-center btn-pick-account';
     }
 
@@ -124,30 +124,6 @@ if (btnRemoveRowMultiAddTrans) {
                     updateMultiAddTotals();
                 }
             }
-        }
-    });
-}
-
-const multiAddDefaultAcc = document.getElementById('multi-add-default-account');
-if (multiAddDefaultAcc) {
-    multiAddDefaultAcc.addEventListener('change', function(e) {
-        const val = e.target.value;
-        if (!val) return;
-        const accounts = JSON.parse(localStorage.getItem('accounts')) || [];
-        const acc = accounts.find(a => String(a.id) === String(val));
-        const tbody = document.getElementById('multi-add-trans-tbody');
-        if (tbody) {
-            tbody.querySelectorAll('tr').forEach(row => {
-                const accInput = row.querySelector('.multi-add-trans-account-row');
-                const accBtn = row.querySelector('.btn-pick-account');
-                if (accInput && accBtn) {
-                    accInput.value = val;
-                    if (acc) {
-                        accBtn.innerHTML = `<span class="icon-circle bg-${acc.color}-subtle text-${acc.color} me-2"><i class="bi bi-${acc.icon}"></i></span><span class="text-truncate">${acc.name}</span>`;
-                        accBtn.classList.remove('text-secondary');
-                    }
-                }
-            });
         }
     });
 }
@@ -320,23 +296,37 @@ function openMultiAddPicker(btn, input, type) {
         el.onmouseleave = () => el.style.backgroundColor = 'transparent';
     });
 
-    const rect = btn.getBoundingClientRect();
-    let top = rect.bottom + 4;
-    let left = rect.left;
-    const pickerWidth = 230;
+    // Ẩn tạm thời để đo kích thước thực tế của menu
+    picker.style.visibility = 'hidden';
+    picker.style.display = 'block';
 
+    const rect = btn.getBoundingClientRect();
+    const pickerWidth = picker.offsetWidth || 220;
+    const pickerHeight = picker.offsetHeight || 120;
+
+    // Vị trí ngang: Ưu tiên căn theo nút, nếu tràn mép phải thì căn theo cạnh phải của nút
+    let left = rect.left;
     if (left + pickerWidth > window.innerWidth - 10) {
-        left = Math.max(10, window.innerWidth - pickerWidth - 10);
+        left = rect.right - pickerWidth;
+    }
+    if (left + pickerWidth > window.innerWidth - 10) {
+        left = window.innerWidth - pickerWidth - 10;
     }
     if (left < 10) left = 10;
 
-    if (top + 250 > window.innerHeight - 10) {
-        top = Math.max(10, rect.top - 250);
+    // Vị trí dọc: Ưu tiên mở ngay bên dưới nút (rect.bottom + 4)
+    // Chỉ lật lên trên khi phía dưới không đủ chỗ VÀ phía trên đủ chỗ
+    let top = rect.bottom + 4;
+    const spaceBelow = window.innerHeight - rect.bottom;
+    const spaceAbove = rect.top;
+
+    if (spaceBelow < pickerHeight + 10 && spaceAbove > pickerHeight + 10) {
+        top = rect.top - pickerHeight - 4;
     }
 
-    picker.style.top = `${top}px`;
-    picker.style.left = `${left}px`;
-    picker.style.display = 'block';
+    picker.style.top = `${Math.round(top)}px`;
+    picker.style.left = `${Math.round(left)}px`;
+    picker.style.visibility = 'visible';
 }
 
 function closeMultiAddPicker() {
@@ -398,6 +388,8 @@ const multiAddModalEl = document.getElementById('multi-add-transaction');
 if (multiAddModalEl) {
     multiAddModalEl.addEventListener('hide.bs.modal', closeMultiAddPicker);
     multiAddModalEl.addEventListener('show.bs.modal', function() {
+        if (typeof updateAccountSelect === 'function') updateAccountSelect();
+        if (typeof updateCategorySelect === 'function') updateCategorySelect();
         const tbody = document.getElementById('multi-add-trans-tbody');
         if (tbody && tbody.children.length === 0) {
             tbody.insertAdjacentHTML('beforeend', createNewRowHTML(1));

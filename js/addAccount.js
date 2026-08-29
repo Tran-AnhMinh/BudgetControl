@@ -1,5 +1,8 @@
 function updateAccountSelect() {
-    const accounts = JSON.parse(localStorage.getItem('accounts')) || [];
+    const accounts = JSON.parse(localStorage.getItem('accounts')) || [
+        { id: 1, name: 'Tiền mặt', icon: 'cash-stack', color: 'success' },
+        { id: 2, name: 'Tài khoản MB', icon: 'bank', color: 'primary' }
+    ];
     const accountHtml = `
         ${accounts.map(a => `
             <li>
@@ -60,18 +63,15 @@ function updateAccountSelect() {
                         const accHidden = row.querySelector('.multi-add-trans-account-row');
                         if (accHidden) {
                             accHidden.value = val;
-                            const dropdownDiv = accHidden.closest('.dropdown');
-                            if (dropdownDiv) {
-                                const btn = dropdownDiv.querySelector('[data-bs-toggle="dropdown"]');
-                                if (btn) {
-                                    if (val === '') {
-                                        btn.innerHTML = 'Tài khoản';
-                                        btn.classList.add('text-secondary');
-                                    } else {
-                                        btn.innerHTML = this.innerHTML;
-                                        btn.classList.remove('text-secondary');
-                                    }
-                                }
+                        }
+                        const btn = row.querySelector('.btn-pick-account');
+                        if (btn) {
+                            if (val === '') {
+                                btn.innerHTML = 'Tài khoản';
+                                btn.classList.add('text-secondary');
+                            } else {
+                                btn.innerHTML = this.innerHTML;
+                                btn.classList.remove('text-secondary');
                             }
                         }
                     });

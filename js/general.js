@@ -257,6 +257,28 @@ document.addEventListener('click', function(e) {
                             renderTable();
                         }
                     }
+                    if (updatedHiddenInput && updatedHiddenInput.id === 'multi-add-transac-select-account') {
+                        const tbody = document.getElementById('multi-add-trans-tbody');
+                        if (tbody) {
+                            const rows = tbody.querySelectorAll('tr');
+                            rows.forEach(row => {
+                                const accHidden = row.querySelector('.multi-add-trans-account-row');
+                                if (accHidden) {
+                                    accHidden.value = val;
+                                }
+                                const btn = row.querySelector('.btn-pick-account');
+                                if (btn) {
+                                    if (val === '') {
+                                        btn.innerHTML = 'Tài khoản';
+                                        btn.classList.add('text-secondary');
+                                    } else {
+                                        btn.innerHTML = dropdownItem.innerHTML;
+                                        btn.classList.remove('text-secondary');
+                                    }
+                                }
+                            });
+                        }
+                    }
                 }
             }
         }

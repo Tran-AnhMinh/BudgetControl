@@ -364,14 +364,20 @@ const MonthlyBudgetModule = (function () {
 
         // Input Tổng ngân sách
         DOM.totalBudgetInput?.addEventListener("input", (e) => {
-            updateTotalBudget(parseMoney(e.target.value));
+            const digits = e.target.value.replace(/\D/g, "");
+            const amount = parseInt(digits, 10) || 0;
+            updateTotalBudget(amount);
+            e.target.value = digits === "" ? "" : Helper.formatMoney(amount);
         });
 
         // Input số tiền từng danh mục trong bảng
         DOM.tableBody?.addEventListener("input", (e) => {
             if (e.target.classList.contains("budget-input")) {
                 const index = parseInt(e.target.dataset.index, 10);
-                updateCategoryAmount(index, parseMoney(e.target.value));
+                const digits = e.target.value.replace(/\D/g, "");
+                const amount = parseInt(digits, 10) || 0;
+                updateCategoryAmount(index, amount);
+                e.target.value = digits === "" ? "" : Helper.formatMoney(amount);
             }
         });
 
@@ -551,8 +557,9 @@ const DailyBudgetModule = (function () {
 
         // Tự động cập nhật và format số khi người dùng gõ
         DOM.input?.addEventListener("input", (e) => {
-            const rawValue = parseMoney(e.target.value);
-            dailyBudget = rawValue;
+            const digits = e.target.value.replace(/\D/g, "");
+            dailyBudget = parseInt(digits, 10) || 0;
+            e.target.value = digits === "" ? "" : Helper.formatMoney(dailyBudget);
         });
 
         // Nhấn Enter để lưu nhanh, Escape để hủy

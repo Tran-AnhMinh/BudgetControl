@@ -119,17 +119,28 @@ body {
 .header{
     margin-bottom:20px;
 }
-.avatar-circle { 
-    width: 40px; 
-    height: 40px; 
-    background-color: var(--bs-info); 
-    color: white; 
-    border-radius: 50%; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    font-weight: 600; 
-    font-size: 16px; 
+.avatar-circle {
+    width: 40px;
+    height: 40px;
+    background-color: var(--bs-info);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 16px;
+    position: relative;
+    overflow: hidden;
+}
+
+.avatar-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
 }
 
 .user-info { 

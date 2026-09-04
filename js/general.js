@@ -90,8 +90,6 @@ function checkBudget(categoryId = null, dateOrMonth = null, showWarningToast = t
     const allTransactions = JSON.parse(localStorage.getItem('transactions')) || [];
 
     function getCategoryName(catId) {
-        const fromBudget = budgetCategories.find(c => String(c.id) === String(catId));
-        if (fromBudget && fromBudget.name) return fromBudget.name;
         const fromAll = allCategories.find(c => String(c.id) === String(catId));
         if (fromAll && fromAll.name) return fromAll.name;
         return `Danh mục #${catId}`;

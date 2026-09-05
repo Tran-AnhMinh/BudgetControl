@@ -1,14 +1,14 @@
 const btnSingleAddTransOpen = document.getElementById('btn-single-add-trans-open');
-if(btnSingleAddTransOpen){
-    btnSingleAddTransOpen.addEventListener('click', function(){
+if (btnSingleAddTransOpen) {
+    btnSingleAddTransOpen.addEventListener('click', function () {
         const expRadio = document.getElementById('expense');
         if (expRadio) expRadio.checked = true;
         flatpickr(".date-picker-input", {
-        enableTime: true,
-        dateFormat: "d/m/Y H:i",
-        time_24hr: true,
-        allowInput: true,
-        defaultDate: new Date()
+            enableTime: true,
+            dateFormat: "d/m/Y H:i",
+            time_24hr: true,
+            allowInput: true,
+            defaultDate: new Date()
         });
     });
 }

@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
             locale: {
                 rangeSeparator: " - "
             },
-            onChange: function(selectedDates, dateStr, instance) {
+            onChange: function (selectedDates, dateStr, instance) {
                 if (typeof renderTable === 'function') {
                     renderTable();
                 }

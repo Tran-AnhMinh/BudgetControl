@@ -169,7 +169,7 @@ flatpickr(".date-picker-input-date-only", {
     defaultDate: new Date()
 });
 
-document.addEventListener('input', function(e) {
+document.addEventListener('input', function (e) {
     if (e.target.classList.contains('amount-input-multi-add')) {
         let val = e.target.value.replace(/\D/g, '');
         if (val !== '') {
@@ -180,7 +180,7 @@ document.addEventListener('input', function(e) {
     }
 });
 
-document.addEventListener('click', function(e) {
+document.addEventListener('click', function (e) {
     const dropdownItem = e.target.closest('.dropdown-item');
     if (dropdownItem) {
         if (dropdownItem.classList.contains('edit-transaction-btn') || dropdownItem.classList.contains('delete-transaction-btn')) {
@@ -203,7 +203,7 @@ document.addEventListener('click', function(e) {
                             button.classList.remove('text-success');
                             button.classList.add('text-danger');
                             button.innerHTML = `<i class="bi bi-arrow-down me-1"></i> Chi`;
-                        } else{
+                        } else {
                             button.classList.remove('text-success', 'text-danger');
                             button.innerHTML = `Tất cả <i class="bi bi-chevron-down ms-1"></i>`;
                         }
@@ -219,7 +219,7 @@ document.addEventListener('click', function(e) {
                         e.preventDefault();
                         const textSpan = button.querySelector('.dropdown-text');
                         const textToSet = dropdownItem.value === '' ? 'Chọn tần suất' : dropdownItem.textContent.trim();
-                        
+
                         if (textSpan) {
                             textSpan.textContent = textToSet;
                         } else {
@@ -234,7 +234,7 @@ document.addEventListener('click', function(e) {
                     } else if (dropdownItem.classList.contains('category-item') || dropdownItem.classList.contains('account-item')) {
                         e.preventDefault();
                         const val = dropdownItem.getAttribute('data-value');
-                        
+
                         if (val === '') {
                             button.innerHTML = dropdownItem.innerHTML;
                             button.classList.add('text-secondary');
@@ -242,13 +242,13 @@ document.addEventListener('click', function(e) {
                             button.innerHTML = dropdownItem.innerHTML;
                             button.classList.remove('text-secondary');
                         }
-                        
+
                         const hiddenInput = dropdown.querySelector('input[type="hidden"]');
                         if (hiddenInput) {
                             hiddenInput.value = val;
                         }
                     }
-                    
+
                     const updatedHiddenInput = dropdown.querySelector('input[type="hidden"]');
                     if (updatedHiddenInput && (updatedHiddenInput.id.startsWith('table-sort') || updatedHiddenInput.classList.contains('table-sort-type'))) {
                         if (typeof renderTable === 'function') {
@@ -283,8 +283,8 @@ document.addEventListener('click', function(e) {
     }
 });
 
-function translateColor(color){
-    switch(color){
+function translateColor(color) {
+    switch (color) {
         case 'primary':
             return 'Xanh dương';
             break;

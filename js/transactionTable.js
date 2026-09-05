@@ -2,7 +2,7 @@ let currentPage = 1;
 let itemsPerPage = 15;
 const transactionTableBody = document.getElementById('transaction-table-body');
 function applyCurrentSort() {
-    switch(currentSortColumn) {
+    switch (currentSortColumn) {
         case 'date':
             transactions.sort((a, b) => sortOrders.date * (new Date(b.time) - new Date(a.time)));
             break;
@@ -16,7 +16,7 @@ function applyCurrentSort() {
             transactions.sort((a, b) => sortOrders.account * a.account.localeCompare(b.account));
             break;
         case 'amount':
-            transactions.sort((a, b) => sortOrders.amount * (b.amount* (b.type === 'expense' ? 1 : -1) - a.amount * (a.type === 'expense' ? 1 : -1)));
+            transactions.sort((a, b) => sortOrders.amount * (b.amount * (b.type === 'expense' ? 1 : -1) - a.amount * (a.type === 'expense' ? 1 : -1)));
             break;
         case 'frequency':
             transactions.sort((a, b) => sortOrders.frequency * String(a.frequency || a.monthly).localeCompare(String(b.frequency || b.monthly)));
@@ -94,7 +94,7 @@ function renderTable() {
     const filterFrequency = document.getElementById('table-sort-frequency')?.value || '';
     const filterAmountMin = document.getElementById('table-sort-amount-min')?.value;
     const filterAmountMax = document.getElementById('table-sort-amount-max')?.value;
-    
+
     const dateInput = document.getElementById('table-sort-date');
     const selectedDates = dateInput && dateInput._flatpickr ? dateInput._flatpickr.selectedDates : [];
 
@@ -110,7 +110,7 @@ function renderTable() {
     if (selectedDates && selectedDates.length > 0) {
         let startDate = new Date(selectedDates[0]);
         startDate.setHours(0, 0, 0, 0);
-        
+
         let endDate = new Date(selectedDates.length > 1 ? selectedDates[1] : selectedDates[0]);
         endDate.setHours(23, 59, 59, 999);
 
@@ -186,7 +186,10 @@ function renderTable() {
                 </td>
                 <td class="text-nowrap text-right"><span class="${typeClass} fw-medium"><i class="bi ${typeIcon}"></i> ${typeText}</span></td>
                 <td class="text-nowrap "><span class="icon-circle bg-${cat.color}-subtle text-${cat.color} me-2"><i class="bi bi-${cat.icon}"></i></span> ${cat.name || ''}</td>
-                <td>${t.detail || ''}</td>
+                <td class="desc-cell">
+                    <span class="desc-text">${t.detail || ''}</span>
+                    ${t.detail ? `<div class="desc-tooltip">${t.detail}</div>` : ''}
+                </td>
                 <td class="text-nowrap"><span class="icon-circle bg-${acc.color}-subtle text-${acc.color} me-2"><i class="bi bi-${acc.icon}"></i></span> ${acc.name || ''}</td>
                 <td class="${amountClass} fw-bold text-end text-nowrap text-left">${amountSign}${formattedAmount}</td>
                 <td class="text-nowrap text-center"><span class="badge badge-custom bg-${frequencyColor}-subtle text-${frequencyColor}">${frequencyText}</span></td>
@@ -232,7 +235,7 @@ if (transactionTableBody) {
     });
 }
 
-transactionTableBody.addEventListener('click', function(e) {
+transactionTableBody.addEventListener('click', function (e) {
     const deleteBtn = e.target.closest('.delete-transaction-btn');
     if (deleteBtn) {
         const index = parseInt(deleteBtn.getAttribute('data-index'), 10);
@@ -308,7 +311,7 @@ transactionTableBody.addEventListener('click', function(e) {
             if (detailInput) {
                 detailInput.value = transaction.detail || '';
             }
-            
+
             document.getElementById('edit-btn-save-transaction').setAttribute('data-index', index);
 
             const editModal = new bootstrap.Modal(document.getElementById('edit-single-add-transaction'));
@@ -319,9 +322,9 @@ transactionTableBody.addEventListener('click', function(e) {
 
 const saveEditBtn = document.getElementById('edit-btn-save-transaction');
 if (saveEditBtn) {
-    saveEditBtn.addEventListener('click', function() {
+    saveEditBtn.addEventListener('click', function () {
         const index = parseInt(this.getAttribute('data-index'), 10);
-        
+
         const type = document.getElementById('edit-expense').checked ? 'expense' : 'income';
         const amountStr = document.getElementById('edit-trans-amount').value.replace(/\D/g, '');
         const amount = parseInt(amountStr, 10) || 0;
@@ -369,13 +372,13 @@ if (saveEditBtn) {
         };
 
         localStorage.setItem('transactions', JSON.stringify(transactions));
-        
+
         const modalEl = document.getElementById('edit-single-add-transaction');
         const modal = bootstrap.Modal.getInstance(modalEl);
         if (modal) modal.hide();
 
         renderTable();
-        
+
         if (typeof showToast === 'function') {
             showToast('Cập nhật giao dịch thành công!');
         }
@@ -404,7 +407,7 @@ if (editAmountInput) {
     if (btn) {
         btn.addEventListener('click', () => {
             const amountInput = document.getElementById('edit-trans-amount');
-            if(amountInput) {
+            if (amountInput) {
                 let currentAmount = parseFloat(amountInput.value.replace(/\D/g, '')) || 0;
                 currentAmount += parseInt(val) * 1000;
                 amountInput.value = currentAmount.toLocaleString('vi-VN');
@@ -425,7 +428,7 @@ if (filterAmountMax) {
 
 const searchInputField = document.querySelector('.search-input');
 if (searchInputField) {
-    searchInputField.addEventListener('input', function() {
+    searchInputField.addEventListener('input', function () {
         currentPage = 1;
         renderTable();
     });
@@ -433,7 +436,7 @@ if (searchInputField) {
 
 const btnResetFilters = document.getElementById('btn-reset-filters');
 if (btnResetFilters) {
-    btnResetFilters.addEventListener('click', function() {
+    btnResetFilters.addEventListener('click', function () {
         currentPage = 1;
         const searchInput = document.querySelector('.search-input');
         if (searchInput) searchInput.value = '';
@@ -496,25 +499,25 @@ if (btnResetFilters) {
 function renderPagination(totalPages) {
     const container = document.getElementById('pagination-container');
     if (!container) return;
-    
+
     let html = '';
-    
+
     html += `<li class="page-item mx-1 ${currentPage === 1 ? 'disabled' : ''}">
                 <a class="page-link text-secondary pagination-btn rounded-2" href="#" data-page="${currentPage - 1}">
                     <i class="bi bi-chevron-left"></i>
                 </a>
              </li>`;
-             
+
     let startPage = Math.max(1, currentPage - 2);
     let endPage = Math.min(totalPages, currentPage + 2);
-    
+
     if (startPage > 1) {
         html += `<li class="page-item mx-1"><a class="page-link text-secondary pagination-btn rounded-2" href="#" data-page="1">1</a></li>`;
         if (startPage > 2) {
             html += `<li class="page-item mx-1"><span class="page-link text-secondary border-0 bg-transparent rounded-2">...</span></li>`;
         }
     }
-    
+
     for (let p = startPage; p <= endPage; p++) {
         if (p === currentPage) {
             html += `<li class="page-item mx-1 active"><a class="page-link pagination-btn rounded-2" href="#" data-page="${p}">${p}</a></li>`;
@@ -522,30 +525,30 @@ function renderPagination(totalPages) {
             html += `<li class="page-item mx-1"><a class="page-link text-secondary pagination-btn rounded-2" href="#" data-page="${p}">${p}</a></li>`;
         }
     }
-    
+
     if (endPage < totalPages) {
         if (endPage < totalPages - 1) {
             html += `<li class="page-item mx-1"><span class="page-link text-secondary border-0 bg-transparent rounded-2">...</span></li>`;
         }
         html += `<li class="page-item mx-1"><a class="page-link text-secondary pagination-btn rounded-2" href="#" data-page="${totalPages}">${totalPages}</a></li>`;
     }
-    
+
     html += `<li class="page-item mx-1 ${currentPage === totalPages ? 'disabled' : ''}">
                 <a class="page-link text-secondary pagination-btn rounded-2" href="#" data-page="${currentPage + 1}">
                     <i class="bi bi-chevron-right"></i>
                 </a>
              </li>`;
-             
+
     container.innerHTML = html;
 }
 
-document.addEventListener('click', function(e) {
+document.addEventListener('click', function (e) {
     const btn = e.target.closest('.pagination-btn');
     if (btn) {
         e.preventDefault();
         const li = btn.closest('.page-item');
         if (li && li.classList.contains('disabled')) return;
-        
+
         const page = parseInt(btn.getAttribute('data-page'), 10);
         if (!isNaN(page)) {
             currentPage = page;
@@ -556,7 +559,7 @@ document.addEventListener('click', function(e) {
 
 const itemsPerPageSelect = document.getElementById('items-per-page-select');
 if (itemsPerPageSelect) {
-    itemsPerPageSelect.addEventListener('change', function() {
+    itemsPerPageSelect.addEventListener('change', function () {
         itemsPerPage = parseInt(this.value, 10) || 10;
         currentPage = 1;
         renderTable();
@@ -566,14 +569,14 @@ if (itemsPerPageSelect) {
 function saveExcel() {
     let data = [];
     data.push(['Ngày giờ', 'Loại', 'Danh mục', 'Chi tiết', 'Tài khoản', 'Số tiền', 'Tần suất']);
-    
+
     for (const t of transactions) {
         const dateObj = new Date(t.time);
         const dateStr = dateObj.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' });
         const timeStr = dateObj.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
         const typeText = t.type === 'expense' ? 'Chi' : 'Thu';
         const frequencyText = t.monthly ? 'Hàng tháng' : 'Một lần';
-        
+
         data.push([
             `${dateStr} ${timeStr}`,
             typeText,

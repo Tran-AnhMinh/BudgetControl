@@ -1,3 +1,13 @@
+if (localStorage.getItem('transactions') === null) {
+    localStorage.setItem('transactions', JSON.stringify([]));
+}
+if (localStorage.getItem('categories') === null) {
+    localStorage.setItem('categories', JSON.stringify([]));
+}
+if (localStorage.getItem('accounts') === null) {
+    localStorage.setItem('accounts', JSON.stringify([]));
+}
+
 let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
 let categories = JSON.parse(localStorage.getItem('categories')) || [];
 let accounts = JSON.parse(localStorage.getItem('accounts')) || [];

@@ -1,5 +1,5 @@
 let currentPage = 1;
-let itemsPerPage = 10;
+let itemsPerPage = 15;
 const transactionTableBody = document.getElementById('transaction-table-body');
 function applyCurrentSort() {
     switch(currentSortColumn) {
@@ -172,7 +172,7 @@ function renderTable() {
 
         const amountSign = isExpense ? '-' : '+';
         const amountClass = isExpense ? 'text-danger' : 'text-success';
-        const formattedAmount = (t.amount || 0).toLocaleString('vi-VN') + 'đ';
+        const formattedAmount = (t.amount || 0).toLocaleString('vi-VN');
 
         const frequencyText = t.monthly ? 'Hàng tháng' : 'Một lần';
         const frequencyColor = t.monthly ? 'primary' : 'secondary';

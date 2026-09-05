@@ -1,16 +1,28 @@
-if (localStorage.getItem('transactions') === null) {
-    localStorage.setItem('transactions', JSON.stringify([]));
-}
-if (localStorage.getItem('categories') === null) {
-    localStorage.setItem('categories', JSON.stringify([]));
-}
-if (localStorage.getItem('accounts') === null) {
-    localStorage.setItem('accounts', JSON.stringify([]));
+function safeParseStorage(key) {
+    try {
+        const raw = localStorage.getItem(key);
+        const parsed = JSON.parse(raw);
+        return Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+        localStorage.removeItem(key);
+        return [];
+    }
 }
 
-let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
-let categories = JSON.parse(localStorage.getItem('categories')) || [];
-let accounts = JSON.parse(localStorage.getItem('accounts')) || [];
+let transactions = safeParseStorage('transactions');
+let categories = safeParseStorage('categories');
+let accounts = safeParseStorage('accounts');
+
+// if (localStorage.getItem('transactions') === null) {
+//     localStorage.setItem('transactions', JSON.stringify([]));
+// }
+// if (localStorage.getItem('categories') === null) {
+//     localStorage.setItem('categories', JSON.stringify([]));
+// }
+// if (localStorage.getItem('accounts') === null) {
+//     localStorage.setItem('accounts', JSON.stringify([]));
+// }
+
 let indexTransInUse = 0;
 transactions.sort((a, b) => new Date(b.time) - new Date(a.time));
 

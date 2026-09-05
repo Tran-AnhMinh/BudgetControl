@@ -32,6 +32,11 @@ const MonthlyBudgetModule = (function () {
         return parseInt(value.toString().replace(/[^0-9]/g, ""), 10) || 0;
     }
 
+    function resolveCategory(id) {
+        return SYSTEM_CATEGORIES.find(c => c.id == id)
+            || { id, name: `Danh mục #${id}`, icon: "question-circle", color: "secondary" };
+    }
+
 
 
     // ========================================
@@ -139,9 +144,6 @@ const MonthlyBudgetModule = (function () {
 
         categories.push({
             id: target.id,
-            name: target.name,
-            icon: target.icon,
-            color: target.color,
             amount: 0
         });
 
@@ -152,7 +154,7 @@ const MonthlyBudgetModule = (function () {
         const targetCat = categories[index];
         if (!targetCat) return;
 
-        const isConfirmed = window.confirm(`Bạn có chắc chắn muốn xóa ${targetCat.name} không?`);
+        const isConfirmed = window.confirm(`Bạn có chắc chắn muốn xóa ${resolveCategory(targetCat.id).name} không?`);
 
         if (isConfirmed) {
             categories.splice(index, 1);
@@ -234,16 +236,17 @@ const MonthlyBudgetModule = (function () {
         DOM.tableBody.innerHTML = "";
 
         categories.forEach((cat, index) => {
+            const info = resolveCategory(cat.id);
             const percent = totalBudget > 0 ? Math.round((cat.amount / totalBudget) * 100) : 0;
             const tr = document.createElement("tr");
 
             tr.innerHTML = `
             <td>
                 <div class="d-flex align-items-center gap-3">
-                    <div class="rounded-circle d-flex align-items-center justify-content-center bg-${cat.color}-subtle text-${cat.color}" style="width: 40px; height: 40px; min-width: 40px;">
-                        <i class="bi bi-${cat.icon} fs-5"></i>
+                    <div class="rounded-circle d-flex align-items-center justify-content-center bg-${info.color}-subtle text-${info.color}" style="width: 40px; height: 40px; min-width: 40px;">
+                        <i class="bi bi-${info.icon} fs-5"></i>
                     </div>
-                    <div class="fw-bold text-dark">${cat.name}</div>
+                    <div class="fw-bold text-dark">${info.name}</div>
                 </div>
             </td>
             <td>
@@ -361,14 +364,20 @@ const MonthlyBudgetModule = (function () {
 
         // Input Tổng ngân sách
         DOM.totalBudgetInput?.addEventListener("input", (e) => {
-            updateTotalBudget(parseMoney(e.target.value));
+            const digits = e.target.value.replace(/\D/g, "");
+            const amount = parseInt(digits, 10) || 0;
+            updateTotalBudget(amount);
+            e.target.value = digits === "" ? "" : Helper.formatMoney(amount);
         });
 
         // Input số tiền từng danh mục trong bảng
         DOM.tableBody?.addEventListener("input", (e) => {
             if (e.target.classList.contains("budget-input")) {
                 const index = parseInt(e.target.dataset.index, 10);
-                updateCategoryAmount(index, parseMoney(e.target.value));
+                const digits = e.target.value.replace(/\D/g, "");
+                const amount = parseInt(digits, 10) || 0;
+                updateCategoryAmount(index, amount);
+                e.target.value = digits === "" ? "" : Helper.formatMoney(amount);
             }
         });
 
@@ -444,7 +453,7 @@ const DailyBudgetModule = (function () {
     // ========================================
     // 1. CONSTANTS & STORAGE KEY
     // ========================================
-    const STORAGE_KEY = "daily_budget";
+    const STORAGE_KEY = "profile";
     const DEFAULT_BUDGET = 500000;
 
     function parseMoney(value) {
@@ -476,12 +485,14 @@ const DailyBudgetModule = (function () {
     // 4. STORAGE
     // ========================================
     function loadData() {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        dailyBudget = saved !== null ? parseMoney(saved) : DEFAULT_BUDGET;
+        const profile = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+        dailyBudget = profile.dailyBudget !== undefined ? parseMoney(profile.dailyBudget) : DEFAULT_BUDGET;
     }
 
     function saveData() {
-        localStorage.setItem(STORAGE_KEY, dailyBudget);
+        const profile = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+        profile.dailyBudget = dailyBudget;
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(profile));
     }
 
     // ========================================
@@ -546,8 +557,9 @@ const DailyBudgetModule = (function () {
 
         // Tự động cập nhật và format số khi người dùng gõ
         DOM.input?.addEventListener("input", (e) => {
-            const rawValue = parseMoney(e.target.value);
-            dailyBudget = rawValue;
+            const digits = e.target.value.replace(/\D/g, "");
+            dailyBudget = parseInt(digits, 10) || 0;
+            e.target.value = digits === "" ? "" : Helper.formatMoney(dailyBudget);
         });
 
         // Nhấn Enter để lưu nhanh, Escape để hủy

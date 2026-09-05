@@ -9,12 +9,67 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
   <link rel="stylesheet" href="./css/sidebar.css" />
   <link rel="stylesheet" href="./css/budget.css" />
-  <meta name="description" content="quản lý giao dịch" />
-  <title>Profle</title>
+  <link rel="stylesheet" href="./css/profile.css" />
+  <meta name="description" content="thông tin cá nhân" />
+  <title>Thông tin cá nhân</title>
 </head>
 
 <body>
-    
+  <div class="profile-page">
+    <button type="button" class="btn back-btn" onclick="goBack()">
+      <i class="bi bi-arrow-left"></i>
+    </button>
+
+    <div class="budget-card profile-card">
+      <div class="text-center mb-4">
+        <div class="avatar-wrapper mx-auto mb-3">
+          <div class="avatar-circle avatar-circle-lg" id="profileAvatar">
+            <span id="profileAvatarInitial">U</span>
+            <img id="profileAvatarImg" class="d-none" alt="Avatar" />
+          </div>
+          <button type="button" id="avatarEditBtn" class="avatar-edit-btn d-none" title="Đổi ảnh đại diện">
+            <i class="bi bi-camera-fill"></i>
+          </button>
+          <input type="file" id="avatarInput" accept="image/*" class="d-none" />
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="profileFullName" class="form-label small text-muted">Họ và tên</label>
+        <input type="text" class="form-control" id="profileFullName" disabled />
+      </div>
+
+      <div class="mb-3">
+        <label for="profileRole" class="form-label small text-muted">Vai trò</label>
+        <input type="text" class="form-control" id="profileRole" disabled />
+      </div>
+
+      <div class="mb-4">
+        <label for="profileDetail" class="form-label small text-muted">Giới thiệu</label>
+        <textarea class="form-control" id="profileDetail" rows="3" disabled></textarea>
+      </div>
+
+      <div class="d-flex justify-content-end gap-2">
+        <div id="viewModeActions">
+          <button type="button" class="btn btn-primary px-4 save-btn" id="editBtn">
+            Chỉnh sửa
+          </button>
+        </div>
+
+        <div id="editModeActions" class="d-none d-flex gap-2">
+          <button type="button" class="btn btn-light px-4 cancel-btn" id="cancelBtn">
+            Hủy
+          </button>
+          <button type="button" class="btn btn-primary px-4 save-btn" id="saveBtn">
+            Lưu
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="./js/profile.js"></script>
 </body>
 
 </html>

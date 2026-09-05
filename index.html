@@ -50,7 +50,7 @@
         </nav>
 
         <div class="main-content flex-grow-1">
-            <div class="header d-flex justify-content-between w-100 align-items-center">
+            <div class="header p-4 d-flex justify-content-between w-100 align-items-center">
                 <div class="header-left">
                     <h3 class="mb-1">Trang quản trị</h3>
 
@@ -75,7 +75,10 @@
                 </div>
                 <div class="dropdown-toggle user-info d-flex align-items-center gap-2" style="cursor: pointer"
                     data-bs-toggle="dropdown" aria-expanded="false">
-                    <div class="avatar-circle me-2">M</div>
+                    <div class="avatar-circle me-2">
+                        <span class="avatar-initial">M</span>
+                        <img class="avatar-img d-none" alt="Avatar" />
+                    </div>
 
                     <div class="user-info d-none d-md-block pe-1">
                         <p class="user-name">Minh</p>
@@ -86,12 +89,12 @@
                 </div>
 
                 <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
-                    <li><a class="dropdown-item" href="#">Thông tin cá nhân</a></li>
+                    <li><a class="dropdown-item" href="profile.html">Thông tin cá nhân</a></li>
                     <li><a class="dropdown-item text-danger" href="#">Đăng xuất</a></li>
                 </ul>
             </div>
 
-            <div class="dashboard-content">
+            <div class="dashboard-content p-4">
                 <div class="row g-3 mb-4">
                     <!-- Card 1 -->
                     <div class="col-12 col-md-6 col-xl-4">
@@ -132,75 +135,10 @@
                     <div class="col-12 col-lg-8">
                         <div class="dashboard-card">
                             <div class="card-heading d-flex justify-content-between align-items-center">
-                                <h5>Ngân sách tháng 8/2025</h5>
-                                <a href="#">Xem tất cả</a>
+                                <h5 id="monthlyBudgetTitle">Ngân sách tháng</h5>
+                                <a href="budget.html">Xem tất cả</a>
                             </div>
-                            <div class="budget-item">
-                                <div class="budget-icon food">
-                                    <i class="bi bi-egg-fried"></i>
-                                </div>
-
-                                <span class="budget-name">Ăn uống</span>
-
-                                <div class="progress budget-progress">
-                                    <div class="progress-bar bg-success" style="width: 71%"></div>
-                                </div>
-
-                                <span class="budget-money"> 1.280.000đ / 1.800.000đ </span>
-
-                                <span class="budget-percent text-success"> 71% </span>
-                            </div>
-
-                            <!-- Học tập -->
-                            <div class="budget-item">
-                                <div class="budget-icon study">
-                                    <i class="bi bi-book"></i>
-                                </div>
-
-                                <span class="budget-name">Học tập</span>
-
-                                <div class="progress budget-progress">
-                                    <div class="progress-bar bg-primary" style="width: 75%"></div>
-                                </div>
-
-                                <span class="budget-money"> 600.000đ / 800.000đ </span>
-
-                                <span class="budget-percent text-success"> 75% </span>
-                            </div>
-
-                            <!-- Đi lại -->
-                            <div class="budget-item">
-                                <div class="budget-icon transport">
-                                    <i class="bi bi-bus-front"></i>
-                                </div>
-
-                                <span class="budget-name">Đi lại</span>
-
-                                <div class="progress budget-progress">
-                                    <div class="progress-bar bg-warning" style="width: 67%"></div>
-                                </div>
-
-                                <span class="budget-money"> 400.000đ / 600.000đ </span>
-
-                                <span class="budget-percent text-success"> 67% </span>
-                            </div>
-
-                            <!-- Giải trí -->
-                            <div class="budget-item">
-                                <div class="budget-icon entertainment">
-                                    <i class="bi bi-controller"></i>
-                                </div>
-
-                                <span class="budget-name">Giải trí</span>
-
-                                <div class="progress budget-progress">
-                                    <div class="progress-bar bg-danger" style="width: 60%"></div>
-                                </div>
-
-                                <span class="budget-money"> 300.000đ / 500.000đ </span>
-
-                                <span class="budget-percent text-danger"> 60% </span>
-                            </div>
+                            <div id="monthlyBudgetList"></div>
                         </div>
                     </div>
                     <div class="col-12 col-lg-4">
@@ -214,7 +152,7 @@
                                     <span>Ngân sách hôm nay</span>
                                 </div>
 
-                                <strong>100.000đ</strong>
+                                <strong id="todayBudgetValue">0đ</strong>
                             </div>
 
                             <!-- Đã chi -->
@@ -224,7 +162,7 @@
                                     <span>Đã chi</span>
                                 </div>
 
-                                <strong>67.000đ</strong>
+                                <strong id="todaySpentValue">0đ</strong>
                             </div>
 
                             <!-- Còn lại -->
@@ -234,35 +172,20 @@
                                     <span>Còn lại</span>
                                 </div>
 
-                                <strong>33.000đ</strong>
+                                <strong id="todayRemainValue">0đ</strong>
                             </div>
 
                             <!-- Progress -->
                             <div class="today-progress-wrapper">
                                 <div class="progress today-progress">
-                                    <div class="progress-bar bg-success" style="width: 67%"></div>
+                                    <div class="progress-bar bg-success" id="todayProgressBar" style="width: 0%"></div>
                                 </div>
 
-                                <span>67%</span>
+                                <span id="todayProgressPercent">0%</span>
                             </div>
 
                             <!-- Chi tiết -->
-                            <div class="today-details">
-                                <div>
-                                    <span>Ăn uống</span>
-                                    <strong>45.000đ</strong>
-                                </div>
-
-                                <div>
-                                    <span>Đi lại</span>
-                                    <strong>7.000đ</strong>
-                                </div>
-
-                                <div>
-                                    <span>Khác</span>
-                                    <strong>15.000đ</strong>
-                                </div>
-                            </div>
+                            <div class="today-details" id="todayDetailsList"></div>
                         </div>
                     </div>
                 </div>

@@ -89,9 +89,9 @@ body {
 }
 
 .btn-filter {
-    color: var(--bs-primary);
-    background-color: rgba(var(--bs-primary-rgb), 0.1);
-    border: none;
+    color: var(--main-color-dark);
+    background-color: var(--main-color-subtle);
+    border: 1px solid var(--main-color-border);
     font-weight: 500;
     border-radius: 8px;
     font-size: 14px;
@@ -99,7 +99,8 @@ body {
 }
 
 .btn-filter:hover {
-    background-color: rgba(var(--bs-primary-rgb), 0.2);
+    background-color: var(--main-color);
+    color: var(--main-color-text);
 }
 
 .btn-export {
@@ -223,14 +224,16 @@ body {
 }
 
 .page-item.active .page-link {
-    background-color: var(--bs-primary);
-    color: white;
+    background-color: var(--main-color);
+    border-color: var(--main-color);
+    color: var(--main-color-text);
+    font-weight: 600;
 }
 
 .btn-add {
-    background-color: var(--bs-primary);
-    color: white;
-    border: 1px solid var(--bs-primary);
+    background-color: var(--main-color);
+    color: var(--main-color-text);
+    border: 1px solid var(--main-color);
     font-weight: 500;
     border-radius: 8px;
     font-size: 14px;
@@ -238,20 +241,20 @@ body {
 }
 
 .btn-add:hover {
-    background-color: var(--bs-primary);
-    border-color: var(--bs-primary);
-    color: white;
+    background-color: var(--main-color-hover);
+    border-color: var(--main-color-hover);
+    color: #111;
 }
 
 .btn-add:nth-of-type(4) {
     background-color: white;
-    color: var(--bs-primary);
-    border: 1px solid var(--bs-primary);
+    color: var(--main-color-dark);
+    border: 1px solid var(--main-color);
 }
 
 .btn-add:nth-of-type(4):hover {
-    background-color: var(--bs-light);
-    color: var(--bs-primary);
+    background-color: var(--main-color-subtle);
+    color: #a82046;
 }
 
 
@@ -266,8 +269,8 @@ body {
 
 .btn-check:checked+.btn-type-toggle {
     background-color: white;
-    border-color: var(--bs-primary);
-    color: var(--bs-primary);
+    border-color: var(--main-color);
+    color: var(--main-color-dark);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
@@ -278,9 +281,22 @@ body {
 }
 
 .btn-quick-amount:hover {
-    background-color: rgba(var(--bs-primary-rgb), 0.1) !important;
-    color: var(--bs-primary) !important;
-    border-color: var(--bs-primary) !important;
+    background-color: var(--main-color-subtle) !important;
+    color: var(--main-color-dark) !important;
+    border-color: var(--main-color) !important;
+}
+
+/* Viền khi bấm / focus cho tất cả các ô nhập liệu, ô chọn và nút bấm */
+.form-control:focus,
+.form-select:focus,
+.filter-select:focus,
+textarea:focus,
+.page-link:focus,
+.btn:not([for*="color"]):not([name*="Color"] + label):focus,
+.btn:not([for*="color"]):not([name*="Color"] + label):active {
+    border-color: var(--main-color) !important;
+    box-shadow: 0 0 0 0.25rem rgba(var(--main-color-rgb), 0.45) !important;
+    outline: none !important;
 }
 
 
@@ -320,16 +336,16 @@ input[name="accountIcon"]+label.btn-outline-secondary {
 
 input[name="categoryIcon"]+label.btn-outline-secondary:hover,
 input[name="accountIcon"]+label.btn-outline-secondary:hover {
-    background-color: rgba(var(--bs-primary-rgb), 0.1);
-    color: var(--bs-primary);
-    border-color: var(--bs-primary);
+    background-color: var(--main-color-subtle);
+    color: var(--main-color-dark);
+    border-color: var(--main-color);
 }
 
 input[name="categoryIcon"]:checked+label.btn-outline-secondary,
 input[name="accountIcon"]:checked+label.btn-outline-secondary {
-    background-color: var(--bs-primary);
-    color: white;
-    border-color: var(--bs-primary);
+    background-color: var(--main-color);
+    color: var(--main-color-text);
+    border-color: var(--main-color);
 }
 
 .flatpickr-calendar {
@@ -341,9 +357,9 @@ input[name="accountIcon"]:checked+label.btn-outline-secondary {
 }
 
 #btn-add-row-multi-add-trans:hover {
-    background-color: var(--bs-primary) !important;
-    color: white !important;
-    border-color: var(--bs-primary) !important;
+    background-color: var(--main-color) !important;
+    color: var(--main-color-text) !important;
+    border-color: var(--main-color) !important;
 }
 
 
@@ -361,7 +377,7 @@ input[name="accountIcon"]:checked+label.btn-outline-secondary {
         -webkit-overflow-scrolling: touch !important;
     }
 
-    .table-responsive > .table {
+    .table-responsive>.table {
         min-width: 600px !important;
     }
 

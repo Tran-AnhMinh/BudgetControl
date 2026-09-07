@@ -11,23 +11,23 @@ let sortOrdersAcc = {
 
 const AccountsTableBody = document.getElementById("accounts-table-body");
 
-function applyCurrentAccSort(accounts){
+function applyCurrentAccSort(accounts) {
     switch (currentSortAcc) {
         case 'name':
-        accounts.sort((a,b) => sortOrdersAcc.name * (a.name || '').localeCompare(b.name || ''));
-        break;
+            accounts.sort((a, b) => sortOrdersAcc.name * (a.name || '').localeCompare(b.name || ''));
+            break;
         case 'icon':
-        accounts.sort((a,b) => sortOrdersAcc.icon * (a.icon || '').localeCompare(b.icon || ''));
-        break;
+            accounts.sort((a, b) => sortOrdersAcc.icon * (a.icon || '').localeCompare(b.icon || ''));
+            break;
         case 'color':
-        accounts.sort((a,b) => sortOrdersAcc.color * (a.color || '').localeCompare(b.color || ''));
-        break;
+            accounts.sort((a, b) => sortOrdersAcc.color * (a.color || '').localeCompare(b.color || ''));
+            break;
     }
 }
 
 const btnSortAccName = document.getElementById("btn-sort-acc-name");
 if (btnSortAccName) {
-    btnSortAccName.addEventListener("click", function() {
+    btnSortAccName.addEventListener("click", function () {
         currentSortAcc = 'name';
         sortOrdersAcc.name *= -1;
         renderAccountsTable();
@@ -36,7 +36,7 @@ if (btnSortAccName) {
 
 const btnSortAccIcon = document.getElementById("btn-sort-acc-icon");
 if (btnSortAccIcon) {
-    btnSortAccIcon.addEventListener("click", function() {
+    btnSortAccIcon.addEventListener("click", function () {
         currentSortAcc = 'icon';
         sortOrdersAcc.icon *= -1;
         renderAccountsTable();
@@ -45,7 +45,7 @@ if (btnSortAccIcon) {
 
 const btnSortAccColor = document.getElementById("btn-sort-acc-color");
 if (btnSortAccColor) {
-    btnSortAccColor.addEventListener("click", function() {
+    btnSortAccColor.addEventListener("click", function () {
         currentSortAcc = 'color';
         sortOrdersAcc.color *= -1;
         renderAccountsTable();
@@ -54,7 +54,7 @@ if (btnSortAccColor) {
 
 const searchAccountInput = document.getElementById('search-account-input');
 if (searchAccountInput) {
-    searchAccountInput.addEventListener('input', function(e) {
+    searchAccountInput.addEventListener('input', function (e) {
         searchQueryAcc = e.target.value;
         curruentPageAcc = 1;
         renderAccountsTable();
@@ -63,12 +63,12 @@ if (searchAccountInput) {
 
 function renderAccountsTable() {
     let accounts = JSON.parse(localStorage.getItem('accounts')) || [];
-    
+
     if (searchQueryAcc.trim() !== '') {
         const query = searchQueryAcc.toLowerCase();
         accounts = accounts.filter(a => (a.name || '').toLowerCase().includes(query));
     }
-    
+
     applyCurrentAccSort(accounts);
 
     const accCountElem = document.getElementById("account-count") || document.getElementById("account-count");
@@ -83,7 +83,7 @@ function renderAccountsTable() {
     const startAccIndex = (curruentPageAcc - 1) * itemsPerPageAcc;
     const endAccIndex = startAccIndex + itemsPerPageAcc;
     const accountsToDisplay = accounts.slice(startAccIndex, endAccIndex);
-    
+
     if (typeof renderPaginationAcc === 'function') {
         renderPaginationAcc(totalAccPages);
     }
@@ -137,25 +137,25 @@ function renderAccountsTable() {
 function renderPaginationAcc(totalPages) {
     const container = document.getElementById('pagination-container-acc');
     if (!container) return;
-    
+
     let html = '';
-    
+
     html += `<li class="page-item mx-1 ${curruentPageAcc === 1 ? 'disabled' : ''}">
                 <a class="page-link text-secondary pagination-btn-acc rounded-2" href="#" data-page="${curruentPageAcc - 1}">
                     <i class="bi bi-chevron-left"></i>
                 </a>
              </li>`;
-             
+
     let startPage = Math.max(1, curruentPageAcc - 2);
     let endPage = Math.min(totalPages, curruentPageAcc + 2);
-    
+
     if (startPage > 1) {
         html += `<li class="page-item mx-1"><a class="page-link text-secondary pagination-btn-acc rounded-2" href="#" data-page="1">1</a></li>`;
         if (startPage > 2) {
             html += `<li class="page-item mx-1"><span class="page-link text-secondary border-0 bg-transparent">...</span></li>`;
         }
     }
-    
+
     for (let p = startPage; p <= endPage; p++) {
         if (p === curruentPageAcc) {
             html += `<li class="page-item active mx-1"><a class="page-link pagination-btn-acc rounded-2" href="#" data-page="${p}">${p}</a></li>`;
@@ -163,24 +163,24 @@ function renderPaginationAcc(totalPages) {
             html += `<li class="page-item mx-1"><a class="page-link text-secondary pagination-btn-acc rounded-2" href="#" data-page="${p}">${p}</a></li>`;
         }
     }
-    
+
     if (endPage < totalPages) {
         if (endPage < totalPages - 1) {
             html += `<li class="page-item mx-1"><span class="page-link text-secondary border-0 bg-transparent">...</span></li>`;
         }
         html += `<li class="page-item mx-1"><a class="page-link text-secondary pagination-btn-acc rounded-2" href="#" data-page="${totalPages}">${totalPages}</a></li>`;
     }
-    
+
     html += `<li class="page-item mx-1 ${curruentPageAcc === totalPages ? 'disabled' : ''}">
                 <a class="page-link text-secondary pagination-btn-acc rounded-2" href="#" data-page="${curruentPageAcc + 1}">
                     <i class="bi bi-chevron-right"></i>
                 </a>
              </li>`;
-             
+
     container.innerHTML = html;
 }
 
-document.addEventListener('click', function(e) {
+document.addEventListener('click', function (e) {
     const btn = e.target.closest('.pagination-btn-acc');
     if (btn) {
         e.preventDefault();
@@ -194,7 +194,7 @@ document.addEventListener('click', function(e) {
 
 const itemsPerPageSelectAcc = document.getElementById('items-per-page-select-acc');
 if (itemsPerPageSelectAcc) {
-    itemsPerPageSelectAcc.addEventListener('change', function() {
+    itemsPerPageSelectAcc.addEventListener('change', function () {
         itemsPerPageAcc = parseInt(this.value, 10);
         curruentPageAcc = 1;
         renderAccountsTable();
@@ -202,7 +202,7 @@ if (itemsPerPageSelectAcc) {
 }
 
 if (AccountsTableBody) {
-    AccountsTableBody.addEventListener('click', function(e) {
+    AccountsTableBody.addEventListener('click', function (e) {
         const deleteBtn = e.target.closest('.delete-account-btn');
         if (deleteBtn) {
             const id = parseInt(deleteBtn.getAttribute('data-id'), 10);
@@ -252,10 +252,10 @@ if (AccountsTableBody) {
 
 const btnSaveEditAccount = document.getElementById('edit-btn-save-account');
 if (btnSaveEditAccount) {
-    btnSaveEditAccount.addEventListener('click', function() {
+    btnSaveEditAccount.addEventListener('click', function () {
         let isValid = true;
         const nameInput = document.getElementById('edit-acc-name');
-        
+
         if (!nameInput.value.trim()) {
             nameInput.classList.add('is-invalid');
             isValid = false;
@@ -277,7 +277,7 @@ if (btnSaveEditAccount) {
                 accounts[index].name = accName;
                 accounts[index].icon = accIcon;
                 accounts[index].color = accColor;
-                
+
                 localStorage.setItem('accounts', JSON.stringify(accounts));
                 renderAccountsTable();
 
@@ -311,7 +311,7 @@ function saveExcelAccounts() {
 
     const data = [];
     data.push(['ID', 'Tên tài khoản', 'Icon', 'Màu sắc']);
-    
+
     for (const a of accounts) {
         data.push([
             a.id || '',

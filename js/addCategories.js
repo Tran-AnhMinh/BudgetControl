@@ -13,12 +13,12 @@ function updateCategorySelect() {
     const categoryInput = document.getElementById('trans-category');
     const categoryMenu = document.getElementById('menu-trans-category');
     const btnCategory = document.getElementById('btn-trans-category');
-    
+
     if (categoryInput && categoryMenu && btnCategory) {
         categoryMenu.innerHTML = categoryHtml;
         const items = categoryMenu.querySelectorAll('.category-item');
         items.forEach(item => {
-            item.addEventListener('click', function(e) {
+            item.addEventListener('click', function (e) {
                 e.preventDefault();
                 const val = this.getAttribute('data-value');
                 categoryInput.value = val;
@@ -29,7 +29,7 @@ function updateCategorySelect() {
                     btnCategory.innerHTML = this.innerHTML;
                     btnCategory.classList.remove('text-secondary');
                 }
-                
+
                 btnCategory.classList.remove('is-invalid');
                 const err = document.getElementById('error-trans-category');
                 if (err) err.classList.add('d-none');
@@ -45,7 +45,7 @@ function updateCategorySelect() {
         multiCategoryMenu.innerHTML = categoryHtml;
         const items = multiCategoryMenu.querySelectorAll('.category-item');
         items.forEach(item => {
-            item.addEventListener('click', function(e) {
+            item.addEventListener('click', function (e) {
                 e.preventDefault();
                 const val = this.getAttribute('data-value');
                 multiCategoryInput.value = val;
@@ -79,7 +79,7 @@ function updateCategorySelect() {
 }
 
 let fromTrans = 0;
-if(document.getElementById('btn-trans-category')){fromTrans = 1;}
+if (document.getElementById('btn-trans-category')) { fromTrans = 1; }
 
 const btnSaveCategory = document.getElementById('btn-save-category');
 if (btnSaveCategory) {
@@ -124,7 +124,7 @@ if (btnSaveCategory) {
                 alert('Thêm danh mục thành công!');
             }
 
-            if(fromTrans){
+            if (fromTrans) {
                 const categoryInput = document.getElementById('trans-category');
                 const btnCategory = document.getElementById('btn-trans-category');
                 if (categoryInput && btnCategory) {

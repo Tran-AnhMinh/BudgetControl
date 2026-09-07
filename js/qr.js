@@ -129,7 +129,7 @@ const QRPageModule = (function (DB, utils) {
       uploadModal: document.getElementById("uploadModal"),
       modalTitle: document.querySelector("#uploadModal .modal-title"),
       submitBtn: document.getElementById("btnSubmitForm"),
-      
+
       // Upload & Preview Containers
       imageUploadWrapper: document.getElementById("imageUploadWrapper"),
       imageInput: document.getElementById("imageInput"),

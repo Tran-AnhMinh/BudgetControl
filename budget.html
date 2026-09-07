@@ -103,7 +103,7 @@
                 Áp dụng cho tổng chi tiêu trong một ngày
               </div>
 
-              <button type="button" id="saveDailyBudget" class="btn btn-primary btn-sm save-btn d-block mx-auto px-4">
+              <button type="button" id="saveDailyBudget" class="btn btn-main btn-sm save-btn d-block mx-auto px-4">
                 Lưu thay đổi
               </button>
             </div>
@@ -141,13 +141,13 @@
                     </div>
 
                     <!-- Chế độ Xem: Chỉ hiển thị text -->
-                    <h4 class="fw-bold text-primary mb-0" id="totalBudgetText">
+                    <h4 class="fw-bold text-main mb-0" id="totalBudgetText">
                       3.000.000đ
                     </h4>
 
                     <!-- Chế độ Chỉnh sửa: Hiện ô input (mặc định ẩn) -->
                     <div class="input-group input-group-sm d-none mt-1" id="totalBudgetInputWrapper">
-                      <input type="text" class="form-control fw-bold text-primary" id="totalBudgetInput"
+                      <input type="text" class="form-control fw-bold text-main" id="totalBudgetInput"
                         value="3.000.000" />
                       <span class="input-group-text bg-white text-muted">đ</span>
                     </div>
@@ -266,7 +266,7 @@
 
               <!-- Add Category Button -->
               <button type="button" id="addCategoryBtn"
-                class="btn btn-outline-primary border-dashed w-100 py-2 rounded-3 my-3 d-none d-flex align-items-center justify-content-center gap-2"
+                class="btn btn-outline-main border-dashed w-100 py-2 rounded-3 my-3 d-none d-flex align-items-center justify-content-center gap-2"
                 data-bs-toggle="modal" data-bs-target="#budgetModal">
                 <i class="bi bi-plus-lg"></i> Thêm danh mục
               </button>
@@ -295,14 +295,14 @@
                 <!-- 1. Tổng ngân sách -->
                 <div class="col">
                   <div class="d-flex align-items-center gap-2">
-                    <div class="rounded-3 p-2 bg-primary-subtle text-primary">
+                    <div class="rounded-3 p-2 bg-main-subtle text-main">
                       <i class="bi bi-wallet2"></i>
                     </div>
                     <div>
                       <div class="text-muted text-nowrap" style="font-size: 11px">
                         Tổng ngân sách
                       </div>
-                      <strong class="text-primary small text-nowrap" id="statTotalBudget">3.000.000đ</strong>
+                      <strong class="text-main small text-nowrap" id="statTotalBudget">3.000.000đ</strong>
                     </div>
                   </div>
                 </div>
@@ -365,7 +365,7 @@
               <div class="d-flex justify-content-end gap-2">
                 <!-- Trạng thái 1: Nút chỉnh sửa ban đầu -->
                 <div id="viewModeActions">
-                  <button type="button" class="btn btn-primary px-4 save-btn" id="editBtn">
+                  <button type="button" class="btn btn-main px-4 save-btn" id="editBtn">
                     Chỉnh sửa
                   </button>
                 </div>
@@ -375,7 +375,7 @@
                   <button type="button" class="btn btn-light px-4 cancel-btn" id="cancelBtn">
                     Hủy
                   </button>
-                  <button type="button" class="btn btn-primary px-4 save-btn" id="saveBtn">
+                  <button type="button" class="btn btn-main px-4 save-btn" id="saveBtn">
                     Lưu ngân sách
                   </button>
                 </div>

@@ -16,12 +16,12 @@ function updateAccountSelect() {
     const accInput = document.getElementById('trans-account');
     const accMenu = document.getElementById('menu-trans-account');
     const btnAcc = document.getElementById('btn-trans-account');
-    
+
     if (accInput && accMenu && btnAcc) {
         accMenu.innerHTML = accountHtml;
         const items = accMenu.querySelectorAll('.account-item');
         items.forEach(item => {
-            item.addEventListener('click', function(e) {
+            item.addEventListener('click', function (e) {
                 e.preventDefault();
                 const val = this.getAttribute('data-value');
                 accInput.value = val;
@@ -39,12 +39,12 @@ function updateAccountSelect() {
     const multiAccInput = document.getElementById('multi-add-transac-select-account');
     const multiAccMenu = document.getElementById('menu-multi-add-transac-select-account');
     const btnMultiAcc = document.getElementById('btn-multi-add-transac-select-account');
-    
+
     if (multiAccInput && multiAccMenu && btnMultiAcc) {
         multiAccMenu.innerHTML = accountHtml;
         const items = multiAccMenu.querySelectorAll('.account-item');
         items.forEach(item => {
-            item.addEventListener('click', function(e) {
+            item.addEventListener('click', function (e) {
                 e.preventDefault();
                 const val = this.getAttribute('data-value');
                 multiAccInput.value = val;
@@ -55,7 +55,7 @@ function updateAccountSelect() {
                     btnMultiAcc.innerHTML = this.innerHTML;
                     btnMultiAcc.classList.remove('text-secondary');
                 }
-                
+
                 const tbody = document.getElementById('multi-add-trans-tbody');
                 if (tbody) {
                     const rows = tbody.querySelectorAll('tr');
@@ -127,7 +127,7 @@ if (btnSaveAccount) {
             };
             accounts.push(newAccount);
             localStorage.setItem('accounts', JSON.stringify(accounts));
-            
+
             if (typeof updateAccountSelect === 'function') {
                 updateAccountSelect();
             }

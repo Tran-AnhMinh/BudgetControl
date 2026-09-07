@@ -175,7 +175,7 @@ function renderTable() {
         const formattedAmount = (t.amount || 0).toLocaleString('vi-VN');
 
         const frequencyText = t.monthly ? 'Hàng tháng' : 'Một lần';
-        const frequencyColor = t.monthly ? 'primary' : 'secondary';
+        const frequencyColor = t.monthly ? 'main' : 'secondary';
 
         return `
             <tr class="align-middle">

@@ -6,8 +6,8 @@
   width: 100%;
 }
 
-.row{
-  gap:30px;
+.row {
+  gap: 30px;
 }
 
 .budget-card {
@@ -19,7 +19,7 @@
 }
 
 .modal-body {
-  height:400px;
+  height: 400px;
   overflow-y: auto;
 }
 
@@ -38,7 +38,7 @@
 }
 
 .section-title i {
-  color: #3448c5;
+  color: var(--main-color-dark);
   font-size: 13px;
 }
 
@@ -76,15 +76,15 @@
 }
 
 .daily-budget-input .form-control:focus {
-  border-color: #3155d9;
-  box-shadow: 0 0 0 2px rgba(49, 85, 217, 0.08);
+  border-color: var(--main-color);
+  box-shadow: 0 0 0 2px rgba(var(--main-color-rgb), 0.5);
 }
 
 .daily-budget-input .currency {
   position: absolute;
   top: 50%;
   right: 10px;
-  transform: translateY(-50%); 
+  transform: translateY(-50%);
   color: #687083;
   font-size: 12px;
   font-weight: 600;
@@ -102,13 +102,13 @@
   padding: 10px 20px;
   border: 0;
   border-radius: 10px;
-  background: #0757d9;
-  color: #fff;
+  background: var(--main-color);
+  color: var(--main-color-text);
   font-size: 14px;
   font-weight: 500;
 }
 
-.cancel-btn{
+.cancel-btn {
   margin-top: 20px;
   padding: 10px 20px;
   border: 0;
@@ -119,8 +119,8 @@
 }
 
 .save-btn:hover {
-  background: #064bc0;
-  color: #fff;
+  background: var(--main-color-hover);
+  color: #111;
 }
 
 /* ================================
@@ -139,25 +139,28 @@
   margin-bottom: 16px;
 }
 
-#monthPicker{
+#monthPicker {
   position: absolute;
-  width:1px;
-  height:1px;
-    opacity:0;
-    cursor: pointer; 
-    z-index: 2;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 2;
 }
 
 .month-picker:focus {
-  border-color: #3155d9;
+  border-color: var(--main-color);
   box-shadow: none;
 }
 
 
-.table th, 
+.table th,
 .table td {
-    padding-left: 16px !important;  /* Khoảng cách bên trái */
-    padding-right: 16px !important; /* Khoảng cách bên phải */
-    padding-top: 12px;              /* Khoảng cách trên dưới */
-    padding-bottom: 12px;
+  padding-left: 16px !important;
+  /* Khoảng cách bên trái */
+  padding-right: 16px !important;
+  /* Khoảng cách bên phải */
+  padding-top: 12px;
+  /* Khoảng cách trên dưới */
+  padding-bottom: 12px;
 }

@@ -1,7 +1,7 @@
 function updateMultiAddTotals() {
     const tbody = document.getElementById('multi-add-trans-tbody');
     if (!tbody) return;
-    
+
     let totalExpense = 0;
     let totalIncome = 0;
 
@@ -9,7 +9,7 @@ function updateMultiAddTotals() {
     rows.forEach(row => {
         const typeInput = row.querySelector('.multi-add-trans-type');
         const amountInput = row.querySelector('.amount-input-multi-add');
-        
+
         if (typeInput && amountInput) {
             const type = typeInput.value;
             const amountRaw = amountInput.value.replace(/\D/g, '');
@@ -25,7 +25,7 @@ function updateMultiAddTotals() {
 
     const expenseDisplay = document.getElementById('multi-add-total-expense');
     const incomeDisplay = document.getElementById('multi-add-total-income');
-    
+
     if (expenseDisplay) expenseDisplay.textContent = totalExpense.toLocaleString('vi-VN') + 'đ';
     if (incomeDisplay) incomeDisplay.textContent = totalIncome.toLocaleString('vi-VN') + 'đ';
 }
@@ -130,7 +130,7 @@ if (btnRemoveRowMultiAddTrans) {
 
 const multiAddDefaultFreq = document.getElementById('multi-add-default-frequency');
 if (multiAddDefaultFreq) {
-    multiAddDefaultFreq.addEventListener('change', function(e) {
+    multiAddDefaultFreq.addEventListener('change', function (e) {
         const val = e.target.value;
         if (!val) return;
         const tbody = document.getElementById('multi-add-trans-tbody');
@@ -208,7 +208,7 @@ if (btnSaveMultiTransaction) {
 
         transactions.push(...newTransactions);
         localStorage.setItem('transactions', JSON.stringify(transactions));
-        
+
         applyCurrentSort();
         renderTable();
         showToast(`Đã thêm thành công ${newTransactions.length} giao dịch!`);
@@ -344,7 +344,7 @@ document.addEventListener('click', function (e) {
         const row = toggleTypeBtn.closest('tr');
         const typeInput = row ? row.querySelector('.multi-add-trans-type') : null;
         const isExpense = !typeInput || typeInput.value === 'expense';
-        
+
         if (isExpense) {
             if (typeInput) typeInput.value = 'income';
             toggleTypeBtn.className = 'btn btn-sm border bg-white text-success d-flex justify-content-center align-items-center w-100 btn-toggle-multi-type';
@@ -387,7 +387,7 @@ document.addEventListener('click', function (e) {
 const multiAddModalEl = document.getElementById('multi-add-transaction');
 if (multiAddModalEl) {
     multiAddModalEl.addEventListener('hide.bs.modal', closeMultiAddPicker);
-    multiAddModalEl.addEventListener('show.bs.modal', function() {
+    multiAddModalEl.addEventListener('show.bs.modal', function () {
         if (typeof updateAccountSelect === 'function') updateAccountSelect();
         if (typeof updateCategorySelect === 'function') updateCategorySelect();
         const tbody = document.getElementById('multi-add-trans-tbody');

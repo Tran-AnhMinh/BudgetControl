@@ -10,23 +10,23 @@ let sortOrdersCage = {
 };
 
 const CagetoriesTableBody = document.getElementById("cagetories-table-body");
-function applyCurrentCageSort(cagetories){
+function applyCurrentCageSort(cagetories) {
     switch (currentSortCage) {
         case 'name':
-        cagetories.sort((a,b) => sortOrdersCage.name * (a.name || '').localeCompare(b.name || ''));
-        break;
+            cagetories.sort((a, b) => sortOrdersCage.name * (a.name || '').localeCompare(b.name || ''));
+            break;
         case 'icon':
-        cagetories.sort((a,b) => sortOrdersCage.icon * (a.icon || '').localeCompare(b.icon || ''));
-        break;
+            cagetories.sort((a, b) => sortOrdersCage.icon * (a.icon || '').localeCompare(b.icon || ''));
+            break;
         case 'color':
-        cagetories.sort((a,b) => sortOrdersCage.color * (a.color || '').localeCompare(b.color || ''));
-        break;
+            cagetories.sort((a, b) => sortOrdersCage.color * (a.color || '').localeCompare(b.color || ''));
+            break;
     }
 }
 
 const btnSortCageName = document.getElementById("btn-sort-cage-name");
 if (btnSortCageName) {
-    btnSortCageName.addEventListener("click", function() {
+    btnSortCageName.addEventListener("click", function () {
         currentSortCage = 'name';
         sortOrdersCage.name *= -1;
         renderCagetoriesTable();
@@ -35,7 +35,7 @@ if (btnSortCageName) {
 
 const btnSortCageIcon = document.getElementById("btn-sort-cage-icon");
 if (btnSortCageIcon) {
-    btnSortCageIcon.addEventListener("click", function() {
+    btnSortCageIcon.addEventListener("click", function () {
         currentSortCage = 'icon';
         sortOrdersCage.icon *= -1;
         renderCagetoriesTable();
@@ -44,7 +44,7 @@ if (btnSortCageIcon) {
 
 const btnSortCageColor = document.getElementById("btn-sort-cage-color");
 if (btnSortCageColor) {
-    btnSortCageColor.addEventListener("click", function() {
+    btnSortCageColor.addEventListener("click", function () {
         currentSortCage = 'color';
         sortOrdersCage.color *= -1;
         renderCagetoriesTable();
@@ -53,7 +53,7 @@ if (btnSortCageColor) {
 
 const searchCategoryInput = document.getElementById('search-category-input');
 if (searchCategoryInput) {
-    searchCategoryInput.addEventListener('input', function(e) {
+    searchCategoryInput.addEventListener('input', function (e) {
         searchQueryCage = e.target.value;
         curruentPageCage = 1;
         renderCagetoriesTable();
@@ -62,19 +62,19 @@ if (searchCategoryInput) {
 
 function renderCagetoriesTable() {
     let cagetories = JSON.parse(localStorage.getItem('categories')) || [];
-    
+
     if (searchQueryCage.trim() !== '') {
         const query = searchQueryCage.toLowerCase();
         cagetories = cagetories.filter(c => (c.name || '').toLowerCase().includes(query));
     }
-    
+
     applyCurrentCageSort(cagetories);
 
     const cageCountElem = document.getElementById("category-count") || document.getElementById("cagetory-count");
     if (cageCountElem) {
         cageCountElem.textContent = cagetories.length;
     }
-    
+
     const totalCagePages = Math.ceil(cagetories.length / itemsPerPageCage) || 1;
     if (curruentPageCage > totalCagePages) {
         curruentPageCage = totalCagePages;
@@ -82,7 +82,7 @@ function renderCagetoriesTable() {
     const startCageIndex = (curruentPageCage - 1) * itemsPerPageCage;
     const endCageIndex = startCageIndex + itemsPerPageCage;
     const cagetoriesToDisplay = cagetories.slice(startCageIndex, endCageIndex);
-    
+
     if (typeof renderPaginationCage === 'function') {
         renderPaginationCage(totalCagePages);
     }
@@ -133,30 +133,30 @@ function renderCagetoriesTable() {
 }
 
 const addCageBtn = document.getElementById('btn-add-category');
-if (addCageBtn) {fromTrans = 0;}
+if (addCageBtn) { fromTrans = 0; }
 
 function renderPaginationCage(totalPages) {
     const container = document.getElementById('pagination-container');
     if (!container) return;
-    
+
     let html = '';
-    
+
     html += `<li class="page-item mx-1 ${curruentPageCage === 1 ? 'disabled' : ''}">
                 <a class="page-link text-secondary pagination-btn-cage rounded-2" href="#" data-page="${curruentPageCage - 1}">
                     <i class="bi bi-chevron-left"></i>
                 </a>
              </li>`;
-             
+
     let startPage = Math.max(1, curruentPageCage - 2);
     let endPage = Math.min(totalPages, curruentPageCage + 2);
-    
+
     if (startPage > 1) {
         html += `<li class="page-item mx-1"><a class="page-link text-secondary pagination-btn-cage rounded-2" href="#" data-page="1">1</a></li>`;
         if (startPage > 2) {
             html += `<li class="page-item mx-1"><span class="page-link text-secondary border-0 bg-transparent">...</span></li>`;
         }
     }
-    
+
     for (let p = startPage; p <= endPage; p++) {
         if (p === curruentPageCage) {
             html += `<li class="page-item active mx-1"><a class="page-link pagination-btn-cage rounded-2" href="#" data-page="${p}">${p}</a></li>`;
@@ -164,24 +164,24 @@ function renderPaginationCage(totalPages) {
             html += `<li class="page-item mx-1"><a class="page-link text-secondary pagination-btn-cage rounded-2" href="#" data-page="${p}">${p}</a></li>`;
         }
     }
-    
+
     if (endPage < totalPages) {
         if (endPage < totalPages - 1) {
             html += `<li class="page-item mx-1"><span class="page-link text-secondary border-0 bg-transparent">...</span></li>`;
         }
         html += `<li class="page-item mx-1"><a class="page-link text-secondary pagination-btn-cage rounded-2" href="#" data-page="${totalPages}">${totalPages}</a></li>`;
     }
-    
+
     html += `<li class="page-item mx-1 ${curruentPageCage === totalPages ? 'disabled' : ''}">
                 <a class="page-link text-secondary pagination-btn-cage rounded-2" href="#" data-page="${curruentPageCage + 1}">
                     <i class="bi bi-chevron-right"></i>
                 </a>
              </li>`;
-             
+
     container.innerHTML = html;
 }
 
-document.addEventListener('click', function(e) {
+document.addEventListener('click', function (e) {
     const btn = e.target.closest('.pagination-btn-cage');
     if (btn) {
         e.preventDefault();
@@ -195,7 +195,7 @@ document.addEventListener('click', function(e) {
 
 const itemsPerPageSelect = document.getElementById('items-per-page-select');
 if (itemsPerPageSelect) {
-    itemsPerPageSelect.addEventListener('change', function() {
+    itemsPerPageSelect.addEventListener('change', function () {
         itemsPerPageCage = parseInt(this.value, 10);
         curruentPageCage = 1;
         renderCagetoriesTable();
@@ -203,7 +203,7 @@ if (itemsPerPageSelect) {
 }
 
 if (CagetoriesTableBody) {
-    CagetoriesTableBody.addEventListener('click', function(e) {
+    CagetoriesTableBody.addEventListener('click', function (e) {
         const deleteBtn = e.target.closest('.delete-category-btn');
         if (deleteBtn) {
             const id = parseInt(deleteBtn.getAttribute('data-id'), 10);
@@ -228,12 +228,12 @@ if (CagetoriesTableBody) {
             const category = cagetories.find(c => c.id === id);
             if (category) {
                 document.getElementById('edit-cat-name').value = category.name || '';
-                
+
                 const iconRadio = document.getElementById(`edit-icon-${category.icon}`);
                 if (iconRadio) {
                     iconRadio.checked = true;
                 }
-                
+
                 const colorRadio = document.getElementById(`edit-color-${category.color}`);
                 if (colorRadio) {
                     colorRadio.checked = true;
@@ -254,10 +254,10 @@ if (CagetoriesTableBody) {
 
 const btnSaveEditCategory = document.getElementById('edit-btn-save-category');
 if (btnSaveEditCategory) {
-    btnSaveEditCategory.addEventListener('click', function() {
+    btnSaveEditCategory.addEventListener('click', function () {
         let isValid = true;
         const nameInput = document.getElementById('edit-cat-name');
-        
+
         if (!nameInput.value.trim()) {
             nameInput.classList.add('is-invalid');
             isValid = false;
@@ -279,7 +279,7 @@ if (btnSaveEditCategory) {
                 cagetories[index].name = cageName;
                 cagetories[index].icon = cageIcon;
                 cagetories[index].color = cageColor;
-                
+
                 localStorage.setItem('categories', JSON.stringify(cagetories));
                 renderCagetoriesTable();
 
@@ -316,7 +316,7 @@ function saveExcelCagetories() {
 
     const data = [];
     data.push(['ID', 'Tên danh mục', 'Icon', 'Màu sắc']);
-    
+
     for (const c of cagetories) {
         data.push([
             c.id || '',

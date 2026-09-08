@@ -19,18 +19,9 @@ const Helper = {
 
 const MonthlyBudgetModule = (function () {
 
-    // ========================================
-    // 1. CONSTANTS & HELPERS
-    // ========================================
-
     const STORAGE_KEY = "monthly_budget";
 
     const SYSTEM_CATEGORIES = JSON.parse(localStorage.getItem('categories')) || [];
-
-    function parseMoney(value) {
-        if (!value) return 0;
-        return parseInt(value.toString().replace(/[^0-9]/g, ""), 10) || 0;
-    }
 
     function resolveCategory(id) {
         return SYSTEM_CATEGORIES.find(c => c.id == id)
@@ -38,10 +29,6 @@ const MonthlyBudgetModule = (function () {
     }
 
 
-
-    // ========================================
-    // 2. STATE
-    // ========================================
 
     let currentMonth = "";
     let totalBudget = 0;
@@ -54,16 +41,10 @@ const MonthlyBudgetModule = (function () {
         categories: []
     };
 
-
-    // ========================================
-    // 3. DOM CACHE
-    // ========================================
-
     let DOM = {};
 
     function cacheDOM() {
         DOM = {
-            // Month Picker
             monthPickerBtn: document.getElementById("monthPickerBtn"),
             monthPicker: document.getElementById("monthPicker"),
             monthPickerText: document.getElementById("monthPickerText"),
@@ -73,7 +54,6 @@ const MonthlyBudgetModule = (function () {
             totalBudgetInput: document.getElementById("totalBudgetInput"),
             totalBudgetWrapper: document.getElementById("totalBudgetInputWrapper"),
 
-            // Actions
             viewGroup: document.getElementById("viewModeActions"),
             editGroup: document.getElementById("editModeActions"),
             editBtn: document.getElementById("editBtn"),
@@ -81,24 +61,21 @@ const MonthlyBudgetModule = (function () {
             saveBtn: document.getElementById("saveBtn"),
             addCategoryBtn: document.getElementById("addCategoryBtn"),
 
-            // Table & Modal
             tableBody: document.getElementById("categoryTableBody"),
             availableCategoryList: document.getElementById("availableCategoryList"),
             budgetModal: document.getElementById("budgetModal"),
 
-            // Bottom Stats
             statTotal: document.getElementById("statTotalBudget"),
             statAllocated: document.getElementById("statAllocated"),
             statRemaining: document.getElementById("statRemaining"),
             statTotalPercent: document.getElementById("statTotalPercent"),
-            statStatusBadge: document.getElementById("statStatusBadge")
+            statStatusBadge: document.getElementById("statStatusBadge"),
+
+            copyBanner: document.getElementById("copyBudgetBanner"),
+            copyFromPrevBtn: document.getElementById("copyFromPrevBtn")
         };
     }
 
-
-    // ========================================
-    // 4. STORAGE
-    // ========================================
 
     function loadData() {
         const savedData = JSON.parse(localStorage.getItem(STORAGE_KEY));
@@ -123,9 +100,6 @@ const MonthlyBudgetModule = (function () {
     }
 
 
-    // ========================================
-    // 5. DATA / BUSINESS LOGIC
-    // ========================================
 
     function setMonth(newMonth) {
         currentMonth = newMonth;
@@ -174,11 +148,31 @@ const MonthlyBudgetModule = (function () {
         renderRealtimeCalculations();
     }
 
+    function getPrevMonth(monthStr) {
+        const [y, m] = monthStr.split("-").map(Number);
+        const d = new Date(y, m - 2, 1);
+        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+    }
+
+    function getPrevMonthData() {
+        const prev = getPrevMonth(currentMonth);
+        const store = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+        return store[prev] || null;
+    }
+
+    function copyFromPrev() {
+        const prevData = getPrevMonthData();
+        if (!prevData) return;
+        totalBudget = prevData.totalBudget || 0;
+        categories = JSON.parse(JSON.stringify(prevData.categories || []));
+        saveData();
+        render();
+    }
+
     function toggleEditMode(editing) {
         isEditing = editing;
 
         if (isEditing) {
-            // Sao lưu dữ liệu hiện tại
             backupState = {
                 totalBudget: totalBudget,
                 categories: JSON.parse(JSON.stringify(categories))
@@ -212,15 +206,12 @@ const MonthlyBudgetModule = (function () {
     }
 
 
-    // ========================================
-    // 6. RENDER
-    // ========================================
-
     function render() {
         renderHeader();
         renderTable();
         renderRealtimeCalculations();
         renderModalAvailableCategories();
+        renderCopyBanner();
     }
 
     function renderHeader() {
@@ -282,7 +273,6 @@ const MonthlyBudgetModule = (function () {
         const remaining = totalBudget - allocatedTotal;
         const totalPercent = totalBudget > 0 ? Math.round((allocatedTotal / totalBudget) * 100) : 0;
 
-        // Cập nhật từng hàng mà không cần vẽ lại DOM table
         const rows = DOM.tableBody?.querySelectorAll("tr") || [];
         rows.forEach((tr, index) => {
             if (categories[index]) {
@@ -313,6 +303,15 @@ const MonthlyBudgetModule = (function () {
                 DOM.statStatusBadge.innerHTML = 'Chưa phân bổ hết <i class="bi bi-dash"></i>';
             }
         }
+    }
+
+    function renderCopyBanner() {
+        if (!DOM.copyBanner) return;
+        const isEmpty = categories.length === 0 && totalBudget === 0;
+        const hasPrev = getPrevMonthData() !== null;
+        const shouldShow = isEmpty && hasPrev && isEditing;
+        DOM.copyBanner.classList.toggle("d-none", !shouldShow);
+        DOM.copyBanner.classList.toggle("d-flex", shouldShow);
     }
 
     function renderModalAvailableCategories() {
@@ -410,6 +409,9 @@ const MonthlyBudgetModule = (function () {
             }
         });
 
+        // Sao chép ngân sách từ tháng trước
+        DOM.copyFromPrevBtn?.addEventListener("click", copyFromPrev);
+
         // Chọn danh mục từ Modal
         DOM.availableCategoryList?.addEventListener("click", (e) => {
             const btn = e.target.closest(".select-modal-cat-btn");
@@ -494,6 +496,7 @@ const DailyBudgetModule = (function () {
         profile.dailyBudget = dailyBudget;
         localStorage.setItem(STORAGE_KEY, JSON.stringify(profile));
     }
+
 
     // ========================================
     // 5. BUSINESS LOGIC & TOGGLE

@@ -1,4 +1,7 @@
-let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+if(localStorage.getItem('transaction') === null) {let transactions = []}
+
+    let transactions = JSON.parse(localStorage.getItem('transacions')) || [];
+
 let categories = JSON.parse(localStorage.getItem('categories')) || [];
 let accounts = JSON.parse(localStorage.getItem('accounts')) || [];
 let indexTransInUse = 0;

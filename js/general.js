@@ -52,7 +52,12 @@ function showToast(message, type = 'success') {
 }
 
 
-function checkBudget(categoryId = null, dateOrMonth = null, showWarningToast = true) {
+let lastDailyToastTime = 0;
+let lastDailyToastDate = '';
+let lastMonthlyToastTime = 0;
+let lastMonthlyToastMonth = '';
+
+function checkBudget(categoryId = null, dateOrMonth = null, showWarningToast = true, savedTransactions = null) {
     let monthKey = '';
     if (dateOrMonth instanceof Date) {
         const year = dateOrMonth.getFullYear();
@@ -95,23 +100,33 @@ function checkBudget(categoryId = null, dateOrMonth = null, showWarningToast = t
         return `Danh mục #${catId}`;
     }
 
+    function getTransMonth(timeVal) {
+        if (!timeVal) return '';
+        if (typeof timeVal === 'string') {
+            const str = timeVal.trim();
+            if (/^\d{4}-\d{2}/.test(str)) {
+                return str.substring(0, 7);
+            }
+            if (str.includes('/')) {
+                const parts = str.split(' ')[0].split('/');
+                if (parts.length === 3) {
+                    return `${parts[2]}-${parts[1].padStart(2, '0')}`;
+                }
+            }
+        }
+        const d = new Date(timeVal);
+        if (!isNaN(d.getTime())) {
+            return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+        }
+        return '';
+    }
+
     function getCategoryExpense(catId) {
         return allTransactions.reduce((total, trans) => {
             if (trans.type !== 'expense') return total;
             if (String(trans.category) !== String(catId)) return total;
 
-            let transMonth = '';
-            if (trans.time) {
-                if (typeof trans.time === 'string' && /^\d{4}-\d{2}/.test(trans.time)) {
-                    transMonth = trans.time.substring(0, 7);
-                } else {
-                    const d = new Date(trans.time);
-                    if (!isNaN(d.getTime())) {
-                        transMonth = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
-                    }
-                }
-            }
-
+            const transMonth = getTransMonth(trans.time);
             if (transMonth === monthKey) {
                 return total + (Number(trans.amount) || 0);
             }
@@ -147,11 +162,228 @@ function checkBudget(categoryId = null, dateOrMonth = null, showWarningToast = t
     } else {
         result = budgetCategories.map(c => checkSingleCategory(c.id));
     }
+
+    // ========================================
+    // KIỂM TRA TỔNG CHI TIÊU TRONG THÁNG (MONTHLY TOTAL BUDGET)
+    // ========================================
+    let monthlyBudgetAmount = 0;
+    if (monthData) {
+        if (monthData.totalBudget !== undefined && Number(monthData.totalBudget) > 0) {
+            monthlyBudgetAmount = Number(monthData.totalBudget);
+        } else {
+            const allocated = budgetCategories.reduce((sum, item) => sum + (Number(item.amount) || 0), 0);
+            monthlyBudgetAmount = allocated > 0 ? allocated : 3000000;
+        }
+    } else {
+        monthlyBudgetAmount = 3000000;
+    }
+
+    const totalMonthExpense = allTransactions.reduce((total, trans) => {
+        if (trans.type !== 'expense') return total;
+        const transMonth = getTransMonth(trans.time);
+        if (transMonth === monthKey) {
+            return total + (Number(trans.amount) || 0);
+        }
+        return total;
+    }, 0);
+
+    const isMonthExceeded = monthlyBudgetAmount > 0 && totalMonthExpense > monthlyBudgetAmount;
+
+    if (isMonthExceeded && showWarningToast) {
+        const nowMs = Date.now();
+        if (nowMs - lastMonthlyToastTime > 1000 || lastMonthlyToastMonth !== monthKey) {
+            lastMonthlyToastTime = nowMs;
+            lastMonthlyToastMonth = monthKey;
+            if (typeof showToast === 'function') {
+                const [y, m] = monthKey.split('-');
+                const monthLabel = `tháng ${m}/${y}`;
+                const monthSpentFormatted = new Intl.NumberFormat('vi-VN').format(totalMonthExpense);
+                const monthBudgetFormatted = new Intl.NumberFormat('vi-VN').format(monthlyBudgetAmount);
+                showToast(`Cảnh báo: Bạn đã vượt mức chi tiêu trong ${monthLabel}! (${monthSpentFormatted}đ / ${monthBudgetFormatted}đ)`, 'warning');
+            }
+        }
+    }
+
+    const monthlyResult = {
+        month: monthKey,
+        monthlyBudget: monthlyBudgetAmount,
+        totalExpense: totalMonthExpense,
+        isExceeded: isMonthExceeded,
+        remain: monthlyBudgetAmount - totalMonthExpense,
+        exceededAmount: Math.max(0, totalMonthExpense - monthlyBudgetAmount)
+    };
+
+    if (result && typeof result === 'object') {
+        result.monthly = monthlyResult;
+    }
+
+    // ========================================
+    // KIỂM TRA MỨC CHI TIÊU TRONG NGÀY (DAILY BUDGET)
+    // ========================================
+    const isMonthOnly = typeof dateOrMonth === 'string' && /^\d{4}-\d{2}$/.test(dateOrMonth.trim());
+
+    if (!isMonthOnly) {
+        let showDailyToast = showWarningToast;
+
+        // Nếu truyền danh sách/giao dịch vừa lưu, kiểm tra xem có giao dịch loại 1 lần không
+        if (savedTransactions !== null && savedTransactions !== undefined) {
+            let hasOneTime = false;
+            if (Array.isArray(savedTransactions)) {
+                hasOneTime = savedTransactions.some(t => {
+                    const isMonthly = t.monthly === true || t.monthly === 'true' || t.frequency === 'monthly';
+                    return t.type === 'expense' && !isMonthly;
+                });
+            } else if (typeof savedTransactions === 'object') {
+                const isMonthly = savedTransactions.monthly === true || savedTransactions.monthly === 'true' || savedTransactions.frequency === 'monthly';
+                hasOneTime = savedTransactions.type === 'expense' && !isMonthly;
+            }
+            if (!hasOneTime) {
+                showDailyToast = false;
+            }
+        }
+
+        // Lấy thông tin profile
+        const profile = JSON.parse(localStorage.getItem('profile')) || {};
+        const rawBudget = profile.dailyBudget !== undefined 
+            ? profile.dailyBudget 
+            : (profile.dailybudget !== undefined ? profile.dailybudget : profile.daily_budget);
+
+        let dailyBudget = 0;
+        if (rawBudget !== undefined && rawBudget !== null && rawBudget !== '') {
+            if (typeof rawBudget === 'number') {
+                dailyBudget = rawBudget;
+            } else {
+                dailyBudget = parseInt(rawBudget.toString().replace(/\D/g, ''), 10) || 0;
+            }
+        } else {
+            dailyBudget = 500000;
+        }
+
+        // Xác định ngày cần kiểm tra (mặc định là hôm nay)
+        let targetDateObj = new Date();
+        if (dateOrMonth instanceof Date && !isNaN(dateOrMonth.getTime())) {
+            targetDateObj = dateOrMonth;
+        } else if (typeof dateOrMonth === 'string' && dateOrMonth.trim() !== '') {
+            const str = dateOrMonth.trim();
+            if (str.includes('/')) {
+                const parts = str.split(' ');
+                const dateParts = parts[0].split('/');
+                if (dateParts.length === 3) {
+                    const day = parseInt(dateParts[0], 10);
+                    const month = parseInt(dateParts[1], 10) - 1;
+                    const year = parseInt(dateParts[2], 10);
+                    if (parts[1]) {
+                        const timeParts = parts[1].split(':');
+                        targetDateObj = new Date(year, month, day, parseInt(timeParts[0], 10) || 0, parseInt(timeParts[1], 10) || 0);
+                    } else {
+                        targetDateObj = new Date(year, month, day);
+                    }
+                }
+            } else {
+                const d = new Date(str);
+                if (!isNaN(d.getTime())) {
+                    targetDateObj = d;
+                }
+            }
+        }
+
+        function isSameDay(timeValue, compareDate) {
+            if (!timeValue) return false;
+            let d = null;
+            if (timeValue instanceof Date) {
+                d = timeValue;
+            } else if (typeof timeValue === 'string') {
+                const str = timeValue.trim();
+                if (str.includes('/')) {
+                    const parts = str.split(' ');
+                    const dateParts = parts[0].split('/');
+                    if (dateParts.length === 3) {
+                        const day = parseInt(dateParts[0], 10);
+                        const month = parseInt(dateParts[1], 10) - 1;
+                        const year = parseInt(dateParts[2], 10);
+                        d = new Date(year, month, day);
+                    }
+                } else {
+                    d = new Date(str);
+                }
+            }
+            if (!d || isNaN(d.getTime())) return false;
+            return d.getFullYear() === compareDate.getFullYear() &&
+                d.getMonth() === compareDate.getMonth() &&
+                d.getDate() === compareDate.getDate();
+        }
+
+        // Chỉ tính các giao dịch thuộc loại 1 lần và loại chi tiêu (expense)
+        const todayExpenses = allTransactions.filter(t => {
+            if (t.type !== 'expense') return false;
+            const isMonthly = t.monthly === true || t.monthly === 'true' || t.frequency === 'monthly';
+            if (isMonthly) return false; // Không tính giao dịch định kỳ tháng
+            return isSameDay(t.time, targetDateObj);
+        });
+
+        const spentToday = todayExpenses.reduce((sum, t) => sum + (Number(t.amount) || 0), 0);
+        const isDailyExceeded = dailyBudget > 0 && spentToday > dailyBudget;
+
+        if (isDailyExceeded && showDailyToast) {
+            const nowMs = Date.now();
+            const now = new Date();
+            const isTargetToday = isSameDay(targetDateObj, now);
+            const dateLabel = isTargetToday ? 'hôm nay' : `${String(targetDateObj.getDate()).padStart(2, '0')}/${String(targetDateObj.getMonth() + 1).padStart(2, '0')}/${targetDateObj.getFullYear()}`;
+
+            // Tránh lặp toast ngày nếu checkBudget được gọi nhiều lần liên tiếp
+            if (nowMs - lastDailyToastTime > 1000 || lastDailyToastDate !== dateLabel) {
+                lastDailyToastTime = nowMs;
+                lastDailyToastDate = dateLabel;
+                if (typeof showToast === 'function') {
+                    const spentFormatted = new Intl.NumberFormat('vi-VN').format(spentToday);
+                    const budgetFormatted = new Intl.NumberFormat('vi-VN').format(dailyBudget);
+                    showToast(`Cảnh báo: Bạn đã vượt mức chi tiêu trong ngày ${dateLabel}! (${spentFormatted}đ / ${budgetFormatted}đ)`, 'warning');
+                }
+            }
+        }
+
+        const dailyResult = {
+            dailyBudget: dailyBudget,
+            spentToday: spentToday,
+            isExceeded: isDailyExceeded,
+            remain: dailyBudget - spentToday,
+            exceededAmount: Math.max(0, spentToday - dailyBudget)
+        };
+
+        if (result && typeof result === 'object') {
+            result.daily = dailyResult;
+        }
+    }
+
     return result;
 }
 
 window.checkBudget = checkBudget;
 window.checkCategoryBudget = checkBudget;
+
+function checkDailyBudget(targetDate = null, showWarningToast = true, savedTransactions = null) {
+    if (typeof targetDate === 'boolean') {
+        savedTransactions = showWarningToast;
+        showWarningToast = targetDate;
+        targetDate = null;
+    }
+    const res = checkBudget(null, targetDate, showWarningToast, savedTransactions);
+    return res && res.daily ? res.daily : res;
+}
+
+window.checkDailyBudget = checkDailyBudget;
+window.checkTodayBudget = checkDailyBudget;
+
+function checkMonthlyBudget(dateOrMonth = null, showWarningToast = true) {
+    if (typeof dateOrMonth === 'boolean') {
+        showWarningToast = dateOrMonth;
+        dateOrMonth = null;
+    }
+    const res = checkBudget(null, dateOrMonth, showWarningToast);
+    return res && res.monthly ? res.monthly : res;
+}
+
+window.checkMonthlyBudget = checkMonthlyBudget;
 
 
 flatpickr(".date-picker-input", {
@@ -309,5 +541,16 @@ function translateColor(color) {
         case 'dark':
             return 'Đen';
             break;
+    }
+}
+
+function safeParseStorage(key) {
+    try {
+        const raw = localStorage.getItem(key);
+        const parsed = JSON.parse(raw);
+        return Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+        localStorage.removeItem(key);
+        return [];
     }
 }

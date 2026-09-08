@@ -218,9 +218,12 @@ if (btnSaveMultiTransaction) {
             newTransactions.forEach(t => {
                 if (t.type === 'expense' && t.category && !checkedCats.has(t.category)) {
                     checkedCats.add(t.category);
-                    checkBudget(t.category, t.time);
+                    checkBudget(t.category, t.time, true, newTransactions);
                 }
             });
+            if (checkedCats.size === 0 && newTransactions.some(t => t.type === 'expense')) {
+                checkBudget(null, baseDateStr, true, newTransactions);
+            }
         }
 
         const modalEl = document.getElementById('multi-add-transaction');

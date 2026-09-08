@@ -81,6 +81,22 @@ function updateCategorySelect() {
 let fromTrans = 0;
 if (document.getElementById('btn-trans-category')) { fromTrans = 1; }
 
+let categoryModalSource = 'single';
+const categoryModalEl = document.getElementById('add-category');
+if (categoryModalEl) {
+    categoryModalEl.addEventListener('show.bs.modal', function (e) {
+        if (e.relatedTarget) {
+            if (e.relatedTarget.closest('#edit-single-add-transaction')) {
+                categoryModalSource = 'edit';
+            } else if (e.relatedTarget.closest('#single-add-transaction')) {
+                categoryModalSource = 'single';
+            } else {
+                categoryModalSource = null;
+            }
+        }
+    });
+}
+
 const btnSaveCategory = document.getElementById('btn-save-category');
 if (btnSaveCategory) {
     btnSaveCategory.addEventListener('click', function () {
@@ -124,7 +140,18 @@ if (btnSaveCategory) {
                 alert('Thêm danh mục thành công!');
             }
 
-            if (fromTrans) {
+            if (categoryModalSource === 'edit') {
+                const editCatInput = document.getElementById('edit-trans-category');
+                const editBtnCat = document.getElementById('edit-btn-trans-category');
+                if (editCatInput && editBtnCat) {
+                    editCatInput.value = newId;
+                    editBtnCat.innerHTML = `<span class="icon-circle bg-${cageColor}-subtle text-${cageColor} me-2"><i class="bi bi-${cageIcon}"></i></span>${cageName}`;
+                    editBtnCat.classList.remove('text-secondary');
+                    editBtnCat.classList.remove('is-invalid');
+                    const err = document.getElementById('edit-error-trans-category');
+                    if (err) err.classList.add('d-none');
+                }
+            } else if (fromTrans || document.getElementById('btn-trans-category')) {
                 const categoryInput = document.getElementById('trans-category');
                 const btnCategory = document.getElementById('btn-trans-category');
                 if (categoryInput && btnCategory) {
@@ -135,7 +162,6 @@ if (btnSaveCategory) {
                     const err = document.getElementById('error-trans-category');
                     if (err) err.classList.add('d-none');
                 }
-                fromTrans = 0;
             }
 
             const addCategoryModalElem = document.getElementById('add-category');
@@ -144,10 +170,18 @@ if (btnSaveCategory) {
                 if (addCategoryModal) addCategoryModal.hide();
             }
 
-            const singleAddModalElem = document.getElementById('single-add-transaction');
-            if (singleAddModalElem) {
-                const singleAddModal = bootstrap.Modal.getOrCreateInstance(singleAddModalElem);
-                if (singleAddModal) singleAddModal.show();
+            if (categoryModalSource === 'edit') {
+                const editModalElem = document.getElementById('edit-single-add-transaction');
+                if (editModalElem) {
+                    const editModal = bootstrap.Modal.getOrCreateInstance(editModalElem);
+                    if (editModal) editModal.show();
+                }
+            } else if (document.getElementById('single-add-transaction') && (categoryModalSource === 'single' || fromTrans)) {
+                const singleAddModalElem = document.getElementById('single-add-transaction');
+                if (singleAddModalElem) {
+                    const singleAddModal = bootstrap.Modal.getOrCreateInstance(singleAddModalElem);
+                    if (singleAddModal) singleAddModal.show();
+                }
             }
 
             name.value = '';

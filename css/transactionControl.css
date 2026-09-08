@@ -653,6 +653,21 @@ input[name="accountIcon"]:checked+label.btn-outline-secondary {
     max-width: 180px;
 }
 
+.desc-cell:hover {
+    z-index: 1080;
+}
+
+tr:has(.desc-cell:hover) {
+    position: relative;
+    z-index: 1080;
+}
+
+.table-responsive:has(.desc-cell:hover) {
+    overflow: visible !important;
+    position: relative;
+    z-index: 1050;
+}
+
 .desc-text {
     display: block;
     white-space: nowrap;
@@ -667,7 +682,7 @@ input[name="accountIcon"]:checked+label.btn-outline-secondary {
     position: absolute;
     top: calc(100% + 6px);
     left: 0;
-    z-index: 1080;
+    z-index: 9999 !important;
     background: #1e293b;
     color: #f1f5f9;
     font-size: 13px;

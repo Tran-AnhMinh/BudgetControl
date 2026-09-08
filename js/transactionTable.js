@@ -383,8 +383,8 @@ if (saveEditBtn) {
             showToast('Cập nhật giao dịch thành công!');
         }
 
-        if (type === 'expense' && category && typeof checkBudget === 'function') {
-            checkBudget(category, time);
+        if (type === 'expense' && typeof checkBudget === 'function') {
+            checkBudget(category, time, true, { type, monthly: frequency });
         }
     });
 }

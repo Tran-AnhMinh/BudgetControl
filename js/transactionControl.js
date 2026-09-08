@@ -1,14 +1,3 @@
-function safeParseStorage(key) {
-    try {
-        const raw = localStorage.getItem(key);
-        const parsed = JSON.parse(raw);
-        return Array.isArray(parsed) ? parsed : [];
-    } catch (e) {
-        localStorage.removeItem(key);
-        return [];
-    }
-}
-
 let transactions = safeParseStorage('transactions');
 let categories = safeParseStorage('categories');
 let accounts = safeParseStorage('accounts');

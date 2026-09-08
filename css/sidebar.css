@@ -15,7 +15,6 @@
     --sidebar-width-collapsed: 60px;
 }
 
-/* Các lớp tiện ích cho màu chủ đạo --main-color */
 .btn-main {
     background-color: var(--main-color) !important;
     border-color: var(--main-color) !important;

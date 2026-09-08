@@ -99,8 +99,8 @@ if (btnSaveTransaction) {
 
             showToast('Thêm giao dịch thành công!');
 
-            if (newTransaction.type === 'expense' && newTransaction.category && typeof checkBudget === 'function') {
-                checkBudget(newTransaction.category, newTransaction.time);
+            if (newTransaction.type === 'expense' && typeof checkBudget === 'function') {
+                checkBudget(newTransaction.category, newTransaction.time, true, newTransaction);
             }
 
             const modal = bootstrap.Modal.getInstance(document.getElementById('single-add-transaction'));

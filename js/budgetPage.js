@@ -4,9 +4,12 @@ const Helper = {
         return parseInt(value.toString().replace(/[^0-9]/g, ""), 10) || 0;
     },
 
-    formatMoney(value, hasCurrency = true) {
-        const formatted = new Intl.NumberFormat("vi-VN").format(value || 0);
-        return hasCurrency ? `${formatted}` : formatted;
+    formatMoney(value) {
+        return new Intl.NumberFormat("vi-VN").format(value || 0);
+    },
+
+    safeParseJSON(key) {
+        try { return JSON.parse(localStorage.getItem(key)); } catch { return null; }
     },
 
     formatMonth(yearMonthStr) {
@@ -21,14 +24,11 @@ const MonthlyBudgetModule = (function () {
 
     const STORAGE_KEY = "monthly_budget";
 
-    const SYSTEM_CATEGORIES = JSON.parse(localStorage.getItem('categories')) || [];
+    const SYSTEM_CATEGORIES = Helper.safeParseJSON('categories') || [];
 
     function resolveCategory(id) {
-        return SYSTEM_CATEGORIES.find(c => c.id == id)
-            || { id, name: `Danh mục #${id}`, icon: "question-circle", color: "secondary" };
+        return SYSTEM_CATEGORIES.find(c => c.id == id);
     }
-
-
 
     let currentMonth = "";
     let totalBudget = 0;
@@ -78,11 +78,12 @@ const MonthlyBudgetModule = (function () {
 
 
     function loadData() {
-        const savedData = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        const savedData = Helper.safeParseJSON(STORAGE_KEY);
 
         if (savedData && savedData[currentMonth]) {
-            totalBudget = savedData[currentMonth].totalBudget || 3000000;
-            categories = savedData[currentMonth].categories || [];
+            totalBudget = savedData[currentMonth].totalBudget ?? 0;
+            const validIds = new Set(SYSTEM_CATEGORIES.map(c => c.id));
+            categories = (savedData[currentMonth].categories || []).filter(c => validIds.has(c.id));
         } else {
             totalBudget = 0;
             categories = [];
@@ -90,8 +91,7 @@ const MonthlyBudgetModule = (function () {
     }
 
     function saveData() {
-        console.log(categories);
-        const fullStore = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+        const fullStore = Helper.safeParseJSON(STORAGE_KEY) || {};
         fullStore[currentMonth] = {
             totalBudget: totalBudget,
             categories: categories
@@ -102,18 +102,17 @@ const MonthlyBudgetModule = (function () {
 
 
     function setMonth(newMonth) {
+        if (isEditing) cancelEdit();
         currentMonth = newMonth;
         loadData();
         render();
     }
 
     function addCategory(catId) {
+        const id = parseInt(catId, 10);
+        if (categories.some(c => c.id === id)) return;
 
-
-        const isAlreadyAdded = categories.some(c => c.id == catId);
-        if (isAlreadyAdded) return;
-
-        const target = SYSTEM_CATEGORIES.find(c => c.id == catId);
+        const target = SYSTEM_CATEGORIES.find(c => c.id === id);
         if (!target) return;
 
         categories.push({
@@ -128,7 +127,8 @@ const MonthlyBudgetModule = (function () {
         const targetCat = categories[index];
         if (!targetCat) return;
 
-        const isConfirmed = window.confirm(`Bạn có chắc chắn muốn xóa ${resolveCategory(targetCat.id).name} không?`);
+        const catInfo = resolveCategory(targetCat.id);
+        const isConfirmed = window.confirm(`Bạn có chắc chắn muốn xóa ${catInfo ? catInfo.name : "danh mục này"} không?`);
 
         if (isConfirmed) {
             categories.splice(index, 1);
@@ -156,7 +156,7 @@ const MonthlyBudgetModule = (function () {
 
     function getPrevMonthData() {
         const prev = getPrevMonth(currentMonth);
-        const store = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+        const store = Helper.safeParseJSON(STORAGE_KEY) || {};
         return store[prev] || null;
     }
 
@@ -228,6 +228,7 @@ const MonthlyBudgetModule = (function () {
 
         categories.forEach((cat, index) => {
             const info = resolveCategory(cat.id);
+            if (!info) return;
             const percent = totalBudget > 0 ? Math.round((cat.amount / totalBudget) * 100) : 0;
             const tr = document.createElement("tr");
 
@@ -288,9 +289,8 @@ const MonthlyBudgetModule = (function () {
         if (DOM.statTotal) DOM.statTotal.textContent = `${Helper.formatMoney(totalBudget)}đ`;
         if (DOM.statAllocated) DOM.statAllocated.textContent = `${Helper.formatMoney(allocatedTotal)}đ`;
         if (DOM.statRemaining) DOM.statRemaining.textContent = `${Helper.formatMoney(remaining)}đ`;
-        if (DOM.statTotalPercent) DOM.statTotalPercent.textContent = `${Helper.formatMoney(totalPercent)}%`;
+        if (DOM.statTotalPercent) DOM.statTotalPercent.textContent = `${totalPercent}%`;
 
-        // Badge Status
         if (DOM.statStatusBadge) {
             if (totalPercent === 100 && remaining === 0) {
                 DOM.statStatusBadge.className = "badge bg-success-subtle text-success border border-success-subtle px-2 py-1 rounded-pill small";
@@ -336,11 +336,6 @@ const MonthlyBudgetModule = (function () {
         `).join("");
     }
 
-
-    // ========================================
-    // 7. EVENTS
-    // ========================================
-
     function bindEvents() {
         // MonthPicker
         DOM.monthPickerBtn?.addEventListener("click", () => {
@@ -364,7 +359,7 @@ const MonthlyBudgetModule = (function () {
         // Input Tổng ngân sách
         DOM.totalBudgetInput?.addEventListener("input", (e) => {
             const digits = e.target.value.replace(/\D/g, "");
-            const amount = parseInt(digits, 10) || 0;
+            const amount = Math.min(parseInt(digits, 10) || 0, 100_000_000_000);
             updateTotalBudget(amount);
             e.target.value = digits === "" ? "" : Helper.formatMoney(amount);
         });
@@ -374,7 +369,7 @@ const MonthlyBudgetModule = (function () {
             if (e.target.classList.contains("budget-input")) {
                 const index = parseInt(e.target.dataset.index, 10);
                 const digits = e.target.value.replace(/\D/g, "");
-                const amount = parseInt(digits, 10) || 0;
+                const amount = Math.min(parseInt(digits, 10) || 0, 100_000_000_000);
                 updateCategoryAmount(index, amount);
                 e.target.value = digits === "" ? "" : Helper.formatMoney(amount);
             }
@@ -396,11 +391,9 @@ const MonthlyBudgetModule = (function () {
 
 
         DOM.tableBody?.addEventListener("click", (e) => {
-            // Tìm phần tử button gần nhất có class .delete-cat-btn
             const btn = e.target.closest(".delete-cat-btn");
             if (!btn) return;
 
-            // Nếu không trong chế độ chỉnh sửa thì bỏ qua
             if (!isEditing) return;
 
             const index = parseInt(btn.getAttribute("data-index"), 10);
@@ -409,10 +402,8 @@ const MonthlyBudgetModule = (function () {
             }
         });
 
-        // Sao chép ngân sách từ tháng trước
         DOM.copyFromPrevBtn?.addEventListener("click", copyFromPrev);
 
-        // Chọn danh mục từ Modal
         DOM.availableCategoryList?.addEventListener("click", (e) => {
             const btn = e.target.closest(".select-modal-cat-btn");
             if (!btn) return;
@@ -424,11 +415,6 @@ const MonthlyBudgetModule = (function () {
         });
     }
 
-
-    // ========================================
-    // 8. INIT
-    // ========================================
-
     function init() {
         const now = new Date();
         currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
@@ -439,11 +425,6 @@ const MonthlyBudgetModule = (function () {
         toggleEditMode(false);
     }
 
-
-    // ========================================
-    // PUBLIC
-    // ========================================
-
     return {
         init
     };
@@ -452,28 +433,13 @@ const MonthlyBudgetModule = (function () {
 
 const DailyBudgetModule = (function () {
 
-    // ========================================
-    // 1. CONSTANTS & STORAGE KEY
-    // ========================================
     const STORAGE_KEY = "profile";
-    const DEFAULT_BUDGET = 500000;
+    const DEFAULT_BUDGET = 0;
 
-    function parseMoney(value) {
-        if (!value) return 0;
-        return parseInt(value.toString().replace(/[^0-9]/g, ""), 10) || 0;
-    }
-
-
-    // ========================================
-    // 2. STATE
-    // ========================================
     let dailyBudget = DEFAULT_BUDGET;
     let isEditing = false;
     let backupBudget = DEFAULT_BUDGET;
 
-    // ========================================
-    // 3. DOM CACHE
-    // ========================================
     let DOM = {};
 
     function cacheDOM() {
@@ -483,29 +449,21 @@ const DailyBudgetModule = (function () {
         };
     }
 
-    // ========================================
-    // 4. STORAGE
-    // ========================================
     function loadData() {
-        const profile = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
-        dailyBudget = profile.dailyBudget !== undefined ? parseMoney(profile.dailyBudget) : DEFAULT_BUDGET;
+        const profile = Helper.safeParseJSON(STORAGE_KEY) || {};
+        dailyBudget = profile.dailyBudget !== undefined ? Helper.parseMoney(profile.dailyBudget) : DEFAULT_BUDGET;
     }
 
     function saveData() {
-        const profile = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+        const profile = Helper.safeParseJSON(STORAGE_KEY) || {};
         profile.dailyBudget = dailyBudget;
         localStorage.setItem(STORAGE_KEY, JSON.stringify(profile));
     }
 
-
-    // ========================================
-    // 5. BUSINESS LOGIC & TOGGLE
-    // ========================================
     function toggleEditMode(editing) {
         isEditing = editing;
 
         if (isEditing) {
-            // Lưu lại giá trị trước khi sửa để phòng khi cần khôi phục
             backupBudget = dailyBudget;
             if (DOM.input) {
                 DOM.input.removeAttribute("disabled");
@@ -531,9 +489,6 @@ const DailyBudgetModule = (function () {
         render();
     }
 
-    // ========================================
-    // 6. RENDER
-    // ========================================
     function render() {
         if (DOM.input) {
 
@@ -541,34 +496,26 @@ const DailyBudgetModule = (function () {
         }
     }
 
-    // ========================================
-    // 7. EVENTS
-    // ========================================
     function bindEvents() {
-        // Bấm nút: chuyển đổi giữa "Chỉnh sửa" và "Lưu thay đổi"
         DOM.saveBtn?.addEventListener("click", () => {
             if (isEditing) {
-                // Đang sửa -> Bấm để Lưu
-                dailyBudget = parseMoney(DOM.input.value);
+                dailyBudget = Helper.parseMoney(DOM.input.value);
                 saveData();
                 toggleEditMode(false);
             } else {
-                // Đang khóa -> Bấm để Chỉnh sửa
                 toggleEditMode(true);
             }
         });
 
-        // Tự động cập nhật và format số khi người dùng gõ
         DOM.input?.addEventListener("input", (e) => {
             const digits = e.target.value.replace(/\D/g, "");
             dailyBudget = parseInt(digits, 10) || 0;
             e.target.value = digits === "" ? "" : Helper.formatMoney(dailyBudget);
         });
 
-        // Nhấn Enter để lưu nhanh, Escape để hủy
         DOM.input?.addEventListener("keydown", (e) => {
             if (e.key === "Enter") {
-                dailyBudget = parseMoney(DOM.input.value);
+                dailyBudget = Helper.parseMoney(DOM.input.value);
                 saveData();
                 toggleEditMode(false);
             } else if (e.key === "Escape") {
@@ -578,9 +525,6 @@ const DailyBudgetModule = (function () {
         });
     }
 
-    // ========================================
-    // 8. INIT
-    // ========================================
     function init() {
         cacheDOM();
         loadData();
@@ -588,18 +532,9 @@ const DailyBudgetModule = (function () {
         toggleEditMode(false);
     }
 
-    return {
-        init,
-        getValue: () => dailyBudget,
-        setValue: (val) => {
-            dailyBudget = parseMoney(val);
-            saveData();
-            render();
-        }
-    };
+    return { init };
 })();
 
-// Khởi chạy khi DOM sẵn sàng
 document.addEventListener("DOMContentLoaded", function () {
     MonthlyBudgetModule.init();
     DailyBudgetModule.init();

@@ -141,14 +141,12 @@
                     </div>
 
                     <!-- Chế độ Xem: Chỉ hiển thị text -->
-                    <h4 class="fw-bold text-main mb-0" id="totalBudgetText">
-                      3.000.000đ
-                    </h4>
+                    <h4 class="fw-bold text-main mb-0" id="totalBudgetText">0đ</h4>
 
                     <!-- Chế độ Chỉnh sửa: Hiện ô input (mặc định ẩn) -->
                     <div class="input-group input-group-sm d-none mt-1" id="totalBudgetInputWrapper">
                       <input type="text" class="form-control fw-bold text-main" id="totalBudgetInput"
-                        value="3.000.000" />
+                        value="0" />
                       <span class="input-group-text bg-white text-muted">đ</span>
                     </div>
                   </div>
@@ -156,12 +154,12 @@
               </div>
 
               <!-- Banner sao chép từ tháng trước -->
-              <div id="copyBudgetBanner" class="alert alert-info d-none align-items-center justify-content-between mb-3">
+              <div id="copyBudgetBanner" class="d-none align-items-center justify-content-between mb-3 rounded-3 px-3 py-2" style="background-color: var(--main-color-subtle); border: 1px solid var(--main-color-border); color: var(--main-color-text);">
                 <div>
-                  <i class="bi bi-info-circle me-2"></i>
+                  <i class="bi bi-info-circle me-2" style="color: var(--main-color-dark);"></i>
                   <span>Tháng này chưa có ngân sách.</span>
                 </div>
-                <button type="button" class="btn btn-primary btn-sm" id="copyFromPrevBtn">
+                <button type="button" class="btn btn-sm" id="copyFromPrevBtn" style="background-color: var(--main-color); color: var(--main-color-text); border: none;" onmouseover="this.style.backgroundColor='var(--main-color-hover)'" onmouseout="this.style.backgroundColor='var(--main-color)'">
                   <i class="bi bi-clipboard me-1"></i> Sao chép từ tháng trước
                 </button>
               </div>
@@ -179,99 +177,7 @@
                       </th>
                     </tr>
                   </thead>
-                  <tbody id="categoryTableBody">
-                    <!-- Ăn uống -->
-                    <tr>
-                      <!-- Cột 1: Danh mục -->
-                      <td>
-                        <div class="d-flex align-items-center gap-3">
-                          <div
-                            class="rounded-circle d-flex align-items-center justify-content-center bg-warning-subtle text-warning"
-                            style="width: 40px; height: 40px">
-                            <i class="bi bi-egg-fried fs-5"></i>
-                          </div>
-                          <div>
-                            <div class="fw-bold text-dark">Ăn uống</div>
-                          </div>
-                        </div>
-                      </td>
-
-                      <!-- Cột 2: Ngân sách -->
-                      <td>
-                        <div class="input-group input-group-sm">
-                          <input type="text" class="form-control text-start fw-semibold budget-input"
-                            value="1.200.000" />
-                          <span class="input-group-text bg-white text-muted">đ</span>
-                        </div>
-                      </td>
-
-                      <!-- Cột 3: Tỷ lệ -->
-                      <td>
-                        <div class="d-flex align-items-center gap-2">
-                          <span class="small fw-semibold text-muted text-nowrap" style="width: 35px">40%</span>
-                          <div class="progress flex-grow-1" style="height: 6px">
-                            <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"></div>
-                          </div>
-                        </div>
-                      </td>
-
-                      <!-- Cột 4: Hành động -->
-                      <td class="text-center">
-                        <button class="btn btn-sm btn-link text-secondary p-1">
-                          <i class="bi bi-arrow-counterclockwise"></i>
-                        </button>
-                        <button class="btn btn-sm btn-link text-secondary p-1">
-                          <i class="bi bi-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
-
-                    <!-- Khác -->
-                    <tr>
-                      <!-- Cột 1: Danh mục -->
-                      <td>
-                        <div class="d-flex align-items-center gap-3">
-                          <div
-                            class="rounded-circle d-flex align-items-center justify-content-center bg-secondary-subtle text-secondary"
-                            style="width: 40px; height: 40px">
-                            <i class="bi bi-three-dots fs-5"></i>
-                          </div>
-                          <div>
-                            <div class="fw-bold text-dark">Khác</div>
-                            <small class="text-muted">Chi phí phát sinh khác</small>
-                          </div>
-                        </div>
-                      </td>
-
-                      <!-- Cột 2: Ngân sách -->
-                      <td>
-                        <div class="input-group input-group-sm">
-                          <input type="text" class="form-control text-end fw-semibold budget-input" value="50.000" />
-                          <span class="input-group-text bg-white text-muted">đ</span>
-                        </div>
-                      </td>
-
-                      <!-- Cột 3: Tỷ lệ -->
-                      <td>
-                        <div class="d-flex align-items-center gap-2">
-                          <span class="small fw-semibold text-muted text-nowrap" style="width: 35px">2%</span>
-                          <div class="progress flex-grow-1" style="height: 6px">
-                            <div class="progress-bar bg-secondary" role="progressbar" style="width: 2%"></div>
-                          </div>
-                        </div>
-                      </td>
-
-                      <!-- Cột 4: Hành động -->
-                      <td class="text-center">
-                        <button class="btn btn-sm btn-link text-secondary p-1">
-                          <i class="bi bi-arrow-counterclockwise"></i>
-                        </button>
-                        <button class="btn btn-sm btn-link text-secondary p-1">
-                          <i class="bi bi-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
+                  <tbody id="categoryTableBody"></tbody>
                 </table>
               </div>
 
@@ -313,7 +219,7 @@
                       <div class="text-muted text-nowrap" style="font-size: 11px">
                         Tổng ngân sách
                       </div>
-                      <strong class="text-main small text-nowrap" id="statTotalBudget">3.000.000đ</strong>
+                      <strong class="text-main small text-nowrap" id="statTotalBudget">0đ</strong>
                     </div>
                   </div>
                 </div>
@@ -328,7 +234,7 @@
                       <div class="text-muted text-nowrap" style="font-size: 11px">
                         Đã phân bổ
                       </div>
-                      <strong class="text-success small text-nowrap" id="statAllocated">3.000.000đ</strong>
+                      <strong class="text-success small text-nowrap" id="statAllocated">0đ</strong>
                     </div>
                   </div>
                 </div>
@@ -358,7 +264,7 @@
                       <div class="text-muted text-nowrap" style="font-size: 11px">
                         Tổng tỷ lệ
                       </div>
-                      <strong class="text-dark small text-nowrap" id="statTotalPercent">100%</strong>
+                      <strong class="text-dark small text-nowrap" id="statTotalPercent">0%</strong>
                     </div>
                   </div>
                 </div>
@@ -374,14 +280,12 @@
 
               <!-- Footer Action -->
               <div class="d-flex justify-content-end gap-2">
-                <!-- Trạng thái 1: Nút chỉnh sửa ban đầu -->
                 <div id="viewModeActions">
                   <button type="button" class="btn btn-main px-4 save-btn" id="editBtn">
                     Chỉnh sửa
                   </button>
                 </div>
 
-                <!-- Trạng thái 2: Nút Hủy & Lưu (Ban đầu ẩn bằng d-none) -->
                 <div id="editModeActions" class="d-none d-flex gap-2">
                   <button type="button" class="btn btn-light px-4 cancel-btn" id="cancelBtn">
                     Hủy

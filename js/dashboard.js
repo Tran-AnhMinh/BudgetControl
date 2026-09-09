@@ -146,7 +146,8 @@ const Dashboard = (function () {
 
         if (!DOM.monthlyBudgetList) return;
 
-        const budgetCategories = monthlyBudgetStore[currentYearMonth]?.categories || [];
+        const validIds = new Set(categories.map(c => c.id));
+        const budgetCategories = (monthlyBudgetStore[currentYearMonth]?.categories || []).filter(c => validIds.has(c.id));
 
         if (budgetCategories.length === 0) {
             DOM.monthlyBudgetList.innerHTML = `<div class="text-muted small py-3">Chưa thiết lập ngân sách tháng này.</div>`;

@@ -118,26 +118,22 @@ const QRPageModule = (function (DB, utils) {
 
   function cacheDOM() {
     DOM = {
-      // Table & Pagination
       tableBody: document.getElementById("qrTableBody"),
       tableSummary: document.getElementById("tableSummary"),
       pagination: document.getElementById("pagination"),
       pageSizeSelect: document.getElementById("pageSizeSelect"),
 
-      // Create / Edit Form Modal
       form: document.getElementById("qrForm"),
       uploadModal: document.getElementById("uploadModal"),
       modalTitle: document.querySelector("#uploadModal .modal-title"),
       submitBtn: document.getElementById("btnSubmitForm"),
 
-      // Upload & Preview Containers
       imageUploadWrapper: document.getElementById("imageUploadWrapper"),
       imageInput: document.getElementById("imageInput"),
       imagePreviewWrapper: document.getElementById("imagePreviewWrapper"),
       imagePreview: document.getElementById("imagePreview"),
       btnRemovePreview: document.getElementById("btnRemovePreview"),
 
-      // Other Form Inputs
       inputName: document.getElementById("nameInput"),
       inputBank: document.getElementById("bankInput"),
       inputAccount: document.getElementById("accountInput"),
@@ -145,7 +141,6 @@ const QRPageModule = (function (DB, utils) {
       inputDesc: document.getElementById("descInput"),
       inputStatus: document.getElementById("statusInput"),
 
-      // Zoom Modal
       zoomModal: document.getElementById("zoomModal"),
       zoomImage: document.getElementById("modalZoomQRImage"),
     };
@@ -242,7 +237,6 @@ const QRPageModule = (function (DB, utils) {
     if (DOM.inputDesc) DOM.inputDesc.value = item.description || "";
     if (DOM.inputStatus) DOM.inputStatus.checked = item.status === "active";
 
-    // Hiển thị ảnh hiện có và ẩn input chọn file
     if (item.imageBlob) {
       showPreviewState(item.imageBlob);
     } else {

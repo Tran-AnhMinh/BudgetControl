@@ -235,9 +235,7 @@ if (btnSaveMultiTransaction) {
     });
 }
 
-// ----------------------------------------------------
-// FLOATING PICKER ĐỘC LẬP CHO CATEGORY & ACCOUNT
-// ----------------------------------------------------
+
 let multiAddPickerEl = null;
 let currentPickerBtn = null;
 let currentPickerInput = null;
@@ -299,7 +297,6 @@ function openMultiAddPicker(btn, input, type) {
         el.onmouseleave = () => el.style.backgroundColor = 'transparent';
     });
 
-    // Ẩn tạm thời để đo kích thước thực tế của menu
     picker.style.visibility = 'hidden';
     picker.style.display = 'block';
 
@@ -307,7 +304,6 @@ function openMultiAddPicker(btn, input, type) {
     const pickerWidth = picker.offsetWidth || 220;
     const pickerHeight = picker.offsetHeight || 120;
 
-    // Vị trí ngang: Ưu tiên căn theo nút, nếu tràn mép phải thì căn theo cạnh phải của nút
     let left = rect.left;
     if (left + pickerWidth > window.innerWidth - 10) {
         left = rect.right - pickerWidth;
@@ -317,8 +313,6 @@ function openMultiAddPicker(btn, input, type) {
     }
     if (left < 10) left = 10;
 
-    // Vị trí dọc: Ưu tiên mở ngay bên dưới nút (rect.bottom + 4)
-    // Chỉ lật lên trên khi phía dưới không đủ chỗ VÀ phía trên đủ chỗ
     let top = rect.bottom + 4;
     const spaceBelow = window.innerHeight - rect.bottom;
     const spaceAbove = rect.top;
@@ -341,7 +335,6 @@ function closeMultiAddPicker() {
 }
 
 document.addEventListener('click', function (e) {
-    // 1. Toggle Chi / Thu
     const toggleTypeBtn = e.target.closest('.btn-toggle-multi-type');
     if (toggleTypeBtn) {
         const row = toggleTypeBtn.closest('tr');
@@ -363,7 +356,6 @@ document.addEventListener('click', function (e) {
         return;
     }
 
-    // 2. Bấm mở Danh mục
     const catBtn = e.target.closest('.btn-pick-category');
     if (catBtn) {
         const row = catBtn.closest('tr');
@@ -372,7 +364,6 @@ document.addEventListener('click', function (e) {
         return;
     }
 
-    // 3. Bấm mở Tài khoản
     const accBtn = e.target.closest('.btn-pick-account');
     if (accBtn) {
         const row = accBtn.closest('tr');
@@ -381,7 +372,6 @@ document.addEventListener('click', function (e) {
         return;
     }
 
-    // 4. Bấm ra ngoài đóng picker
     if (multiAddPickerEl && multiAddPickerEl.style.display === 'block' && !multiAddPickerEl.contains(e.target)) {
         closeMultiAddPicker();
     }

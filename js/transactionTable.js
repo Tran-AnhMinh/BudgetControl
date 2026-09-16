@@ -186,12 +186,13 @@ function renderTable() {
                 </td>
                 <td class="text-nowrap text-right"><span class="${typeClass} fw-medium"><i class="bi ${typeIcon}"></i> ${typeText}</span></td>
                 <td class="text-nowrap "><span class="icon-circle bg-${cat.color}-subtle text-${cat.color} me-2"><i class="bi bi-${cat.icon}"></i></span> ${cat.name || ''}</td>
+                <td class="text-nowrap"><span class="icon-circle bg-${acc.color}-subtle text-${acc.color} me-2"><i class="bi bi-${acc.icon}"></i></span> ${acc.name || ''}</td>
+                <td class="${amountClass} fw-bold text-end text-nowrap text-left">${amountSign}${formattedAmount}</td>
                 <td class="desc-cell">
                     <span class="desc-text">${t.detail || ''}</span>
                     ${t.detail ? `<div class="desc-tooltip">${t.detail}</div>` : ''}
                 </td>
-                <td class="text-nowrap"><span class="icon-circle bg-${acc.color}-subtle text-${acc.color} me-2"><i class="bi bi-${acc.icon}"></i></span> ${acc.name || ''}</td>
-                <td class="${amountClass} fw-bold text-end text-nowrap text-left">${amountSign}${formattedAmount}</td>
+                
                 <td class="text-nowrap text-center"><span class="badge badge-custom bg-${frequencyColor}-subtle text-${frequencyColor}">${frequencyText}</span></td>
                 <td class="text-end">
                     <div class="dropdown">

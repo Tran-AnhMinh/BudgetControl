@@ -2,6 +2,12 @@ let currentPage = 1;
 let itemsPerPage = 15;
 const transactionTableBody = document.getElementById('transaction-table-body');
 function applyCurrentSort() {
+    const categories = JSON.parse(localStorage.getItem('categories')) || [];
+    const accounts = JSON.parse(localStorage.getItem('accounts')) || [];
+
+    const getCatName = (t) => (categories.find(c => String(c.id) === String(t.category)) || { name: String(t.category) }).name || '';
+    const getAccName = (t) => (accounts.find(a => String(a.id) === String(t.account)) || { name: String(t.account) }).name || '';
+
     switch (currentSortColumn) {
         case 'date':
             transactions.sort((a, b) => sortOrders.date * (new Date(b.time) - new Date(a.time)));
@@ -10,10 +16,10 @@ function applyCurrentSort() {
             transactions.sort((a, b) => sortOrders.type * a.type.localeCompare(b.type));
             break;
         case 'category':
-            transactions.sort((a, b) => sortOrders.category * a.category.localeCompare(b.category));
+            transactions.sort((a, b) => sortOrders.category * getCatName(a).localeCompare(getCatName(b)));
             break;
         case 'account':
-            transactions.sort((a, b) => sortOrders.account * a.account.localeCompare(b.account));
+            transactions.sort((a, b) => sortOrders.account * getAccName(a).localeCompare(getAccName(b)));
             break;
         case 'amount':
             transactions.sort((a, b) => sortOrders.amount * (b.amount * (b.type === 'expense' ? 1 : -1) - a.amount * (a.type === 'expense' ? 1 : -1)));

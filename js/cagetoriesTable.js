@@ -299,7 +299,6 @@ if (btnSaveEditCategory) {
 
 
 
-// Helper to get categories
 function getCagetories() {
     return JSON.parse(localStorage.getItem('categories')) || [];
 }

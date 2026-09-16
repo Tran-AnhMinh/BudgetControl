@@ -163,9 +163,6 @@ function checkBudget(categoryId = null, dateOrMonth = null, showWarningToast = t
         result = budgetCategories.map(c => checkSingleCategory(c.id));
     }
 
-    // ========================================
-    // KIỂM TRA TỔNG CHI TIÊU TRONG THÁNG (MONTHLY TOTAL BUDGET)
-    // ========================================
     let monthlyBudgetAmount = 0;
     if (monthData) {
         if (monthData.totalBudget !== undefined && Number(monthData.totalBudget) > 0) {
@@ -217,15 +214,11 @@ function checkBudget(categoryId = null, dateOrMonth = null, showWarningToast = t
         result.monthly = monthlyResult;
     }
 
-    // ========================================
-    // KIỂM TRA MỨC CHI TIÊU TRONG NGÀY (DAILY BUDGET)
-    // ========================================
+
     const isMonthOnly = typeof dateOrMonth === 'string' && /^\d{4}-\d{2}$/.test(dateOrMonth.trim());
 
     if (!isMonthOnly) {
         let showDailyToast = showWarningToast;
-
-        // Nếu truyền danh sách/giao dịch vừa lưu, kiểm tra xem có giao dịch loại 1 lần không
         if (savedTransactions !== null && savedTransactions !== undefined) {
             let hasOneTime = false;
             if (Array.isArray(savedTransactions)) {
@@ -242,7 +235,6 @@ function checkBudget(categoryId = null, dateOrMonth = null, showWarningToast = t
             }
         }
 
-        // Lấy thông tin profile
         const profile = JSON.parse(localStorage.getItem('profile')) || {};
         const rawBudget = profile.dailyBudget !== undefined 
             ? profile.dailyBudget 
@@ -259,7 +251,6 @@ function checkBudget(categoryId = null, dateOrMonth = null, showWarningToast = t
             dailyBudget = 500000;
         }
 
-        // Xác định ngày cần kiểm tra (mặc định là hôm nay)
         let targetDateObj = new Date();
         if (dateOrMonth instanceof Date && !isNaN(dateOrMonth.getTime())) {
             targetDateObj = dateOrMonth;
@@ -313,7 +304,6 @@ function checkBudget(categoryId = null, dateOrMonth = null, showWarningToast = t
                 d.getDate() === compareDate.getDate();
         }
 
-        // Chỉ tính các giao dịch thuộc loại 1 lần và loại chi tiêu (expense)
         const todayExpenses = allTransactions.filter(t => {
             if (t.type !== 'expense') return false;
             const isMonthly = t.monthly === true || t.monthly === 'true' || t.frequency === 'monthly';
